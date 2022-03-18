@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//	Solution/Project:  Team4_Project2/Team4_Project2
+//	Solution/Project:  Team4_Project3/Team4_Project3
 //	File Name:         Instruction.cs
 //	Description:       Instruction class for keeping information about a specific instruction
 //	Course:            CSCI-4717-201 - Comp Architecture
@@ -20,16 +20,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Team4_Project2
+namespace Team4_Project3
 {
     /// <summary>
     ///  Instruction class for keeping information about a specific instruction
     /// </summary>
     public class Instruction
     {
-        string instLit,p1Register, p2Register = string.Empty;
+        string instLit, p1Register, p2Register = string.Empty;
         string sRegister = string.Empty;
-        int fetch, decode, execute, store,  name = 0;
+        int fetch, decode, execute, store, name = 0;
 
         /// <summary>
         /// Parameterized Constructor for Instruction
@@ -40,7 +40,7 @@ namespace Team4_Project2
         /// <param name="execute">Number of execute cycles</param>
         /// <param name="store">Number of register cycles</param>
         /// <param name="register">Register currently being worked on</param>
-        public Instruction(int name, int fetch, int decode, int execute, int store,string sRegister,string p1Register, string instLit )
+        public Instruction(int name, int fetch, int decode, int execute, int store, string sRegister, string p1Register, string instLit)
         {
             this.name = name;
             this.fetch = fetch;
@@ -52,7 +52,7 @@ namespace Team4_Project2
             this.instLit = instLit;
 
         }//end Instruction()
-        public Instruction(int name, int fetch, int decode, int execute, int store, string sRegister, string p1Register,string p2Register, string instLit)
+        public Instruction(int name, int fetch, int decode, int execute, int store, string sRegister, string p1Register, string p2Register, string instLit)
         {
             this.name = name;
             this.fetch = fetch;
@@ -80,7 +80,7 @@ namespace Team4_Project2
 
         public int Decode
         {
-            get { return decode; } 
+            get { return decode; }
             set { decode = value; }
         }
 
@@ -118,4 +118,4 @@ namespace Team4_Project2
         }
     }//end Instruction class
 
-}//end Team4_Project2 namespace
+}//end Team4_Project3 namespace

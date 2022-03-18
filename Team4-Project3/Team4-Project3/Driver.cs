@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//	Solution/Project:  Team4_Project2/Team4_Project2
+//	Solution/Project:  Team4_Project3/Team4_Project3
 //	File Name:         Driver.cs
 //	Description:       Main Driver for Project 2 program
 //	Course:            CSCI-4717-201 - Comp Architecture
@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 
-namespace Team4_Project2
+namespace Team4_Project3
 {
     /// <summary>
     ///  Driver class for starting program via a windows form gui
@@ -33,4 +33,4 @@ namespace Team4_Project2
 
     }//end Driver class
 
-}//end Team4_Project2 namespace
+}//end Team4_Project3 namespace

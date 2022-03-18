@@ -4,9 +4,9 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AEA35915-D887-439C-949A-92DACB621286}</ProjectGuid>
+    <ProjectGuid>{4702E0EE-21DE-446E-9EED-00ACCB6E4DE9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Team4_Project2</RootNamespace>
+    <RootNamespace>Team4_Project3</RootNamespace>
     <AssemblyName>Team4-Project2</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//	Solution/Project:  Team4_Project2/Team4_Project2
+//	Solution/Project:  Team4_Project3/Team4_Project3
 //	File Name:         ProgramController.cs
 //	Description:       ProgramController class for controlling majority of program functionality
 //	Course:            CSCI-4717-201 - Comp Architecture
@@ -24,7 +24,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Team4_Project2
+namespace Team4_Project3
 {
     /// <summary>
     ///  ProgramController class for controlling majority of program functionality
@@ -1040,4 +1040,4 @@ namespace Team4_Project2
 
     }//end ProgramController class
 
-}//end Team4_Project2 namespace
+}//end Team4_Project3 namespace

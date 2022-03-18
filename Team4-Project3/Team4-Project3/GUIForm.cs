@@ -1,6 +1,6 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//	Solution/Project:  Team4_Project2/Team4_Project2
+//	Solution/Project:  Team4_Project3/Team4_Project3
 //	File Name:         GUIForm.cs
 //	Description:       GUIForm class for program GUI to show visual static pipeline simulation
 //	Course:            CSCI-4717-201 - Comp Architecture
@@ -24,7 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Team4_Project2
+namespace Team4_Project3
 {
     public partial class GUIForm : Form
     {
