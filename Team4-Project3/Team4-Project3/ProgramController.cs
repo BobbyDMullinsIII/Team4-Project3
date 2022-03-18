@@ -19,9 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Team4_Project3
@@ -45,9 +43,7 @@ namespace Team4_Project3
 
             //Opens application to guiForm
             guiForm = new GUIForm();
-            guiForm.counterTextBox.SelectionAlignment = HorizontalAlignment.Center;
             Application.Run(guiForm);
-
 
         }//end startProgram()
         #endregion
@@ -893,6 +889,7 @@ namespace Team4_Project3
 
         }//end fetch()
         #endregion
+
         #region decode() Method
         /// <summary>
         /// Method for decoding instruction phase in pipeline

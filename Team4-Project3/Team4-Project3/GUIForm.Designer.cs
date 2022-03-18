@@ -40,8 +40,31 @@
             this.assemblyTextBox = new System.Windows.Forms.TextBox();
             this.assemblyLabel = new System.Windows.Forms.Label();
             this.simulationPanel = new System.Windows.Forms.Panel();
+            this.storeStallLabel = new System.Windows.Forms.Label();
+            this.executeStallLabel = new System.Windows.Forms.Label();
+            this.decodeStallLabel = new System.Windows.Forms.Label();
+            this.fetchStallLabel = new System.Windows.Forms.Label();
+            this.wawLabel = new System.Windows.Forms.Label();
+            this.warLabel = new System.Windows.Forms.Label();
+            this.rawLabel = new System.Windows.Forms.Label();
+            this.controlHazardLabel = new System.Windows.Forms.Label();
+            this.dataHazardLabel = new System.Windows.Forms.Label();
+            this.structuralHazardLabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.storeStallTextbox = new System.Windows.Forms.TextBox();
+            this.decodeStallTextbox = new System.Windows.Forms.TextBox();
+            this.executeStallTextbox = new System.Windows.Forms.TextBox();
+            this.fetchStallTextbox = new System.Windows.Forms.TextBox();
+            this.warTextBox = new System.Windows.Forms.TextBox();
+            this.wawTextBox = new System.Windows.Forms.TextBox();
+            this.rawTextBox = new System.Windows.Forms.TextBox();
+            this.dataHTextBox = new System.Windows.Forms.TextBox();
+            this.controlHTextBox = new System.Windows.Forms.TextBox();
+            this.structHTextBox = new System.Windows.Forms.TextBox();
+            this.counterTextBox = new System.Windows.Forms.TextBox();
             this.cyclesLabel = new System.Windows.Forms.Label();
-            this.counterTextBox = new System.Windows.Forms.RichTextBox();
             this.executeTextBox = new System.Windows.Forms.TextBox();
             this.storeTextBox = new System.Windows.Forms.TextBox();
             this.decodeTextBox = new System.Windows.Forms.TextBox();
@@ -52,17 +75,17 @@
             this.executeLabel = new System.Windows.Forms.Label();
             this.decodeLabel = new System.Windows.Forms.Label();
             this.fetchLabel = new System.Windows.Forms.Label();
-            this.staticPipeLabel = new System.Windows.Forms.Label();
+            this.dynamicPipeLabel = new System.Windows.Forms.Label();
             this.savePipelineOutputButton = new System.Windows.Forms.Button();
             this.clearPipelineOutputButton = new System.Windows.Forms.Button();
             this.loadPipelineOutputButton = new System.Windows.Forms.Button();
             this.pipelineOutputTextBox = new System.Windows.Forms.TextBox();
             this.pipelineOutputLabel = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.outputPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.assemblyPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.outputPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // MNAWLabel
@@ -181,7 +204,6 @@
             this.assemblyTextBox.Name = "assemblyTextBox";
             this.assemblyTextBox.Size = new System.Drawing.Size(293, 420);
             this.assemblyTextBox.TabIndex = 6;
-            this.assemblyTextBox.TextChanged += new System.EventHandler(this.assemblyTextBox_TextChanged);
             // 
             // assemblyLabel
             // 
@@ -199,8 +221,31 @@
             // simulationPanel
             // 
             this.simulationPanel.BackColor = System.Drawing.Color.Black;
-            this.simulationPanel.Controls.Add(this.cyclesLabel);
+            this.simulationPanel.Controls.Add(this.storeStallLabel);
+            this.simulationPanel.Controls.Add(this.executeStallLabel);
+            this.simulationPanel.Controls.Add(this.decodeStallLabel);
+            this.simulationPanel.Controls.Add(this.fetchStallLabel);
+            this.simulationPanel.Controls.Add(this.wawLabel);
+            this.simulationPanel.Controls.Add(this.warLabel);
+            this.simulationPanel.Controls.Add(this.rawLabel);
+            this.simulationPanel.Controls.Add(this.controlHazardLabel);
+            this.simulationPanel.Controls.Add(this.dataHazardLabel);
+            this.simulationPanel.Controls.Add(this.structuralHazardLabel);
+            this.simulationPanel.Controls.Add(this.label3);
+            this.simulationPanel.Controls.Add(this.label2);
+            this.simulationPanel.Controls.Add(this.label1);
+            this.simulationPanel.Controls.Add(this.storeStallTextbox);
+            this.simulationPanel.Controls.Add(this.decodeStallTextbox);
+            this.simulationPanel.Controls.Add(this.executeStallTextbox);
+            this.simulationPanel.Controls.Add(this.fetchStallTextbox);
+            this.simulationPanel.Controls.Add(this.warTextBox);
+            this.simulationPanel.Controls.Add(this.wawTextBox);
+            this.simulationPanel.Controls.Add(this.rawTextBox);
+            this.simulationPanel.Controls.Add(this.dataHTextBox);
+            this.simulationPanel.Controls.Add(this.controlHTextBox);
+            this.simulationPanel.Controls.Add(this.structHTextBox);
             this.simulationPanel.Controls.Add(this.counterTextBox);
+            this.simulationPanel.Controls.Add(this.cyclesLabel);
             this.simulationPanel.Controls.Add(this.executeTextBox);
             this.simulationPanel.Controls.Add(this.storeTextBox);
             this.simulationPanel.Controls.Add(this.decodeTextBox);
@@ -211,11 +256,257 @@
             this.simulationPanel.Controls.Add(this.executeLabel);
             this.simulationPanel.Controls.Add(this.decodeLabel);
             this.simulationPanel.Controls.Add(this.fetchLabel);
-            this.simulationPanel.Controls.Add(this.staticPipeLabel);
+            this.simulationPanel.Controls.Add(this.dynamicPipeLabel);
             this.simulationPanel.Location = new System.Drawing.Point(318, 79);
             this.simulationPanel.Name = "simulationPanel";
             this.simulationPanel.Size = new System.Drawing.Size(946, 604);
             this.simulationPanel.TabIndex = 3;
+            // 
+            // storeStallLabel
+            // 
+            this.storeStallLabel.AutoSize = true;
+            this.storeStallLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.storeStallLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.storeStallLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storeStallLabel.Location = new System.Drawing.Point(780, 463);
+            this.storeStallLabel.Name = "storeStallLabel";
+            this.storeStallLabel.Size = new System.Drawing.Size(50, 22);
+            this.storeStallLabel.TabIndex = 60;
+            this.storeStallLabel.Text = "Store";
+            // 
+            // executeStallLabel
+            // 
+            this.executeStallLabel.AutoSize = true;
+            this.executeStallLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.executeStallLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.executeStallLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.executeStallLabel.Location = new System.Drawing.Point(761, 437);
+            this.executeStallLabel.Name = "executeStallLabel";
+            this.executeStallLabel.Size = new System.Drawing.Size(69, 22);
+            this.executeStallLabel.TabIndex = 59;
+            this.executeStallLabel.Text = "Execute";
+            // 
+            // decodeStallLabel
+            // 
+            this.decodeStallLabel.AutoSize = true;
+            this.decodeStallLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.decodeStallLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.decodeStallLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.decodeStallLabel.Location = new System.Drawing.Point(763, 411);
+            this.decodeStallLabel.Name = "decodeStallLabel";
+            this.decodeStallLabel.Size = new System.Drawing.Size(67, 22);
+            this.decodeStallLabel.TabIndex = 58;
+            this.decodeStallLabel.Text = "Decode";
+            // 
+            // fetchStallLabel
+            // 
+            this.fetchStallLabel.AutoSize = true;
+            this.fetchStallLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fetchStallLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fetchStallLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fetchStallLabel.Location = new System.Drawing.Point(778, 385);
+            this.fetchStallLabel.Name = "fetchStallLabel";
+            this.fetchStallLabel.Size = new System.Drawing.Size(52, 22);
+            this.fetchStallLabel.TabIndex = 57;
+            this.fetchStallLabel.Text = "Fetch";
+            // 
+            // wawLabel
+            // 
+            this.wawLabel.AutoSize = true;
+            this.wawLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.wawLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.wawLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wawLabel.Location = new System.Drawing.Point(778, 325);
+            this.wawLabel.Name = "wawLabel";
+            this.wawLabel.Size = new System.Drawing.Size(52, 22);
+            this.wawLabel.TabIndex = 56;
+            this.wawLabel.Text = "WAW";
+            // 
+            // warLabel
+            // 
+            this.warLabel.AutoSize = true;
+            this.warLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.warLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.warLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warLabel.Location = new System.Drawing.Point(781, 299);
+            this.warLabel.Name = "warLabel";
+            this.warLabel.Size = new System.Drawing.Size(49, 22);
+            this.warLabel.TabIndex = 55;
+            this.warLabel.Text = "WAR";
+            // 
+            // rawLabel
+            // 
+            this.rawLabel.AutoSize = true;
+            this.rawLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rawLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.rawLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rawLabel.Location = new System.Drawing.Point(781, 273);
+            this.rawLabel.Name = "rawLabel";
+            this.rawLabel.Size = new System.Drawing.Size(49, 22);
+            this.rawLabel.TabIndex = 54;
+            this.rawLabel.Text = "RAW";
+            // 
+            // controlHazardLabel
+            // 
+            this.controlHazardLabel.AutoSize = true;
+            this.controlHazardLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.controlHazardLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.controlHazardLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.controlHazardLabel.Location = new System.Drawing.Point(768, 211);
+            this.controlHazardLabel.Name = "controlHazardLabel";
+            this.controlHazardLabel.Size = new System.Drawing.Size(62, 22);
+            this.controlHazardLabel.TabIndex = 53;
+            this.controlHazardLabel.Text = "Control";
+            // 
+            // dataHazardLabel
+            // 
+            this.dataHazardLabel.AutoSize = true;
+            this.dataHazardLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dataHazardLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dataHazardLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataHazardLabel.Location = new System.Drawing.Point(784, 185);
+            this.dataHazardLabel.Name = "dataHazardLabel";
+            this.dataHazardLabel.Size = new System.Drawing.Size(46, 22);
+            this.dataHazardLabel.TabIndex = 52;
+            this.dataHazardLabel.Text = "Data";
+            // 
+            // structuralHazardLabel
+            // 
+            this.structuralHazardLabel.AutoSize = true;
+            this.structuralHazardLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.structuralHazardLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.structuralHazardLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.structuralHazardLabel.Location = new System.Drawing.Point(750, 159);
+            this.structuralHazardLabel.Name = "structuralHazardLabel";
+            this.structuralHazardLabel.Size = new System.Drawing.Size(80, 22);
+            this.structuralHazardLabel.TabIndex = 51;
+            this.structuralHazardLabel.Text = "Structural";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(749, 356);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(74, 27);
+            this.label3.TabIndex = 50;
+            this.label3.Text = "Stalled";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(749, 243);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(140, 27);
+            this.label2.TabIndex = 49;
+            this.label2.Text = "Dependencies";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(749, 129);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 27);
+            this.label1.TabIndex = 48;
+            this.label1.Text = "Hazards";
+            // 
+            // storeStallTextbox
+            // 
+            this.storeStallTextbox.Location = new System.Drawing.Point(836, 463);
+            this.storeStallTextbox.Name = "storeStallTextbox";
+            this.storeStallTextbox.Size = new System.Drawing.Size(100, 20);
+            this.storeStallTextbox.TabIndex = 47;
+            this.storeStallTextbox.Text = "0";
+            // 
+            // decodeStallTextbox
+            // 
+            this.decodeStallTextbox.Location = new System.Drawing.Point(836, 411);
+            this.decodeStallTextbox.Name = "decodeStallTextbox";
+            this.decodeStallTextbox.Size = new System.Drawing.Size(100, 20);
+            this.decodeStallTextbox.TabIndex = 46;
+            this.decodeStallTextbox.Text = "0";
+            // 
+            // executeStallTextbox
+            // 
+            this.executeStallTextbox.Location = new System.Drawing.Point(836, 437);
+            this.executeStallTextbox.Name = "executeStallTextbox";
+            this.executeStallTextbox.Size = new System.Drawing.Size(100, 20);
+            this.executeStallTextbox.TabIndex = 45;
+            this.executeStallTextbox.Text = "0";
+            // 
+            // fetchStallTextbox
+            // 
+            this.fetchStallTextbox.Location = new System.Drawing.Point(836, 385);
+            this.fetchStallTextbox.Name = "fetchStallTextbox";
+            this.fetchStallTextbox.Size = new System.Drawing.Size(100, 20);
+            this.fetchStallTextbox.TabIndex = 44;
+            this.fetchStallTextbox.Text = "0";
+            // 
+            // warTextBox
+            // 
+            this.warTextBox.Location = new System.Drawing.Point(836, 299);
+            this.warTextBox.Name = "warTextBox";
+            this.warTextBox.Size = new System.Drawing.Size(100, 20);
+            this.warTextBox.TabIndex = 43;
+            this.warTextBox.Text = "0";
+            // 
+            // wawTextBox
+            // 
+            this.wawTextBox.Location = new System.Drawing.Point(836, 325);
+            this.wawTextBox.Name = "wawTextBox";
+            this.wawTextBox.Size = new System.Drawing.Size(100, 20);
+            this.wawTextBox.TabIndex = 42;
+            this.wawTextBox.Text = "0";
+            // 
+            // rawTextBox
+            // 
+            this.rawTextBox.Location = new System.Drawing.Point(836, 273);
+            this.rawTextBox.Name = "rawTextBox";
+            this.rawTextBox.Size = new System.Drawing.Size(100, 20);
+            this.rawTextBox.TabIndex = 41;
+            this.rawTextBox.Text = "0";
+            // 
+            // dataHTextBox
+            // 
+            this.dataHTextBox.Location = new System.Drawing.Point(836, 185);
+            this.dataHTextBox.Name = "dataHTextBox";
+            this.dataHTextBox.Size = new System.Drawing.Size(100, 20);
+            this.dataHTextBox.TabIndex = 40;
+            this.dataHTextBox.Text = "0";
+            // 
+            // controlHTextBox
+            // 
+            this.controlHTextBox.Location = new System.Drawing.Point(836, 211);
+            this.controlHTextBox.Name = "controlHTextBox";
+            this.controlHTextBox.Size = new System.Drawing.Size(100, 20);
+            this.controlHTextBox.TabIndex = 39;
+            this.controlHTextBox.Text = "0";
+            // 
+            // structHTextBox
+            // 
+            this.structHTextBox.Location = new System.Drawing.Point(836, 159);
+            this.structHTextBox.Name = "structHTextBox";
+            this.structHTextBox.Size = new System.Drawing.Size(100, 20);
+            this.structHTextBox.TabIndex = 38;
+            this.structHTextBox.Text = "0";
+            // 
+            // counterTextBox
+            // 
+            this.counterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.counterTextBox.Location = new System.Drawing.Point(736, 37);
+            this.counterTextBox.Name = "counterTextBox";
+            this.counterTextBox.Size = new System.Drawing.Size(200, 80);
+            this.counterTextBox.TabIndex = 37;
+            this.counterTextBox.Text = "0";
+            this.counterTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // cyclesLabel
             // 
@@ -228,16 +519,6 @@
             this.cyclesLabel.Size = new System.Drawing.Size(139, 27);
             this.cyclesLabel.TabIndex = 36;
             this.cyclesLabel.Text = "Cycle Counter";
-            // 
-            // counterTextBox
-            // 
-            this.counterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.counterTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.counterTextBox.Location = new System.Drawing.Point(736, 37);
-            this.counterTextBox.Name = "counterTextBox";
-            this.counterTextBox.Size = new System.Drawing.Size(200, 75);
-            this.counterTextBox.TabIndex = 35;
-            this.counterTextBox.Text = "0";
             // 
             // executeTextBox
             // 
@@ -352,18 +633,18 @@
             this.fetchLabel.TabIndex = 4;
             this.fetchLabel.Text = "Fetch";
             // 
-            // staticPipeLabel
+            // dynamicPipeLabel
             // 
-            this.staticPipeLabel.AutoSize = true;
-            this.staticPipeLabel.BackColor = System.Drawing.Color.Black;
-            this.staticPipeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.staticPipeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.staticPipeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.staticPipeLabel.Location = new System.Drawing.Point(3, 1);
-            this.staticPipeLabel.Name = "staticPipeLabel";
-            this.staticPipeLabel.Size = new System.Drawing.Size(321, 33);
-            this.staticPipeLabel.TabIndex = 4;
-            this.staticPipeLabel.Text = "Static Pipeline Simulation";
+            this.dynamicPipeLabel.AutoSize = true;
+            this.dynamicPipeLabel.BackColor = System.Drawing.Color.Black;
+            this.dynamicPipeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dynamicPipeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dynamicPipeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dynamicPipeLabel.Location = new System.Drawing.Point(3, 1);
+            this.dynamicPipeLabel.Name = "dynamicPipeLabel";
+            this.dynamicPipeLabel.Size = new System.Drawing.Size(358, 33);
+            this.dynamicPipeLabel.TabIndex = 4;
+            this.dynamicPipeLabel.Text = "Dynamic Pipeline Simulation";
             // 
             // savePipelineOutputButton
             // 
@@ -422,7 +703,6 @@
             this.pipelineOutputTextBox.Name = "pipelineOutputTextBox";
             this.pipelineOutputTextBox.Size = new System.Drawing.Size(293, 420);
             this.pipelineOutputTextBox.TabIndex = 6;
-            this.pipelineOutputTextBox.TextChanged += new System.EventHandler(this.pipelineOutputTextBox_TextChanged);
             // 
             // pipelineOutputLabel
             // 
@@ -437,18 +717,18 @@
             this.pipelineOutputLabel.TabIndex = 5;
             this.pipelineOutputLabel.Text = "Pipeline Output";
             // 
-            // panel1
+            // outputPanel
             // 
-            this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.Controls.Add(this.savePipelineOutputButton);
-            this.panel1.Controls.Add(this.clearPipelineOutputButton);
-            this.panel1.Controls.Add(this.loadPipelineOutputButton);
-            this.panel1.Controls.Add(this.pipelineOutputTextBox);
-            this.panel1.Controls.Add(this.pipelineOutputLabel);
-            this.panel1.Location = new System.Drawing.Point(1272, 80);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(312, 604);
-            this.panel1.TabIndex = 17;
+            this.outputPanel.BackColor = System.Drawing.Color.Black;
+            this.outputPanel.Controls.Add(this.savePipelineOutputButton);
+            this.outputPanel.Controls.Add(this.clearPipelineOutputButton);
+            this.outputPanel.Controls.Add(this.loadPipelineOutputButton);
+            this.outputPanel.Controls.Add(this.pipelineOutputTextBox);
+            this.outputPanel.Controls.Add(this.pipelineOutputLabel);
+            this.outputPanel.Location = new System.Drawing.Point(1272, 80);
+            this.outputPanel.Name = "outputPanel";
+            this.outputPanel.Size = new System.Drawing.Size(312, 604);
+            this.outputPanel.TabIndex = 17;
             // 
             // GUIForm
             // 
@@ -456,7 +736,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1584, 681);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.outputPanel);
             this.Controls.Add(this.simulationPanel);
             this.Controls.Add(this.assemblyPanel);
             this.Controls.Add(this.MNAWLabel);
@@ -473,8 +753,8 @@
             this.assemblyPanel.PerformLayout();
             this.simulationPanel.ResumeLayout(false);
             this.simulationPanel.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.outputPanel.ResumeLayout(false);
+            this.outputPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -488,7 +768,7 @@
         private System.Windows.Forms.ToolStripMenuItem instructionsToolStripMenuItem;
         private System.Windows.Forms.Panel assemblyPanel;
         private System.Windows.Forms.Panel simulationPanel;
-        private System.Windows.Forms.Label staticPipeLabel;
+        private System.Windows.Forms.Label dynamicPipeLabel;
         private System.Windows.Forms.Label assemblyLabel;
         private System.Windows.Forms.TextBox assemblyTextBox;
         private System.Windows.Forms.Button saveAssemblyButton;
@@ -506,13 +786,36 @@
         private System.Windows.Forms.Button loadPipelineOutputButton;
         private System.Windows.Forms.TextBox pipelineOutputTextBox;
         private System.Windows.Forms.Label pipelineOutputLabel;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel outputPanel;
         private System.Windows.Forms.TextBox executeTextBox;
         private System.Windows.Forms.TextBox storeTextBox;
         private System.Windows.Forms.TextBox decodeTextBox;
         private System.Windows.Forms.TextBox instructOneText;
-        public System.Windows.Forms.RichTextBox counterTextBox;
         private System.Windows.Forms.Label cyclesLabel;
+        private System.Windows.Forms.TextBox counterTextBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox storeStallTextbox;
+        private System.Windows.Forms.TextBox decodeStallTextbox;
+        private System.Windows.Forms.TextBox executeStallTextbox;
+        private System.Windows.Forms.TextBox fetchStallTextbox;
+        private System.Windows.Forms.TextBox warTextBox;
+        private System.Windows.Forms.TextBox wawTextBox;
+        private System.Windows.Forms.TextBox rawTextBox;
+        private System.Windows.Forms.TextBox dataHTextBox;
+        private System.Windows.Forms.TextBox controlHTextBox;
+        private System.Windows.Forms.TextBox structHTextBox;
+        private System.Windows.Forms.Label structuralHazardLabel;
+        private System.Windows.Forms.Label dataHazardLabel;
+        private System.Windows.Forms.Label controlHazardLabel;
+        private System.Windows.Forms.Label rawLabel;
+        private System.Windows.Forms.Label warLabel;
+        private System.Windows.Forms.Label wawLabel;
+        private System.Windows.Forms.Label storeStallLabel;
+        private System.Windows.Forms.Label executeStallLabel;
+        private System.Windows.Forms.Label decodeStallLabel;
+        private System.Windows.Forms.Label fetchStallLabel;
     }
 }
 

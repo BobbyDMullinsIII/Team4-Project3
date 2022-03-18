@@ -2,7 +2,7 @@
 //
 //	Solution/Project:  Team4_Project3/Team4_Project3
 //	File Name:         GUIForm.cs
-//	Description:       GUIForm class for program GUI to show visual static pipeline simulation
+//	Description:       GUIForm class for program GUI to show visual dynamic pipeline simulation
 //	Course:            CSCI-4717-201 - Comp Architecture
 //	Authors:           Zachary Lykins, lykinsz@etsu.edu            
 //	                   Bobby Mullins, mullinsbd@etsu.edu
@@ -16,83 +16,85 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Team4_Project3
 {
     public partial class GUIForm : Form
     {
-        //Counter for cycles
-        int cycleCounter = 0;
+        //==Counters==//
+        //============================================================//
+        int progCount = 0;      //Program Counter
+        int cycleCounter = 0;   //Cycle Counter
 
-        //0 = not started,
-        //1 = fetch phase
-        //2 = decode phase
-        //3 = execute phase
-        //4 = store/finish phase
-        int phaseCounterOne = 0;
-        int phaseCounterTwo;
-        int phaseCounterThree;
-        int phaseCounterFour;
+        //Hazard Counters
+        int structHCount = 0;
+        int dataHCount = 0;
+        int controlHCounter = 0;
 
-        int fStall, dStall, eStall, sStall = 0;
-        int progCount = 0;
+        //Dependency Counters
+        int rawCount = 0;
+        int warCount = 0;
+        int wawCount = 0;
 
+        //Stall Counters
+        int fStall = 0;
+        int dStall = 0;
+        int eStall = 0;
+        int sStall = 0;
+        //============================================================//
+
+
+        //==Flags==//
+        //============================================================//
+        //Dependency Flags
+        bool rawFlag = true;
+        bool warFlag = true;
+        bool wawFlag = true;
+
+        //Stall Flags
+        bool fFlagCount = true;
+        bool dFlagCount = true;
+        bool eFlagCount = true;
+        bool sFlagCount = true;
+        //============================================================//
+
+        //List of all assembly instructions
         List<string> instructions = new List<string>();
-        int programIndex = 0;
-        bool start = true;
 
-        int fetchStall, decodeStall, executeStall = 0;
-        int readyFetch, readyDecode, readyExecute = 0;
-
-        bool fWall, dWall, eWall, sWall = true;
-        bool fGo, dGo, eGo, sGo = false;
-
+        //Currently fetched instructions
         List<Instruction> pipeFetch = new List<Instruction>();
         List<Instruction> pipeDecode = new List<Instruction>();
         List<Instruction> pipeExecute = new List<Instruction>();
         List<Instruction> pipeStore = new List<Instruction>();
 
-        string instLit = string.Empty;
+        int programIndex = 0;
+        bool start = true;
+
+        bool fWall, dWall, eWall, sWall = true;
+        bool fGo, dGo, eGo, sGo = false;
+
         int stopF = 0;
-
-        int readyFlag = 0;
-
         bool ifStop = false;
 
         string param1, param2, store = string.Empty;
 
-        int dataHCount = 0;
-
-        bool rawFlag = true;
-        bool warFlag = true;
-
         bool rF1 = true;
         bool rF2 = true;
 
-        int rawCount = 0;
-        int warCount = 0;
-        int structCount = 0;
 
-        bool sFlagCount = true;
-        bool eFlagCount = true;
-        bool fFlagCount = true;
-        bool dFlagCount = true;
-        bool rFree, wFree = true;
-
-
-
+        //GUIForm Constructor
+        #region GUIForm Constructor
+        /// <summary>
+        /// GUIForm Constructor
+        /// </summary>
         public GUIForm()
         {
             InitializeComponent();
         }
+        #endregion
 
+        //GUIForm Button Methods
         #region Dropdown Menu Buttons
         /// <summary>
         /// Opens instruction set information
@@ -203,13 +205,8 @@ namespace Team4_Project3
                     instructions.Add(var);
                 }
 
-
+                //Make textbox for assembly language readonly during simulation to not mess anything up
                 assemblyTextBox.ReadOnly = true;
-                //Sets counter to 1, equal to fetch phase
-                phaseCounterOne++;
-
-                //Sets fetch phase label to red to signify we are in that phase
-                fetchLabel.ForeColor = Color.Red;
 
                 //Enables nextPhaseButton to be pressed when simulation has began and disables startButton
                 nextCycleButton.Enabled = true;
@@ -224,18 +221,12 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void nextCycleButton_Click(object sender, EventArgs e)
         {
-            //Increase cycle counter by one
-
-
             if (start == true)
             {
                 dWall = true;
                 sWall = true;
                 eWall = true;
             }
-
-
-
 
             if (pipeStore.Count > 0)
             {
@@ -251,7 +242,7 @@ namespace Team4_Project3
                 if (ifStop == true && pipeStore.Count == 0)
                 {
                     nextCycleButton.Enabled = false;
-                    pipelineOutputTextBox.Text = ProgramController.outputPipelineStats(structCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
+                    pipelineOutputTextBox.Text = ProgramController.outputPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
                 }
             }
 
@@ -284,9 +275,13 @@ namespace Team4_Project3
                 if (sGo == true && sWall == false && pipeExecute.Count > 0)
                 {
                     eStall++;
+                    executeStallTextbox.Text = eStall.ToString();
+
                     if (eFlagCount == true)
                     {
-                        structCount++;
+                        structHCount++;
+                        structHTextBox.Text = structHCount.ToString();
+
                         eFlagCount = false;
                     }
 
@@ -320,9 +315,13 @@ namespace Team4_Project3
                 if (eGo == true && eWall == false && pipeDecode.Count > 0)
                 {
                     dStall++;
+                    decodeStallTextbox.Text = dStall.ToString();
+
                     if (dFlagCount == true)
                     {
-                        structCount++;
+                        structHCount++;
+                        structHTextBox.Text = structHCount.ToString();
+
                         dFlagCount = false;
                     }
 
@@ -356,9 +355,13 @@ namespace Team4_Project3
                 if (dGo == true && dWall == false && pipeFetch.Count > 0)
                 {
                     fStall++;
+                    fetchStallTextbox.Text = fStall.ToString();
+
                     if (fFlagCount == true)
                     {
-                        structCount++;
+                        structHCount++;
+                        structHTextBox.Text = structHCount.ToString();
+
                         fFlagCount = false;
                     }
 
@@ -369,8 +372,13 @@ namespace Team4_Project3
                     if (pipeExecute[0].SRegister == pipeDecode[0].P1Register || pipeExecute[0].SRegister == pipeDecode[0].P2Register)
                     {
                         rawFlag = false;
+
                         rawCount++;
+                        rawTextBox.Text = rawCount.ToString();
+
                         dataHCount++;
+                        dataHTextBox.Text = dataHCount.ToString();
+
                         rF1 = false;
                     }
                 }
@@ -379,8 +387,13 @@ namespace Team4_Project3
                     if (pipeStore[0].SRegister == pipeDecode[0].P1Register || pipeStore[0].SRegister == pipeDecode[0].P2Register)
                     {
                         rawFlag = false;
+
                         rawCount++;
+                        rawTextBox.Text = rawCount.ToString();
+
                         dataHCount++;
+                        dataHTextBox.Text = dataHCount.ToString();
+
                         rF2 = false;
                     }
                 }
@@ -390,8 +403,13 @@ namespace Team4_Project3
                     if (pipeDecode[0].SRegister == pipeExecute[0].P1Register || pipeDecode[0].SRegister == pipeExecute[0].P2Register)
                     {
                         warFlag = false;
+
                         warCount++;
+                        warTextBox.Text = warCount.ToString();
+
                         dataHCount++;
+                        dataHTextBox.Text = dataHCount.ToString();
+
                         rF1 = false;
                     }
                 }
@@ -401,8 +419,13 @@ namespace Team4_Project3
                     if (pipeDecode[0].SRegister == pipeStore[0].P1Register || pipeDecode[0].SRegister == pipeStore[0].P2Register)
                     {
                         warFlag = false;
+
                         warCount++;
+                        warTextBox.Text = warCount.ToString();
+
                         dataHCount++;
+                        dataHTextBox.Text = dataHCount.ToString();
+
                         rF2 = false;
                     }
                 }
@@ -450,8 +473,6 @@ namespace Team4_Project3
             }
 
 
-
-
             if (pipeFetch.Count >= 1)
             {
                 instructOneText.Text = pipeFetch[0].InstLit;
@@ -485,20 +506,14 @@ namespace Team4_Project3
                 storeTextBox.Text = "";
             }
             if (nextCycleButton.Enabled == true)
+            {
+                //Increase cycle counter by one
                 incrementCycleCounter();
+            }
         }
         #endregion
 
-        private void pipelineOutputTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void assemblyTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        //GUIForm Regular Methods
         #region incrementCycleCounter() Method
         /// <summary>
         /// Method for incrementing cycle counter and updating gui to reflect it
@@ -507,7 +522,6 @@ namespace Team4_Project3
         {
             cycleCounter++;
             counterTextBox.Text = cycleCounter.ToString();
-            counterTextBox.SelectionAlignment = HorizontalAlignment.Center;
 
         }//end incrementCycleCounter()
         #endregion    
