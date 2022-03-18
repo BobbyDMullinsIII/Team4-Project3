@@ -40,6 +40,39 @@
             this.assemblyTextBox = new System.Windows.Forms.TextBox();
             this.assemblyLabel = new System.Windows.Forms.Label();
             this.simulationPanel = new System.Windows.Forms.Panel();
+            this.r0Label = new System.Windows.Forms.Label();
+            this.f15Label = new System.Windows.Forms.Label();
+            this.f14Label = new System.Windows.Forms.Label();
+            this.f13Label = new System.Windows.Forms.Label();
+            this.f12Label = new System.Windows.Forms.Label();
+            this.r11Label = new System.Windows.Forms.Label();
+            this.r10Label = new System.Windows.Forms.Label();
+            this.r9Label = new System.Windows.Forms.Label();
+            this.r8Label = new System.Windows.Forms.Label();
+            this.r7Label = new System.Windows.Forms.Label();
+            this.r6Label = new System.Windows.Forms.Label();
+            this.r5Label = new System.Windows.Forms.Label();
+            this.r4Label = new System.Windows.Forms.Label();
+            this.r3Label = new System.Windows.Forms.Label();
+            this.r2Label = new System.Windows.Forms.Label();
+            this.r1Label = new System.Windows.Forms.Label();
+            this.f15TextBox = new System.Windows.Forms.TextBox();
+            this.f14TextBox = new System.Windows.Forms.TextBox();
+            this.f13TextBox = new System.Windows.Forms.TextBox();
+            this.f12TextBox = new System.Windows.Forms.TextBox();
+            this.r11TextBox = new System.Windows.Forms.TextBox();
+            this.r10TextBox = new System.Windows.Forms.TextBox();
+            this.r9TextBox = new System.Windows.Forms.TextBox();
+            this.r8TextBox = new System.Windows.Forms.TextBox();
+            this.r7TextBox = new System.Windows.Forms.TextBox();
+            this.r6TextBox = new System.Windows.Forms.TextBox();
+            this.r5TextBox = new System.Windows.Forms.TextBox();
+            this.r4TextBox = new System.Windows.Forms.TextBox();
+            this.r3TextBox = new System.Windows.Forms.TextBox();
+            this.r2TextBox = new System.Windows.Forms.TextBox();
+            this.r1TextBox = new System.Windows.Forms.TextBox();
+            this.r0TextBox = new System.Windows.Forms.TextBox();
+            this.registersLabel = new System.Windows.Forms.Label();
             this.storeStallLabel = new System.Windows.Forms.Label();
             this.executeStallLabel = new System.Windows.Forms.Label();
             this.decodeStallLabel = new System.Windows.Forms.Label();
@@ -221,6 +254,39 @@
             // simulationPanel
             // 
             this.simulationPanel.BackColor = System.Drawing.Color.Black;
+            this.simulationPanel.Controls.Add(this.r0Label);
+            this.simulationPanel.Controls.Add(this.f15Label);
+            this.simulationPanel.Controls.Add(this.f14Label);
+            this.simulationPanel.Controls.Add(this.f13Label);
+            this.simulationPanel.Controls.Add(this.f12Label);
+            this.simulationPanel.Controls.Add(this.r11Label);
+            this.simulationPanel.Controls.Add(this.r10Label);
+            this.simulationPanel.Controls.Add(this.r9Label);
+            this.simulationPanel.Controls.Add(this.r8Label);
+            this.simulationPanel.Controls.Add(this.r7Label);
+            this.simulationPanel.Controls.Add(this.r6Label);
+            this.simulationPanel.Controls.Add(this.r5Label);
+            this.simulationPanel.Controls.Add(this.r4Label);
+            this.simulationPanel.Controls.Add(this.r3Label);
+            this.simulationPanel.Controls.Add(this.r2Label);
+            this.simulationPanel.Controls.Add(this.r1Label);
+            this.simulationPanel.Controls.Add(this.f15TextBox);
+            this.simulationPanel.Controls.Add(this.f14TextBox);
+            this.simulationPanel.Controls.Add(this.f13TextBox);
+            this.simulationPanel.Controls.Add(this.f12TextBox);
+            this.simulationPanel.Controls.Add(this.r11TextBox);
+            this.simulationPanel.Controls.Add(this.r10TextBox);
+            this.simulationPanel.Controls.Add(this.r9TextBox);
+            this.simulationPanel.Controls.Add(this.r8TextBox);
+            this.simulationPanel.Controls.Add(this.r7TextBox);
+            this.simulationPanel.Controls.Add(this.r6TextBox);
+            this.simulationPanel.Controls.Add(this.r5TextBox);
+            this.simulationPanel.Controls.Add(this.r4TextBox);
+            this.simulationPanel.Controls.Add(this.r3TextBox);
+            this.simulationPanel.Controls.Add(this.r2TextBox);
+            this.simulationPanel.Controls.Add(this.r1TextBox);
+            this.simulationPanel.Controls.Add(this.r0TextBox);
+            this.simulationPanel.Controls.Add(this.registersLabel);
             this.simulationPanel.Controls.Add(this.storeStallLabel);
             this.simulationPanel.Controls.Add(this.executeStallLabel);
             this.simulationPanel.Controls.Add(this.decodeStallLabel);
@@ -261,6 +327,322 @@
             this.simulationPanel.Name = "simulationPanel";
             this.simulationPanel.Size = new System.Drawing.Size(946, 604);
             this.simulationPanel.TabIndex = 3;
+            // 
+            // r0Label
+            // 
+            this.r0Label.AutoSize = true;
+            this.r0Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r0Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r0Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r0Label.Location = new System.Drawing.Point(548, 40);
+            this.r0Label.Name = "r0Label";
+            this.r0Label.Size = new System.Drawing.Size(32, 22);
+            this.r0Label.TabIndex = 94;
+            this.r0Label.Text = "R0";
+            // 
+            // f15Label
+            // 
+            this.f15Label.AutoSize = true;
+            this.f15Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.f15Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.f15Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.f15Label.Location = new System.Drawing.Point(632, 118);
+            this.f15Label.Name = "f15Label";
+            this.f15Label.Size = new System.Drawing.Size(39, 22);
+            this.f15Label.TabIndex = 92;
+            this.f15Label.Text = "F15";
+            // 
+            // f14Label
+            // 
+            this.f14Label.AutoSize = true;
+            this.f14Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.f14Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.f14Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.f14Label.Location = new System.Drawing.Point(632, 92);
+            this.f14Label.Name = "f14Label";
+            this.f14Label.Size = new System.Drawing.Size(39, 22);
+            this.f14Label.TabIndex = 91;
+            this.f14Label.Text = "F14";
+            // 
+            // f13Label
+            // 
+            this.f13Label.AutoSize = true;
+            this.f13Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.f13Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.f13Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.f13Label.Location = new System.Drawing.Point(632, 66);
+            this.f13Label.Name = "f13Label";
+            this.f13Label.Size = new System.Drawing.Size(39, 22);
+            this.f13Label.TabIndex = 90;
+            this.f13Label.Text = "F13";
+            // 
+            // f12Label
+            // 
+            this.f12Label.AutoSize = true;
+            this.f12Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.f12Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.f12Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.f12Label.Location = new System.Drawing.Point(632, 40);
+            this.f12Label.Name = "f12Label";
+            this.f12Label.Size = new System.Drawing.Size(39, 22);
+            this.f12Label.TabIndex = 89;
+            this.f12Label.Text = "F12";
+            // 
+            // r11Label
+            // 
+            this.r11Label.AutoSize = true;
+            this.r11Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r11Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r11Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r11Label.Location = new System.Drawing.Point(539, 326);
+            this.r11Label.Name = "r11Label";
+            this.r11Label.Size = new System.Drawing.Size(41, 22);
+            this.r11Label.TabIndex = 88;
+            this.r11Label.Text = "R11";
+            // 
+            // r10Label
+            // 
+            this.r10Label.AutoSize = true;
+            this.r10Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r10Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r10Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r10Label.Location = new System.Drawing.Point(539, 300);
+            this.r10Label.Name = "r10Label";
+            this.r10Label.Size = new System.Drawing.Size(41, 22);
+            this.r10Label.TabIndex = 87;
+            this.r10Label.Text = "R10";
+            // 
+            // r9Label
+            // 
+            this.r9Label.AutoSize = true;
+            this.r9Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r9Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r9Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r9Label.Location = new System.Drawing.Point(548, 274);
+            this.r9Label.Name = "r9Label";
+            this.r9Label.Size = new System.Drawing.Size(32, 22);
+            this.r9Label.TabIndex = 86;
+            this.r9Label.Text = "R9";
+            // 
+            // r8Label
+            // 
+            this.r8Label.AutoSize = true;
+            this.r8Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r8Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r8Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r8Label.Location = new System.Drawing.Point(548, 248);
+            this.r8Label.Name = "r8Label";
+            this.r8Label.Size = new System.Drawing.Size(32, 22);
+            this.r8Label.TabIndex = 85;
+            this.r8Label.Text = "R8";
+            // 
+            // r7Label
+            // 
+            this.r7Label.AutoSize = true;
+            this.r7Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r7Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r7Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r7Label.Location = new System.Drawing.Point(548, 222);
+            this.r7Label.Name = "r7Label";
+            this.r7Label.Size = new System.Drawing.Size(32, 22);
+            this.r7Label.TabIndex = 84;
+            this.r7Label.Text = "R7";
+            // 
+            // r6Label
+            // 
+            this.r6Label.AutoSize = true;
+            this.r6Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r6Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r6Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r6Label.Location = new System.Drawing.Point(548, 196);
+            this.r6Label.Name = "r6Label";
+            this.r6Label.Size = new System.Drawing.Size(32, 22);
+            this.r6Label.TabIndex = 83;
+            this.r6Label.Text = "R6";
+            // 
+            // r5Label
+            // 
+            this.r5Label.AutoSize = true;
+            this.r5Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r5Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r5Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r5Label.Location = new System.Drawing.Point(548, 170);
+            this.r5Label.Name = "r5Label";
+            this.r5Label.Size = new System.Drawing.Size(32, 22);
+            this.r5Label.TabIndex = 82;
+            this.r5Label.Text = "R5";
+            // 
+            // r4Label
+            // 
+            this.r4Label.AutoSize = true;
+            this.r4Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r4Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r4Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r4Label.Location = new System.Drawing.Point(548, 144);
+            this.r4Label.Name = "r4Label";
+            this.r4Label.Size = new System.Drawing.Size(32, 22);
+            this.r4Label.TabIndex = 81;
+            this.r4Label.Text = "R4";
+            // 
+            // r3Label
+            // 
+            this.r3Label.AutoSize = true;
+            this.r3Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r3Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r3Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r3Label.Location = new System.Drawing.Point(548, 118);
+            this.r3Label.Name = "r3Label";
+            this.r3Label.Size = new System.Drawing.Size(32, 22);
+            this.r3Label.TabIndex = 80;
+            this.r3Label.Text = "R3";
+            // 
+            // r2Label
+            // 
+            this.r2Label.AutoSize = true;
+            this.r2Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r2Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r2Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r2Label.Location = new System.Drawing.Point(548, 92);
+            this.r2Label.Name = "r2Label";
+            this.r2Label.Size = new System.Drawing.Size(32, 22);
+            this.r2Label.TabIndex = 79;
+            this.r2Label.Text = "R2";
+            // 
+            // r1Label
+            // 
+            this.r1Label.AutoSize = true;
+            this.r1Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.r1Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.r1Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.r1Label.Location = new System.Drawing.Point(548, 66);
+            this.r1Label.Name = "r1Label";
+            this.r1Label.Size = new System.Drawing.Size(32, 22);
+            this.r1Label.TabIndex = 78;
+            this.r1Label.Text = "R1";
+            // 
+            // f15TextBox
+            // 
+            this.f15TextBox.Location = new System.Drawing.Point(677, 118);
+            this.f15TextBox.Name = "f15TextBox";
+            this.f15TextBox.Size = new System.Drawing.Size(40, 20);
+            this.f15TextBox.TabIndex = 77;
+            // 
+            // f14TextBox
+            // 
+            this.f14TextBox.Location = new System.Drawing.Point(677, 92);
+            this.f14TextBox.Name = "f14TextBox";
+            this.f14TextBox.Size = new System.Drawing.Size(40, 20);
+            this.f14TextBox.TabIndex = 76;
+            // 
+            // f13TextBox
+            // 
+            this.f13TextBox.Location = new System.Drawing.Point(677, 66);
+            this.f13TextBox.Name = "f13TextBox";
+            this.f13TextBox.Size = new System.Drawing.Size(40, 20);
+            this.f13TextBox.TabIndex = 75;
+            // 
+            // f12TextBox
+            // 
+            this.f12TextBox.Location = new System.Drawing.Point(677, 40);
+            this.f12TextBox.Name = "f12TextBox";
+            this.f12TextBox.Size = new System.Drawing.Size(40, 20);
+            this.f12TextBox.TabIndex = 74;
+            // 
+            // r11TextBox
+            // 
+            this.r11TextBox.Location = new System.Drawing.Point(586, 326);
+            this.r11TextBox.Name = "r11TextBox";
+            this.r11TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r11TextBox.TabIndex = 73;
+            // 
+            // r10TextBox
+            // 
+            this.r10TextBox.Location = new System.Drawing.Point(586, 300);
+            this.r10TextBox.Name = "r10TextBox";
+            this.r10TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r10TextBox.TabIndex = 72;
+            // 
+            // r9TextBox
+            // 
+            this.r9TextBox.Location = new System.Drawing.Point(586, 274);
+            this.r9TextBox.Name = "r9TextBox";
+            this.r9TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r9TextBox.TabIndex = 71;
+            // 
+            // r8TextBox
+            // 
+            this.r8TextBox.Location = new System.Drawing.Point(586, 248);
+            this.r8TextBox.Name = "r8TextBox";
+            this.r8TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r8TextBox.TabIndex = 70;
+            // 
+            // r7TextBox
+            // 
+            this.r7TextBox.Location = new System.Drawing.Point(586, 222);
+            this.r7TextBox.Name = "r7TextBox";
+            this.r7TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r7TextBox.TabIndex = 69;
+            // 
+            // r6TextBox
+            // 
+            this.r6TextBox.Location = new System.Drawing.Point(586, 196);
+            this.r6TextBox.Name = "r6TextBox";
+            this.r6TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r6TextBox.TabIndex = 68;
+            // 
+            // r5TextBox
+            // 
+            this.r5TextBox.Location = new System.Drawing.Point(586, 170);
+            this.r5TextBox.Name = "r5TextBox";
+            this.r5TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r5TextBox.TabIndex = 67;
+            // 
+            // r4TextBox
+            // 
+            this.r4TextBox.Location = new System.Drawing.Point(586, 144);
+            this.r4TextBox.Name = "r4TextBox";
+            this.r4TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r4TextBox.TabIndex = 66;
+            // 
+            // r3TextBox
+            // 
+            this.r3TextBox.Location = new System.Drawing.Point(586, 118);
+            this.r3TextBox.Name = "r3TextBox";
+            this.r3TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r3TextBox.TabIndex = 65;
+            // 
+            // r2TextBox
+            // 
+            this.r2TextBox.Location = new System.Drawing.Point(586, 92);
+            this.r2TextBox.Name = "r2TextBox";
+            this.r2TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r2TextBox.TabIndex = 64;
+            // 
+            // r1TextBox
+            // 
+            this.r1TextBox.Location = new System.Drawing.Point(586, 66);
+            this.r1TextBox.Name = "r1TextBox";
+            this.r1TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r1TextBox.TabIndex = 63;
+            // 
+            // r0TextBox
+            // 
+            this.r0TextBox.Location = new System.Drawing.Point(586, 40);
+            this.r0TextBox.Name = "r0TextBox";
+            this.r0TextBox.Size = new System.Drawing.Size(40, 20);
+            this.r0TextBox.TabIndex = 62;
+            // 
+            // registersLabel
+            // 
+            this.registersLabel.AutoSize = true;
+            this.registersLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.registersLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.registersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.registersLabel.Location = new System.Drawing.Point(584, 8);
+            this.registersLabel.Name = "registersLabel";
+            this.registersLabel.Size = new System.Drawing.Size(95, 27);
+            this.registersLabel.TabIndex = 61;
+            this.registersLabel.Text = "Registers";
             // 
             // storeStallLabel
             // 
@@ -816,6 +1198,39 @@
         private System.Windows.Forms.Label executeStallLabel;
         private System.Windows.Forms.Label decodeStallLabel;
         private System.Windows.Forms.Label fetchStallLabel;
+        private System.Windows.Forms.Label registersLabel;
+        private System.Windows.Forms.TextBox r0TextBox;
+        private System.Windows.Forms.Label r0Label;
+        private System.Windows.Forms.Label f15Label;
+        private System.Windows.Forms.Label f14Label;
+        private System.Windows.Forms.Label f13Label;
+        private System.Windows.Forms.Label f12Label;
+        private System.Windows.Forms.Label r11Label;
+        private System.Windows.Forms.Label r10Label;
+        private System.Windows.Forms.Label r9Label;
+        private System.Windows.Forms.Label r8Label;
+        private System.Windows.Forms.Label r7Label;
+        private System.Windows.Forms.Label r6Label;
+        private System.Windows.Forms.Label r5Label;
+        private System.Windows.Forms.Label r4Label;
+        private System.Windows.Forms.Label r3Label;
+        private System.Windows.Forms.Label r2Label;
+        private System.Windows.Forms.Label r1Label;
+        private System.Windows.Forms.TextBox f15TextBox;
+        private System.Windows.Forms.TextBox f14TextBox;
+        private System.Windows.Forms.TextBox f13TextBox;
+        private System.Windows.Forms.TextBox f12TextBox;
+        private System.Windows.Forms.TextBox r11TextBox;
+        private System.Windows.Forms.TextBox r10TextBox;
+        private System.Windows.Forms.TextBox r9TextBox;
+        private System.Windows.Forms.TextBox r8TextBox;
+        private System.Windows.Forms.TextBox r7TextBox;
+        private System.Windows.Forms.TextBox r6TextBox;
+        private System.Windows.Forms.TextBox r5TextBox;
+        private System.Windows.Forms.TextBox r4TextBox;
+        private System.Windows.Forms.TextBox r3TextBox;
+        private System.Windows.Forms.TextBox r2TextBox;
+        private System.Windows.Forms.TextBox r1TextBox;
     }
 }
 
