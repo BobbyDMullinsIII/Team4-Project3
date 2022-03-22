@@ -109,16 +109,17 @@
             this.decodeLabel = new System.Windows.Forms.Label();
             this.fetchLabel = new System.Windows.Forms.Label();
             this.dynamicPipeLabel = new System.Windows.Forms.Label();
-            this.savePipelineOutputButton = new System.Windows.Forms.Button();
-            this.clearPipelineOutputButton = new System.Windows.Forms.Button();
-            this.loadPipelineOutputButton = new System.Windows.Forms.Button();
-            this.pipelineOutputTextBox = new System.Windows.Forms.TextBox();
-            this.pipelineOutputLabel = new System.Windows.Forms.Label();
             this.outputPanel = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.pipelineOutput = new System.Windows.Forms.TabPage();
+            this.memoryOutput = new System.Windows.Forms.TabPage();
+            this.memOutputText = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.assemblyPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
             this.outputPanel.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.memoryOutput.SuspendLayout();
             this.SuspendLayout();
             // 
             // MNAWLabel
@@ -187,7 +188,7 @@
             this.saveAssemblyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
             this.saveAssemblyButton.ForeColor = System.Drawing.Color.Black;
             this.saveAssemblyButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveAssemblyButton.Location = new System.Drawing.Point(235, 461);
+            this.saveAssemblyButton.Location = new System.Drawing.Point(235, 552);
             this.saveAssemblyButton.Margin = new System.Windows.Forms.Padding(1);
             this.saveAssemblyButton.Name = "saveAssemblyButton";
             this.saveAssemblyButton.Size = new System.Drawing.Size(70, 40);
@@ -203,7 +204,7 @@
             this.clearAssemblyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
             this.clearAssemblyButton.ForeColor = System.Drawing.Color.Black;
             this.clearAssemblyButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.clearAssemblyButton.Location = new System.Drawing.Point(12, 461);
+            this.clearAssemblyButton.Location = new System.Drawing.Point(12, 552);
             this.clearAssemblyButton.Margin = new System.Windows.Forms.Padding(1);
             this.clearAssemblyButton.Name = "clearAssemblyButton";
             this.clearAssemblyButton.Size = new System.Drawing.Size(140, 40);
@@ -219,7 +220,7 @@
             this.loadAssemblyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
             this.loadAssemblyButton.ForeColor = System.Drawing.Color.Black;
             this.loadAssemblyButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.loadAssemblyButton.Location = new System.Drawing.Point(163, 461);
+            this.loadAssemblyButton.Location = new System.Drawing.Point(163, 552);
             this.loadAssemblyButton.Margin = new System.Windows.Forms.Padding(1);
             this.loadAssemblyButton.Name = "loadAssemblyButton";
             this.loadAssemblyButton.Size = new System.Drawing.Size(70, 40);
@@ -236,7 +237,7 @@
             this.assemblyTextBox.Location = new System.Drawing.Point(12, 37);
             this.assemblyTextBox.Multiline = true;
             this.assemblyTextBox.Name = "assemblyTextBox";
-            this.assemblyTextBox.Size = new System.Drawing.Size(293, 420);
+            this.assemblyTextBox.Size = new System.Drawing.Size(293, 511);
             this.assemblyTextBox.TabIndex = 6;
             // 
             // assemblyLabel
@@ -1075,90 +1076,56 @@
             this.dynamicPipeLabel.TabIndex = 4;
             this.dynamicPipeLabel.Text = "Dynamic Pipeline Simulation";
             // 
-            // savePipelineOutputButton
-            // 
-            this.savePipelineOutputButton.BackColor = System.Drawing.Color.Silver;
-            this.savePipelineOutputButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.savePipelineOutputButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.savePipelineOutputButton.ForeColor = System.Drawing.Color.Black;
-            this.savePipelineOutputButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.savePipelineOutputButton.Location = new System.Drawing.Point(235, 461);
-            this.savePipelineOutputButton.Margin = new System.Windows.Forms.Padding(1);
-            this.savePipelineOutputButton.Name = "savePipelineOutputButton";
-            this.savePipelineOutputButton.Size = new System.Drawing.Size(70, 40);
-            this.savePipelineOutputButton.TabIndex = 16;
-            this.savePipelineOutputButton.Text = "Save";
-            this.savePipelineOutputButton.UseVisualStyleBackColor = false;
-            this.savePipelineOutputButton.Click += new System.EventHandler(this.savePipelineOutputButton_Click);
-            // 
-            // clearPipelineOutputButton
-            // 
-            this.clearPipelineOutputButton.BackColor = System.Drawing.Color.Silver;
-            this.clearPipelineOutputButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.clearPipelineOutputButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.clearPipelineOutputButton.ForeColor = System.Drawing.Color.Black;
-            this.clearPipelineOutputButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.clearPipelineOutputButton.Location = new System.Drawing.Point(12, 461);
-            this.clearPipelineOutputButton.Margin = new System.Windows.Forms.Padding(1);
-            this.clearPipelineOutputButton.Name = "clearPipelineOutputButton";
-            this.clearPipelineOutputButton.Size = new System.Drawing.Size(140, 40);
-            this.clearPipelineOutputButton.TabIndex = 15;
-            this.clearPipelineOutputButton.Text = "Clear";
-            this.clearPipelineOutputButton.UseVisualStyleBackColor = false;
-            this.clearPipelineOutputButton.Click += new System.EventHandler(this.clearPipelineOutputButton_Click);
-            // 
-            // loadPipelineOutputButton
-            // 
-            this.loadPipelineOutputButton.BackColor = System.Drawing.Color.Silver;
-            this.loadPipelineOutputButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.loadPipelineOutputButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.loadPipelineOutputButton.ForeColor = System.Drawing.Color.Black;
-            this.loadPipelineOutputButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.loadPipelineOutputButton.Location = new System.Drawing.Point(163, 461);
-            this.loadPipelineOutputButton.Margin = new System.Windows.Forms.Padding(1);
-            this.loadPipelineOutputButton.Name = "loadPipelineOutputButton";
-            this.loadPipelineOutputButton.Size = new System.Drawing.Size(70, 40);
-            this.loadPipelineOutputButton.TabIndex = 14;
-            this.loadPipelineOutputButton.Text = "Load";
-            this.loadPipelineOutputButton.UseVisualStyleBackColor = false;
-            this.loadPipelineOutputButton.Click += new System.EventHandler(this.loadPipelineOutputButton_Click);
-            // 
-            // pipelineOutputTextBox
-            // 
-            this.pipelineOutputTextBox.BackColor = System.Drawing.Color.White;
-            this.pipelineOutputTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pipelineOutputTextBox.ForeColor = System.Drawing.Color.Black;
-            this.pipelineOutputTextBox.Location = new System.Drawing.Point(12, 37);
-            this.pipelineOutputTextBox.Multiline = true;
-            this.pipelineOutputTextBox.Name = "pipelineOutputTextBox";
-            this.pipelineOutputTextBox.Size = new System.Drawing.Size(293, 420);
-            this.pipelineOutputTextBox.TabIndex = 6;
-            // 
-            // pipelineOutputLabel
-            // 
-            this.pipelineOutputLabel.AutoSize = true;
-            this.pipelineOutputLabel.BackColor = System.Drawing.Color.Black;
-            this.pipelineOutputLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pipelineOutputLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.pipelineOutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pipelineOutputLabel.Location = new System.Drawing.Point(58, 1);
-            this.pipelineOutputLabel.Name = "pipelineOutputLabel";
-            this.pipelineOutputLabel.Size = new System.Drawing.Size(201, 33);
-            this.pipelineOutputLabel.TabIndex = 5;
-            this.pipelineOutputLabel.Text = "Pipeline Output";
-            // 
             // outputPanel
             // 
             this.outputPanel.BackColor = System.Drawing.Color.Black;
-            this.outputPanel.Controls.Add(this.savePipelineOutputButton);
-            this.outputPanel.Controls.Add(this.clearPipelineOutputButton);
-            this.outputPanel.Controls.Add(this.loadPipelineOutputButton);
-            this.outputPanel.Controls.Add(this.pipelineOutputTextBox);
-            this.outputPanel.Controls.Add(this.pipelineOutputLabel);
+            this.outputPanel.Controls.Add(this.tabControl1);
             this.outputPanel.Location = new System.Drawing.Point(1272, 80);
             this.outputPanel.Name = "outputPanel";
             this.outputPanel.Size = new System.Drawing.Size(312, 604);
             this.outputPanel.TabIndex = 17;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.pipelineOutput);
+            this.tabControl1.Controls.Add(this.memoryOutput);
+            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(312, 598);
+            this.tabControl1.TabIndex = 18;
+            // 
+            // pipelineOutput
+            // 
+            this.pipelineOutput.Location = new System.Drawing.Point(4, 22);
+            this.pipelineOutput.Name = "pipelineOutput";
+            this.pipelineOutput.Padding = new System.Windows.Forms.Padding(3);
+            this.pipelineOutput.Size = new System.Drawing.Size(304, 572);
+            this.pipelineOutput.TabIndex = 0;
+            this.pipelineOutput.Text = "Pipeline Output";
+            this.pipelineOutput.UseVisualStyleBackColor = true;
+            // 
+            // memoryOutput
+            // 
+            this.memoryOutput.Controls.Add(this.memOutputText);
+            this.memoryOutput.Location = new System.Drawing.Point(4, 22);
+            this.memoryOutput.Name = "memoryOutput";
+            this.memoryOutput.Padding = new System.Windows.Forms.Padding(3);
+            this.memoryOutput.Size = new System.Drawing.Size(304, 572);
+            this.memoryOutput.TabIndex = 1;
+            this.memoryOutput.Text = " Memory Output";
+            this.memoryOutput.UseVisualStyleBackColor = true;
+            // 
+            // memOutputText
+            // 
+            this.memOutputText.Location = new System.Drawing.Point(4, 7);
+            this.memOutputText.MaxLength = 999999999;
+            this.memOutputText.Multiline = true;
+            this.memOutputText.Name = "memOutputText";
+            this.memOutputText.ReadOnly = true;
+            this.memOutputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.memOutputText.Size = new System.Drawing.Size(289, 559);
+            this.memOutputText.TabIndex = 0;
             // 
             // GUIForm
             // 
@@ -1184,7 +1151,9 @@
             this.simulationPanel.ResumeLayout(false);
             this.simulationPanel.PerformLayout();
             this.outputPanel.ResumeLayout(false);
-            this.outputPanel.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.memoryOutput.ResumeLayout(false);
+            this.memoryOutput.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1211,11 +1180,6 @@
         private System.Windows.Forms.Label fetchLabel;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button nextCycleButton;
-        private System.Windows.Forms.Button savePipelineOutputButton;
-        private System.Windows.Forms.Button clearPipelineOutputButton;
-        private System.Windows.Forms.Button loadPipelineOutputButton;
-        private System.Windows.Forms.TextBox pipelineOutputTextBox;
-        private System.Windows.Forms.Label pipelineOutputLabel;
         private System.Windows.Forms.Panel outputPanel;
         private System.Windows.Forms.TextBox executeTextBox;
         private System.Windows.Forms.TextBox storeTextBox;
@@ -1279,6 +1243,10 @@
         private System.Windows.Forms.TextBox r3TextBox;
         private System.Windows.Forms.TextBox r2TextBox;
         private System.Windows.Forms.TextBox r1TextBox;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage pipelineOutput;
+        private System.Windows.Forms.TabPage memoryOutput;
+        private System.Windows.Forms.TextBox memOutputText;
     }
 }
 

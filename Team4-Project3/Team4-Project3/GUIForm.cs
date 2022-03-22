@@ -81,6 +81,10 @@ namespace Team4_Project3
 
         bool rF1 = true;
         bool rF2 = true;
+        //MEMORY ARRAY//
+        //===============================================================//
+        String[,] Memory = new String[16384,17];
+
 
 
         //GUIForm Constructor
@@ -157,7 +161,7 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void clearPipelineOutputButton_Click(object sender, EventArgs e)
         {
-            pipelineOutputTextBox.Text = "";
+            pipelineOutput.Text = "";
         }
 
         /// <summary>
@@ -167,7 +171,7 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void loadPipelineOutputButton_Click(object sender, EventArgs e)
         {
-            pipelineOutputTextBox.Text = ProgramController.openFile();
+            pipelineOutput.Text = ProgramController.openFile();
         }
 
         /// <summary>
@@ -177,7 +181,7 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void savePipelineOutputButton_Click(object sender, EventArgs e)
         {
-            ProgramController.saveFile(pipelineOutputTextBox.Text);
+            ProgramController.saveFile(pipelineOutput.Text);
         }
         #endregion
 
@@ -189,6 +193,40 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void startButton_Click(object sender, EventArgs e)
         {
+            int memHelp = 0;
+            //instantiate memory
+            for (int i = 0; i < 16384; i++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    if (j == 0)
+                    {
+                        Memory[i, j] = $"{string.Format("{0}",memHelp.ToString("X5"))} \t";
+                        memHelp += 16;
+                    }
+                    else 
+                    {
+                        Memory[i, j] = "0  ";
+                    }
+                }
+            }
+            string memString = "";
+            for (int i = 0; i < 16384; i++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    if (j == 16)
+                    {
+                        memString += Memory[i, j];
+                        memString += "\r\n";
+                    }
+                    else
+                    {
+                        memString += Memory[i, j];
+                    }
+                }
+            }
+            memOutputText.Text = memString;
             //If assemblyTextBox has no code in it, show error message
             if (String.IsNullOrWhiteSpace(assemblyTextBox.Text) == true)
             {
@@ -242,7 +280,7 @@ namespace Team4_Project3
                 if (ifStop == true && pipeStore.Count == 0)
                 {
                     nextCycleButton.Enabled = false;
-                    pipelineOutputTextBox.Text = ProgramController.outputPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
+                    pipelineOutput.Text = ProgramController.outputPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
                 }
             }
 
