@@ -114,11 +114,13 @@
             this.pipelineOutput = new System.Windows.Forms.TabPage();
             this.memoryOutput = new System.Windows.Forms.TabPage();
             this.memOutputText = new System.Windows.Forms.TextBox();
+            this.pipeLineOutText = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.assemblyPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
             this.outputPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.pipelineOutput.SuspendLayout();
             this.memoryOutput.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1097,6 +1099,7 @@
             // 
             // pipelineOutput
             // 
+            this.pipelineOutput.Controls.Add(this.pipeLineOutText);
             this.pipelineOutput.Location = new System.Drawing.Point(4, 22);
             this.pipelineOutput.Name = "pipelineOutput";
             this.pipelineOutput.Padding = new System.Windows.Forms.Padding(3);
@@ -1127,6 +1130,14 @@
             this.memOutputText.Size = new System.Drawing.Size(289, 559);
             this.memOutputText.TabIndex = 0;
             // 
+            // pipeLineOutText
+            // 
+            this.pipeLineOutText.Location = new System.Drawing.Point(13, 15);
+            this.pipeLineOutText.Multiline = true;
+            this.pipeLineOutText.Name = "pipeLineOutText";
+            this.pipeLineOutText.Size = new System.Drawing.Size(275, 526);
+            this.pipeLineOutText.TabIndex = 0;
+            // 
             // GUIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1152,6 +1163,8 @@
             this.simulationPanel.PerformLayout();
             this.outputPanel.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.pipelineOutput.ResumeLayout(false);
+            this.pipelineOutput.PerformLayout();
             this.memoryOutput.ResumeLayout(false);
             this.memoryOutput.PerformLayout();
             this.ResumeLayout(false);
@@ -1247,6 +1260,7 @@
         private System.Windows.Forms.TabPage pipelineOutput;
         private System.Windows.Forms.TabPage memoryOutput;
         private System.Windows.Forms.TextBox memOutputText;
+        private System.Windows.Forms.TextBox pipeLineOutText;
     }
 }
 

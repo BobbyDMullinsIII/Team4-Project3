@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Text;
 
 namespace Team4_Project3
 {
@@ -83,7 +84,7 @@ namespace Team4_Project3
         bool rF2 = true;
         //MEMORY ARRAY//
         //===============================================================//
-        String[,] Memory = new String[16384,17];
+        String[,] Memory = new String[65536,17];
 
 
 
@@ -193,9 +194,9 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void startButton_Click(object sender, EventArgs e)
         {
+            //Instantiate Memory (1MB)
             int memHelp = 0;
-            //instantiate memory
-            for (int i = 0; i < 16384; i++)
+            for (int i = 0; i < 65536; i++)
             {
                 for (int j = 0; j < 17; j++)
                 {
@@ -210,23 +211,29 @@ namespace Team4_Project3
                     }
                 }
             }
-            string memString = "";
-            for (int i = 0; i < 16384; i++)
+
+            //Store all memory into single string
+            StringBuilder memString = new StringBuilder();
+            for (int i = 0; i < 65536; i++)
             {
                 for (int j = 0; j < 17; j++)
                 {
                     if (j == 16)
                     {
-                        memString += Memory[i, j];
-                        memString += "\r\n";
+                        memString.Append(Memory[i, j]);
+                        memString.Append( "\r\n");
                     }
                     else
                     {
-                        memString += Memory[i, j];
+                        memString.Append( Memory[i, j]);
                     }
                 }
             }
-            memOutputText.Text = memString;
+
+            //Output memString to Textbox
+            memOutputText.Text = Convert.ToString(memString);
+
+
             //If assemblyTextBox has no code in it, show error message
             if (String.IsNullOrWhiteSpace(assemblyTextBox.Text) == true)
             {
@@ -280,7 +287,7 @@ namespace Team4_Project3
                 if (ifStop == true && pipeStore.Count == 0)
                 {
                     nextCycleButton.Enabled = false;
-                    pipelineOutput.Text = ProgramController.outputPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
+                    pipeLineOutText.Text = ProgramController.outputPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
                 }
             }
 
