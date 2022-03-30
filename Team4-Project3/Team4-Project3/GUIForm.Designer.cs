@@ -40,6 +40,18 @@
             this.assemblyTextBox = new System.Windows.Forms.TextBox();
             this.assemblyLabel = new System.Windows.Forms.Label();
             this.simulationPanel = new System.Windows.Forms.Panel();
+            this.oldLabel = new System.Windows.Forms.Label();
+            this.storeLabel = new System.Windows.Forms.Label();
+            this.decodeLabel = new System.Windows.Forms.Label();
+            this.fetchLabel = new System.Windows.Forms.Label();
+            this.commitTextBox = new System.Windows.Forms.TextBox();
+            this.writeTextBox = new System.Windows.Forms.TextBox();
+            this.memoryReadTextBox = new System.Windows.Forms.TextBox();
+            this.issueTextBox = new System.Windows.Forms.TextBox();
+            this.commitLabel = new System.Windows.Forms.Label();
+            this.writeLabel = new System.Windows.Forms.Label();
+            this.memoryReadLabel = new System.Windows.Forms.Label();
+            this.issueLabel = new System.Windows.Forms.Label();
             this.r0Label = new System.Windows.Forms.Label();
             this.f15Label = new System.Windows.Forms.Label();
             this.f14Label = new System.Windows.Forms.Label();
@@ -112,18 +124,6 @@
             this.pipeLineOutText = new System.Windows.Forms.TextBox();
             this.memoryOutput = new System.Windows.Forms.TabPage();
             this.memOutputText = new System.Windows.Forms.TextBox();
-            this.issueLabel = new System.Windows.Forms.Label();
-            this.memoryReadLabel = new System.Windows.Forms.Label();
-            this.writeLabel = new System.Windows.Forms.Label();
-            this.commitLabel = new System.Windows.Forms.Label();
-            this.issueTextBox = new System.Windows.Forms.TextBox();
-            this.memoryReadTextBox = new System.Windows.Forms.TextBox();
-            this.writeTextBox = new System.Windows.Forms.TextBox();
-            this.commitTextBox = new System.Windows.Forms.TextBox();
-            this.fetchLabel = new System.Windows.Forms.Label();
-            this.decodeLabel = new System.Windows.Forms.Label();
-            this.storeLabel = new System.Windows.Forms.Label();
-            this.oldLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.assemblyPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
@@ -349,6 +349,138 @@
             this.simulationPanel.Name = "simulationPanel";
             this.simulationPanel.Size = new System.Drawing.Size(946, 604);
             this.simulationPanel.TabIndex = 3;
+            // 
+            // oldLabel
+            // 
+            this.oldLabel.AutoSize = true;
+            this.oldLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.oldLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.oldLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.oldLabel.Location = new System.Drawing.Point(33, 316);
+            this.oldLabel.Name = "oldLabel";
+            this.oldLabel.Size = new System.Drawing.Size(253, 41);
+            this.oldLabel.TabIndex = 106;
+            this.oldLabel.Text = "OLD PIPELINE";
+            // 
+            // storeLabel
+            // 
+            this.storeLabel.AutoSize = true;
+            this.storeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.storeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.storeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storeLabel.Location = new System.Drawing.Point(268, 423);
+            this.storeLabel.Name = "storeLabel";
+            this.storeLabel.Size = new System.Drawing.Size(119, 27);
+            this.storeLabel.TabIndex = 105;
+            this.storeLabel.Text = "Store/Finish";
+            // 
+            // decodeLabel
+            // 
+            this.decodeLabel.AutoSize = true;
+            this.decodeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.decodeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.decodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.decodeLabel.Location = new System.Drawing.Point(268, 392);
+            this.decodeLabel.Name = "decodeLabel";
+            this.decodeLabel.Size = new System.Drawing.Size(82, 27);
+            this.decodeLabel.TabIndex = 104;
+            this.decodeLabel.Text = "Decode";
+            // 
+            // fetchLabel
+            // 
+            this.fetchLabel.AutoSize = true;
+            this.fetchLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fetchLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fetchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fetchLabel.Location = new System.Drawing.Point(268, 359);
+            this.fetchLabel.Name = "fetchLabel";
+            this.fetchLabel.Size = new System.Drawing.Size(63, 27);
+            this.fetchLabel.TabIndex = 103;
+            this.fetchLabel.Text = "Fetch";
+            // 
+            // commitTextBox
+            // 
+            this.commitTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.commitTextBox.Location = new System.Drawing.Point(12, 190);
+            this.commitTextBox.Name = "commitTextBox";
+            this.commitTextBox.ReadOnly = true;
+            this.commitTextBox.Size = new System.Drawing.Size(250, 26);
+            this.commitTextBox.TabIndex = 102;
+            // 
+            // writeTextBox
+            // 
+            this.writeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.writeTextBox.Location = new System.Drawing.Point(12, 158);
+            this.writeTextBox.Name = "writeTextBox";
+            this.writeTextBox.ReadOnly = true;
+            this.writeTextBox.Size = new System.Drawing.Size(250, 26);
+            this.writeTextBox.TabIndex = 101;
+            // 
+            // memoryReadTextBox
+            // 
+            this.memoryReadTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.memoryReadTextBox.Location = new System.Drawing.Point(12, 126);
+            this.memoryReadTextBox.Name = "memoryReadTextBox";
+            this.memoryReadTextBox.ReadOnly = true;
+            this.memoryReadTextBox.Size = new System.Drawing.Size(250, 26);
+            this.memoryReadTextBox.TabIndex = 100;
+            // 
+            // issueTextBox
+            // 
+            this.issueTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.issueTextBox.Location = new System.Drawing.Point(12, 62);
+            this.issueTextBox.Name = "issueTextBox";
+            this.issueTextBox.ReadOnly = true;
+            this.issueTextBox.Size = new System.Drawing.Size(250, 26);
+            this.issueTextBox.TabIndex = 99;
+            // 
+            // commitLabel
+            // 
+            this.commitLabel.AutoSize = true;
+            this.commitLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.commitLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.commitLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.commitLabel.Location = new System.Drawing.Point(268, 190);
+            this.commitLabel.Name = "commitLabel";
+            this.commitLabel.Size = new System.Drawing.Size(81, 27);
+            this.commitLabel.TabIndex = 98;
+            this.commitLabel.Text = "Commit";
+            // 
+            // writeLabel
+            // 
+            this.writeLabel.AutoSize = true;
+            this.writeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.writeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.writeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.writeLabel.Location = new System.Drawing.Point(268, 157);
+            this.writeLabel.Name = "writeLabel";
+            this.writeLabel.Size = new System.Drawing.Size(60, 27);
+            this.writeLabel.TabIndex = 97;
+            this.writeLabel.Text = "Write";
+            // 
+            // memoryReadLabel
+            // 
+            this.memoryReadLabel.AutoSize = true;
+            this.memoryReadLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.memoryReadLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.memoryReadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.memoryReadLabel.Location = new System.Drawing.Point(268, 126);
+            this.memoryReadLabel.Name = "memoryReadLabel";
+            this.memoryReadLabel.Size = new System.Drawing.Size(136, 27);
+            this.memoryReadLabel.TabIndex = 96;
+            this.memoryReadLabel.Text = "Memory Read";
+            // 
+            // issueLabel
+            // 
+            this.issueLabel.AutoSize = true;
+            this.issueLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.issueLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.issueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.issueLabel.Location = new System.Drawing.Point(268, 61);
+            this.issueLabel.Name = "issueLabel";
+            this.issueLabel.Size = new System.Drawing.Size(61, 27);
+            this.issueLabel.TabIndex = 95;
+            this.issueLabel.Text = "Issue";
             // 
             // r0Label
             // 
@@ -1092,10 +1224,11 @@
             // 
             // pipeLineOutText
             // 
-            this.pipeLineOutText.Location = new System.Drawing.Point(13, 15);
+            this.pipeLineOutText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pipeLineOutText.Location = new System.Drawing.Point(0, 0);
             this.pipeLineOutText.Multiline = true;
             this.pipeLineOutText.Name = "pipeLineOutText";
-            this.pipeLineOutText.Size = new System.Drawing.Size(275, 526);
+            this.pipeLineOutText.Size = new System.Drawing.Size(304, 572);
             this.pipeLineOutText.TabIndex = 0;
             // 
             // memoryOutput
@@ -1111,146 +1244,15 @@
             // 
             // memOutputText
             // 
-            this.memOutputText.Location = new System.Drawing.Point(4, 7);
+            this.memOutputText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.memOutputText.Location = new System.Drawing.Point(0, 0);
             this.memOutputText.MaxLength = 999999999;
             this.memOutputText.Multiline = true;
             this.memOutputText.Name = "memOutputText";
             this.memOutputText.ReadOnly = true;
             this.memOutputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.memOutputText.Size = new System.Drawing.Size(289, 559);
+            this.memOutputText.Size = new System.Drawing.Size(302, 572);
             this.memOutputText.TabIndex = 0;
-            // 
-            // issueLabel
-            // 
-            this.issueLabel.AutoSize = true;
-            this.issueLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.issueLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.issueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.issueLabel.Location = new System.Drawing.Point(268, 61);
-            this.issueLabel.Name = "issueLabel";
-            this.issueLabel.Size = new System.Drawing.Size(61, 27);
-            this.issueLabel.TabIndex = 95;
-            this.issueLabel.Text = "Issue";
-            // 
-            // memoryReadLabel
-            // 
-            this.memoryReadLabel.AutoSize = true;
-            this.memoryReadLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.memoryReadLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.memoryReadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.memoryReadLabel.Location = new System.Drawing.Point(268, 126);
-            this.memoryReadLabel.Name = "memoryReadLabel";
-            this.memoryReadLabel.Size = new System.Drawing.Size(136, 27);
-            this.memoryReadLabel.TabIndex = 96;
-            this.memoryReadLabel.Text = "Memory Read";
-            // 
-            // writeLabel
-            // 
-            this.writeLabel.AutoSize = true;
-            this.writeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.writeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.writeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeLabel.Location = new System.Drawing.Point(268, 157);
-            this.writeLabel.Name = "writeLabel";
-            this.writeLabel.Size = new System.Drawing.Size(60, 27);
-            this.writeLabel.TabIndex = 97;
-            this.writeLabel.Text = "Write";
-            // 
-            // commitLabel
-            // 
-            this.commitLabel.AutoSize = true;
-            this.commitLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.commitLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.commitLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commitLabel.Location = new System.Drawing.Point(268, 190);
-            this.commitLabel.Name = "commitLabel";
-            this.commitLabel.Size = new System.Drawing.Size(81, 27);
-            this.commitLabel.TabIndex = 98;
-            this.commitLabel.Text = "Commit";
-            // 
-            // issueTextBox
-            // 
-            this.issueTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.issueTextBox.Location = new System.Drawing.Point(12, 62);
-            this.issueTextBox.Name = "issueTextBox";
-            this.issueTextBox.ReadOnly = true;
-            this.issueTextBox.Size = new System.Drawing.Size(250, 26);
-            this.issueTextBox.TabIndex = 99;
-            // 
-            // memoryReadTextBox
-            // 
-            this.memoryReadTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.memoryReadTextBox.Location = new System.Drawing.Point(12, 126);
-            this.memoryReadTextBox.Name = "memoryReadTextBox";
-            this.memoryReadTextBox.ReadOnly = true;
-            this.memoryReadTextBox.Size = new System.Drawing.Size(250, 26);
-            this.memoryReadTextBox.TabIndex = 100;
-            // 
-            // writeTextBox
-            // 
-            this.writeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeTextBox.Location = new System.Drawing.Point(12, 158);
-            this.writeTextBox.Name = "writeTextBox";
-            this.writeTextBox.ReadOnly = true;
-            this.writeTextBox.Size = new System.Drawing.Size(250, 26);
-            this.writeTextBox.TabIndex = 101;
-            // 
-            // commitTextBox
-            // 
-            this.commitTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commitTextBox.Location = new System.Drawing.Point(12, 190);
-            this.commitTextBox.Name = "commitTextBox";
-            this.commitTextBox.ReadOnly = true;
-            this.commitTextBox.Size = new System.Drawing.Size(250, 26);
-            this.commitTextBox.TabIndex = 102;
-            // 
-            // fetchLabel
-            // 
-            this.fetchLabel.AutoSize = true;
-            this.fetchLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.fetchLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.fetchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fetchLabel.Location = new System.Drawing.Point(268, 359);
-            this.fetchLabel.Name = "fetchLabel";
-            this.fetchLabel.Size = new System.Drawing.Size(63, 27);
-            this.fetchLabel.TabIndex = 103;
-            this.fetchLabel.Text = "Fetch";
-            // 
-            // decodeLabel
-            // 
-            this.decodeLabel.AutoSize = true;
-            this.decodeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.decodeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.decodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decodeLabel.Location = new System.Drawing.Point(268, 392);
-            this.decodeLabel.Name = "decodeLabel";
-            this.decodeLabel.Size = new System.Drawing.Size(82, 27);
-            this.decodeLabel.TabIndex = 104;
-            this.decodeLabel.Text = "Decode";
-            // 
-            // storeLabel
-            // 
-            this.storeLabel.AutoSize = true;
-            this.storeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.storeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.storeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.storeLabel.Location = new System.Drawing.Point(268, 423);
-            this.storeLabel.Name = "storeLabel";
-            this.storeLabel.Size = new System.Drawing.Size(119, 27);
-            this.storeLabel.TabIndex = 105;
-            this.storeLabel.Text = "Store/Finish";
-            // 
-            // oldLabel
-            // 
-            this.oldLabel.AutoSize = true;
-            this.oldLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.oldLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.oldLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.oldLabel.Location = new System.Drawing.Point(33, 316);
-            this.oldLabel.Name = "oldLabel";
-            this.oldLabel.Size = new System.Drawing.Size(253, 41);
-            this.oldLabel.TabIndex = 106;
-            this.oldLabel.Text = "OLD PIPELINE";
             // 
             // GUIForm
             // 

@@ -1109,7 +1109,7 @@ namespace Team4_Project3
         /// <returns>Value to store in reg1</returns>
         public static int ANDD(int reg2, int reg3)
         {
-            return reg2 & reg3; //CODE PROBABLY DOESNT GIVE CORRECT OUTPUT CURRENTLY (Try to fix if you want)
+            return reg2 & reg3; //CODE PROBABLY DOESNT GIVE CORRECT OUTPUT CURRENTLY (Try to fix if you think it's broken)
 
         }//end ANDD()
         #endregion
@@ -1123,7 +1123,7 @@ namespace Team4_Project3
         /// <returns>Value to store in reg1</returns>
         public static int OORR(int reg2, int reg3)
         {
-            return reg2 | reg3; //CODE PROBABLY DOESNT GIVE CORRECT OUTPUT CURRENTLY (Try to fix if you want)
+            return reg2 | reg3; //CODE PROBABLY DOESNT GIVE CORRECT OUTPUT CURRENTLY (Try to fix if you think it's broken)
 
         }//end OORR()
         #endregion
