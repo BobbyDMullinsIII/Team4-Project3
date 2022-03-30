@@ -1040,7 +1040,7 @@ namespace Team4_Project3
         /// <summary>
         /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions for ints
         /// </summary>
-        /// <param name="reg2">First r</param>
+        /// <param name="reg2">Register/Immediate/Memory to load from</param>
         /// <returns>Value to store in reg1</returns>
         public static int LDRE(int reg2)
         {
@@ -1053,7 +1053,7 @@ namespace Team4_Project3
         /// <summary>
         /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions for floats
         /// </summary>
-        /// <param name="reg2">First r</param>
+        /// <param name="reg2">Register/Immediate/Memory to load from</param>
         /// <returns>Value to store in reg1</returns>
         public static float LDREfloat(float reg2)
         {
@@ -1066,7 +1066,7 @@ namespace Team4_Project3
         /// <summary>
         /// Method for STRE &R,R instruction
         /// </summary>
-        /// <param name="reg2">Register to be loaded into</param>
+        /// <param name="reg2">Register to be loaded into memory</param>
         /// <returns>Value to store in memory</returns>
         public static int STRE(int reg2)
         {
