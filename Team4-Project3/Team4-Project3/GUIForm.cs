@@ -25,8 +25,8 @@ namespace Team4_Project3
     {
         //==Counters==//
         //============================================================//
-        int progCount = 0;      //Program Counter
-        int cycleCounter = 0;   //Cycle Counter
+        //Cycle Counter
+        int cycleCounter = 0;
 
         //Hazard Counters
         int structHCount = 0;
@@ -43,7 +43,6 @@ namespace Team4_Project3
         int dStall = 0;
         int eStall = 0;
         int sStall = 0;
-        //============================================================//
 
 
         //==Flags==//
@@ -58,7 +57,36 @@ namespace Team4_Project3
         bool dFlagCount = true;
         bool eFlagCount = true;
         bool sFlagCount = true;
+
+
+        //Registers//
         //============================================================//
+        //Regular Registers
+        int R0;     //Program Counter
+        int R1;     //Flag
+        int R2;     //Flag
+        int R3;     //Flag
+        int R4;
+        int R5;
+        int R6;
+        int R7;
+        int R8;
+        int R9;
+        int R10;
+        int R11;
+
+        //Floating-Point Registers
+        float F12;
+        float F13;
+        float F14;
+        float F15;
+
+
+        //1MB Memory Array//
+        //============================================================//
+        String[,] Memory = new String[65536, 17];
+
+
 
         //List of all assembly instructions
         List<string> instructions = new List<string>();
@@ -82,9 +110,7 @@ namespace Team4_Project3
 
         bool rF1 = true;
         bool rF2 = true;
-        //MEMORY ARRAY//
-        //===============================================================//
-        String[,] Memory = new String[65536,17];
+
 
 
 
@@ -508,13 +534,15 @@ namespace Team4_Project3
 
             if (start == true)
             {
-                (pipeFetch, progCount, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, progCount, programIndex);
+                (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
+                r0TextBox.Text = R0.ToString();
                 start = false;
 
             }
             if (pipeFetch.Count == 0 && stopF == 0)
             {
-                (pipeFetch, progCount, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, progCount, programIndex);
+                (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
+                r0TextBox.Text = R0.ToString();
             }
 
 
