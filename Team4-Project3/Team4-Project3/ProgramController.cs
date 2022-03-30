@@ -1038,7 +1038,7 @@ namespace Team4_Project3
         //Control Logic Methods
         #region LDRE() Method
         /// <summary>
-        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions
+        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions for ints
         /// </summary>
         /// <param name="reg2">First r</param>
         /// <returns>Value to store in reg1</returns>
@@ -1047,6 +1047,19 @@ namespace Team4_Project3
             return reg2;
 
         }//end LDRE()
+        #endregion
+
+        #region LDREfloat() Method
+        /// <summary>
+        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions for floats
+        /// </summary>
+        /// <param name="reg2">First r</param>
+        /// <returns>Value to store in reg1</returns>
+        public static float LDREfloat(float reg2)
+        {
+            return reg2;
+
+        }//end LDREfloat()
         #endregion
 
         #region STRE() Method
