@@ -40,7 +40,11 @@
             this.assemblyTextBox = new System.Windows.Forms.TextBox();
             this.assemblyLabel = new System.Windows.Forms.Label();
             this.simulationPanel = new System.Windows.Forms.Panel();
-            this.oldLabel = new System.Windows.Forms.Label();
+            this.startDynamicButton = new System.Windows.Forms.Button();
+            this.staticPipelineLabel = new System.Windows.Forms.Label();
+            this.dynamicPipelineLabel = new System.Windows.Forms.Label();
+            this.dynamicExecuteLabel = new System.Windows.Forms.Label();
+            this.dynamicExecuteTextBox = new System.Windows.Forms.TextBox();
             this.storeLabel = new System.Windows.Forms.Label();
             this.decodeLabel = new System.Windows.Forms.Label();
             this.fetchLabel = new System.Windows.Forms.Label();
@@ -115,15 +119,16 @@
             this.decodeTextBox = new System.Windows.Forms.TextBox();
             this.instructOneText = new System.Windows.Forms.TextBox();
             this.nextCycleButton = new System.Windows.Forms.Button();
-            this.startButton = new System.Windows.Forms.Button();
+            this.startStaticButton = new System.Windows.Forms.Button();
             this.executeLabel = new System.Windows.Forms.Label();
-            this.dynamicPipeLabel = new System.Windows.Forms.Label();
+            this.pipelineSimulationLabel = new System.Windows.Forms.Label();
             this.outputPanel = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.pipelineOutput = new System.Windows.Forms.TabPage();
             this.pipeLineOutText = new System.Windows.Forms.TextBox();
             this.memoryOutput = new System.Windows.Forms.TabPage();
             this.memOutputText = new System.Windows.Forms.TextBox();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.assemblyPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
@@ -159,6 +164,7 @@
             // 
             this.filesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.instructionsToolStripMenuItem,
+            this.resetToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.filesToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.filesToolStripMenuItem.Name = "filesToolStripMenuItem";
@@ -168,14 +174,14 @@
             // instructionsToolStripMenuItem
             // 
             this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
-            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.instructionsToolStripMenuItem.Text = "Information";
             this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.informationToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -267,7 +273,11 @@
             // simulationPanel
             // 
             this.simulationPanel.BackColor = System.Drawing.Color.Black;
-            this.simulationPanel.Controls.Add(this.oldLabel);
+            this.simulationPanel.Controls.Add(this.startDynamicButton);
+            this.simulationPanel.Controls.Add(this.staticPipelineLabel);
+            this.simulationPanel.Controls.Add(this.dynamicPipelineLabel);
+            this.simulationPanel.Controls.Add(this.dynamicExecuteLabel);
+            this.simulationPanel.Controls.Add(this.dynamicExecuteTextBox);
             this.simulationPanel.Controls.Add(this.storeLabel);
             this.simulationPanel.Controls.Add(this.decodeLabel);
             this.simulationPanel.Controls.Add(this.fetchLabel);
@@ -342,25 +352,76 @@
             this.simulationPanel.Controls.Add(this.decodeTextBox);
             this.simulationPanel.Controls.Add(this.instructOneText);
             this.simulationPanel.Controls.Add(this.nextCycleButton);
-            this.simulationPanel.Controls.Add(this.startButton);
+            this.simulationPanel.Controls.Add(this.startStaticButton);
             this.simulationPanel.Controls.Add(this.executeLabel);
-            this.simulationPanel.Controls.Add(this.dynamicPipeLabel);
+            this.simulationPanel.Controls.Add(this.pipelineSimulationLabel);
             this.simulationPanel.Location = new System.Drawing.Point(318, 79);
             this.simulationPanel.Name = "simulationPanel";
             this.simulationPanel.Size = new System.Drawing.Size(946, 604);
             this.simulationPanel.TabIndex = 3;
             // 
-            // oldLabel
+            // startDynamicButton
             // 
-            this.oldLabel.AutoSize = true;
-            this.oldLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.oldLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.oldLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.oldLabel.Location = new System.Drawing.Point(33, 316);
-            this.oldLabel.Name = "oldLabel";
-            this.oldLabel.Size = new System.Drawing.Size(253, 41);
-            this.oldLabel.TabIndex = 106;
-            this.oldLabel.Text = "OLD PIPELINE";
+            this.startDynamicButton.BackColor = System.Drawing.Color.Silver;
+            this.startDynamicButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.startDynamicButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.startDynamicButton.ForeColor = System.Drawing.Color.Black;
+            this.startDynamicButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.startDynamicButton.Location = new System.Drawing.Point(12, 517);
+            this.startDynamicButton.Margin = new System.Windows.Forms.Padding(1);
+            this.startDynamicButton.Name = "startDynamicButton";
+            this.startDynamicButton.Size = new System.Drawing.Size(200, 75);
+            this.startDynamicButton.TabIndex = 111;
+            this.startDynamicButton.Text = "Start Dynamic Simulation";
+            this.startDynamicButton.UseVisualStyleBackColor = false;
+            this.startDynamicButton.Click += new System.EventHandler(this.startDynamicButton_Click);
+            // 
+            // staticPipelineLabel
+            // 
+            this.staticPipelineLabel.AutoSize = true;
+            this.staticPipelineLabel.BackColor = System.Drawing.Color.Black;
+            this.staticPipelineLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.staticPipelineLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.staticPipelineLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.staticPipelineLabel.Location = new System.Drawing.Point(12, 273);
+            this.staticPipelineLabel.Name = "staticPipelineLabel";
+            this.staticPipelineLabel.Size = new System.Drawing.Size(188, 33);
+            this.staticPipelineLabel.TabIndex = 110;
+            this.staticPipelineLabel.Text = "Static Pipeline";
+            // 
+            // dynamicPipelineLabel
+            // 
+            this.dynamicPipelineLabel.AutoSize = true;
+            this.dynamicPipelineLabel.BackColor = System.Drawing.Color.Black;
+            this.dynamicPipelineLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dynamicPipelineLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dynamicPipelineLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dynamicPipelineLabel.Location = new System.Drawing.Point(12, 44);
+            this.dynamicPipelineLabel.Name = "dynamicPipelineLabel";
+            this.dynamicPipelineLabel.Size = new System.Drawing.Size(225, 33);
+            this.dynamicPipelineLabel.TabIndex = 109;
+            this.dynamicPipelineLabel.Text = "Dynamic Pipeline";
+            // 
+            // dynamicExecuteLabel
+            // 
+            this.dynamicExecuteLabel.AutoSize = true;
+            this.dynamicExecuteLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dynamicExecuteLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dynamicExecuteLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dynamicExecuteLabel.Location = new System.Drawing.Point(268, 111);
+            this.dynamicExecuteLabel.Name = "dynamicExecuteLabel";
+            this.dynamicExecuteLabel.Size = new System.Drawing.Size(85, 27);
+            this.dynamicExecuteLabel.TabIndex = 108;
+            this.dynamicExecuteLabel.Text = "Execute";
+            // 
+            // dynamicExecuteTextBox
+            // 
+            this.dynamicExecuteTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dynamicExecuteTextBox.Location = new System.Drawing.Point(12, 112);
+            this.dynamicExecuteTextBox.Name = "dynamicExecuteTextBox";
+            this.dynamicExecuteTextBox.ReadOnly = true;
+            this.dynamicExecuteTextBox.Size = new System.Drawing.Size(250, 26);
+            this.dynamicExecuteTextBox.TabIndex = 107;
             // 
             // storeLabel
             // 
@@ -368,7 +429,7 @@
             this.storeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.storeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.storeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.storeLabel.Location = new System.Drawing.Point(268, 423);
+            this.storeLabel.Location = new System.Drawing.Point(268, 404);
             this.storeLabel.Name = "storeLabel";
             this.storeLabel.Size = new System.Drawing.Size(119, 27);
             this.storeLabel.TabIndex = 105;
@@ -380,7 +441,7 @@
             this.decodeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.decodeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.decodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decodeLabel.Location = new System.Drawing.Point(268, 392);
+            this.decodeLabel.Location = new System.Drawing.Point(268, 341);
             this.decodeLabel.Name = "decodeLabel";
             this.decodeLabel.Size = new System.Drawing.Size(82, 27);
             this.decodeLabel.TabIndex = 104;
@@ -392,7 +453,7 @@
             this.fetchLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.fetchLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.fetchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fetchLabel.Location = new System.Drawing.Point(268, 359);
+            this.fetchLabel.Location = new System.Drawing.Point(268, 308);
             this.fetchLabel.Name = "fetchLabel";
             this.fetchLabel.Size = new System.Drawing.Size(63, 27);
             this.fetchLabel.TabIndex = 103;
@@ -401,7 +462,7 @@
             // commitTextBox
             // 
             this.commitTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commitTextBox.Location = new System.Drawing.Point(12, 190);
+            this.commitTextBox.Location = new System.Drawing.Point(12, 208);
             this.commitTextBox.Name = "commitTextBox";
             this.commitTextBox.ReadOnly = true;
             this.commitTextBox.Size = new System.Drawing.Size(250, 26);
@@ -410,7 +471,7 @@
             // writeTextBox
             // 
             this.writeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeTextBox.Location = new System.Drawing.Point(12, 158);
+            this.writeTextBox.Location = new System.Drawing.Point(12, 176);
             this.writeTextBox.Name = "writeTextBox";
             this.writeTextBox.ReadOnly = true;
             this.writeTextBox.Size = new System.Drawing.Size(250, 26);
@@ -419,7 +480,7 @@
             // memoryReadTextBox
             // 
             this.memoryReadTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.memoryReadTextBox.Location = new System.Drawing.Point(12, 126);
+            this.memoryReadTextBox.Location = new System.Drawing.Point(12, 144);
             this.memoryReadTextBox.Name = "memoryReadTextBox";
             this.memoryReadTextBox.ReadOnly = true;
             this.memoryReadTextBox.Size = new System.Drawing.Size(250, 26);
@@ -428,7 +489,7 @@
             // issueTextBox
             // 
             this.issueTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.issueTextBox.Location = new System.Drawing.Point(12, 62);
+            this.issueTextBox.Location = new System.Drawing.Point(12, 80);
             this.issueTextBox.Name = "issueTextBox";
             this.issueTextBox.ReadOnly = true;
             this.issueTextBox.Size = new System.Drawing.Size(250, 26);
@@ -440,7 +501,7 @@
             this.commitLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.commitLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.commitLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commitLabel.Location = new System.Drawing.Point(268, 190);
+            this.commitLabel.Location = new System.Drawing.Point(268, 208);
             this.commitLabel.Name = "commitLabel";
             this.commitLabel.Size = new System.Drawing.Size(81, 27);
             this.commitLabel.TabIndex = 98;
@@ -452,7 +513,7 @@
             this.writeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.writeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.writeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeLabel.Location = new System.Drawing.Point(268, 157);
+            this.writeLabel.Location = new System.Drawing.Point(268, 175);
             this.writeLabel.Name = "writeLabel";
             this.writeLabel.Size = new System.Drawing.Size(60, 27);
             this.writeLabel.TabIndex = 97;
@@ -464,7 +525,7 @@
             this.memoryReadLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.memoryReadLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.memoryReadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.memoryReadLabel.Location = new System.Drawing.Point(268, 126);
+            this.memoryReadLabel.Location = new System.Drawing.Point(268, 144);
             this.memoryReadLabel.Name = "memoryReadLabel";
             this.memoryReadLabel.Size = new System.Drawing.Size(136, 27);
             this.memoryReadLabel.TabIndex = 96;
@@ -476,7 +537,7 @@
             this.issueLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.issueLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.issueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.issueLabel.Location = new System.Drawing.Point(268, 61);
+            this.issueLabel.Location = new System.Drawing.Point(268, 79);
             this.issueLabel.Name = "issueLabel";
             this.issueLabel.Size = new System.Drawing.Size(61, 27);
             this.issueLabel.TabIndex = 95;
@@ -1101,7 +1162,7 @@
             // executeTextBox
             // 
             this.executeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.executeTextBox.Location = new System.Drawing.Point(12, 94);
+            this.executeTextBox.Location = new System.Drawing.Point(12, 373);
             this.executeTextBox.Name = "executeTextBox";
             this.executeTextBox.ReadOnly = true;
             this.executeTextBox.Size = new System.Drawing.Size(250, 26);
@@ -1110,7 +1171,7 @@
             // storeTextBox
             // 
             this.storeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.storeTextBox.Location = new System.Drawing.Point(12, 424);
+            this.storeTextBox.Location = new System.Drawing.Point(12, 405);
             this.storeTextBox.Name = "storeTextBox";
             this.storeTextBox.ReadOnly = true;
             this.storeTextBox.Size = new System.Drawing.Size(250, 26);
@@ -1119,7 +1180,7 @@
             // decodeTextBox
             // 
             this.decodeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decodeTextBox.Location = new System.Drawing.Point(12, 392);
+            this.decodeTextBox.Location = new System.Drawing.Point(12, 341);
             this.decodeTextBox.Name = "decodeTextBox";
             this.decodeTextBox.ReadOnly = true;
             this.decodeTextBox.Size = new System.Drawing.Size(250, 26);
@@ -1128,7 +1189,7 @@
             // instructOneText
             // 
             this.instructOneText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.instructOneText.Location = new System.Drawing.Point(12, 360);
+            this.instructOneText.Location = new System.Drawing.Point(12, 309);
             this.instructOneText.Name = "instructOneText";
             this.instructOneText.ReadOnly = true;
             this.instructOneText.Size = new System.Drawing.Size(250, 26);
@@ -1151,21 +1212,21 @@
             this.nextCycleButton.UseVisualStyleBackColor = false;
             this.nextCycleButton.Click += new System.EventHandler(this.nextCycleButton_Click);
             // 
-            // startButton
+            // startStaticButton
             // 
-            this.startButton.BackColor = System.Drawing.Color.Silver;
-            this.startButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.startButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.startButton.ForeColor = System.Drawing.Color.Black;
-            this.startButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.startButton.Location = new System.Drawing.Point(12, 517);
-            this.startButton.Margin = new System.Windows.Forms.Padding(1);
-            this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(200, 75);
-            this.startButton.TabIndex = 17;
-            this.startButton.Text = "Start Simulation";
-            this.startButton.UseVisualStyleBackColor = false;
-            this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            this.startStaticButton.BackColor = System.Drawing.Color.Silver;
+            this.startStaticButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.startStaticButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.startStaticButton.ForeColor = System.Drawing.Color.Black;
+            this.startStaticButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.startStaticButton.Location = new System.Drawing.Point(214, 517);
+            this.startStaticButton.Margin = new System.Windows.Forms.Padding(1);
+            this.startStaticButton.Name = "startStaticButton";
+            this.startStaticButton.Size = new System.Drawing.Size(200, 75);
+            this.startStaticButton.TabIndex = 17;
+            this.startStaticButton.Text = "Start Static  Simulation";
+            this.startStaticButton.UseVisualStyleBackColor = false;
+            this.startStaticButton.Click += new System.EventHandler(this.startStaticButton_Click);
             // 
             // executeLabel
             // 
@@ -1173,24 +1234,24 @@
             this.executeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.executeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.executeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.executeLabel.Location = new System.Drawing.Point(268, 94);
+            this.executeLabel.Location = new System.Drawing.Point(268, 372);
             this.executeLabel.Name = "executeLabel";
             this.executeLabel.Size = new System.Drawing.Size(85, 27);
             this.executeLabel.TabIndex = 6;
             this.executeLabel.Text = "Execute";
             // 
-            // dynamicPipeLabel
+            // pipelineSimulationLabel
             // 
-            this.dynamicPipeLabel.AutoSize = true;
-            this.dynamicPipeLabel.BackColor = System.Drawing.Color.Black;
-            this.dynamicPipeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dynamicPipeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dynamicPipeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dynamicPipeLabel.Location = new System.Drawing.Point(3, 1);
-            this.dynamicPipeLabel.Name = "dynamicPipeLabel";
-            this.dynamicPipeLabel.Size = new System.Drawing.Size(358, 33);
-            this.dynamicPipeLabel.TabIndex = 4;
-            this.dynamicPipeLabel.Text = "Dynamic Pipeline Simulation";
+            this.pipelineSimulationLabel.AutoSize = true;
+            this.pipelineSimulationLabel.BackColor = System.Drawing.Color.Black;
+            this.pipelineSimulationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pipelineSimulationLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pipelineSimulationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pipelineSimulationLabel.Location = new System.Drawing.Point(3, 1);
+            this.pipelineSimulationLabel.Name = "pipelineSimulationLabel";
+            this.pipelineSimulationLabel.Size = new System.Drawing.Size(245, 33);
+            this.pipelineSimulationLabel.TabIndex = 4;
+            this.pipelineSimulationLabel.Text = "Pipeline Simulation";
             // 
             // outputPanel
             // 
@@ -1254,6 +1315,13 @@
             this.memOutputText.Size = new System.Drawing.Size(302, 572);
             this.memOutputText.TabIndex = 0;
             // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
+            // 
             // GUIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1296,7 +1364,7 @@
         private System.Windows.Forms.ToolStripMenuItem instructionsToolStripMenuItem;
         private System.Windows.Forms.Panel assemblyPanel;
         private System.Windows.Forms.Panel simulationPanel;
-        private System.Windows.Forms.Label dynamicPipeLabel;
+        private System.Windows.Forms.Label pipelineSimulationLabel;
         private System.Windows.Forms.Label assemblyLabel;
         private System.Windows.Forms.TextBox assemblyTextBox;
         private System.Windows.Forms.Button saveAssemblyButton;
@@ -1304,7 +1372,7 @@
         private System.Windows.Forms.Button loadAssemblyButton;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label executeLabel;
-        private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.Button startStaticButton;
         private System.Windows.Forms.Button nextCycleButton;
         private System.Windows.Forms.Panel outputPanel;
         private System.Windows.Forms.TextBox executeTextBox;
@@ -1382,10 +1450,15 @@
         private System.Windows.Forms.TextBox writeTextBox;
         private System.Windows.Forms.TextBox memoryReadTextBox;
         private System.Windows.Forms.TextBox issueTextBox;
-        private System.Windows.Forms.Label oldLabel;
         private System.Windows.Forms.Label storeLabel;
         private System.Windows.Forms.Label decodeLabel;
         private System.Windows.Forms.Label fetchLabel;
+        private System.Windows.Forms.TextBox dynamicExecuteTextBox;
+        private System.Windows.Forms.Label dynamicExecuteLabel;
+        private System.Windows.Forms.Label staticPipelineLabel;
+        private System.Windows.Forms.Label dynamicPipelineLabel;
+        private System.Windows.Forms.Button startDynamicButton;
+        private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
     }
 }
 

@@ -23,6 +23,9 @@ namespace Team4_Project3
 {
     public partial class GUIForm : Form
     {
+        //Conducting Static or Dynamic Simulation Bool
+        bool isDynamic = false;
+
         //==Counters==//
         //============================================================//
         //Cycle Counter
@@ -59,33 +62,32 @@ namespace Team4_Project3
         bool sFlagCount = true;
 
 
-        //Registers//
+        //==Registers==//
         //============================================================//
         //Regular Registers
-        int R0;     //Program Counter
-        int R1;     //Flag
-        int R2;     //Flag
-        int R3;     //Flag
-        int R4;
-        int R5;
-        int R6;
-        int R7;
-        int R8;
-        int R9;
-        int R10;
-        int R11;
+        int R0 = 0; //Program Counter
+        int R1 = 0; //Flag
+        int R2 = 0; //Flag
+        int R3 = 0; //Flag
+        int R4 = 0;
+        int R5 = 0;
+        int R6 = 0;
+        int R7 = 0;
+        int R8 = 0;
+        int R9 = 0;
+        int R10 = 0;
+        int R11 = 0;
 
         //Floating-Point Registers
-        float F12;
-        float F13;
-        float F14;
-        float F15;
+        float F12 = 0f;
+        float F13 = 0f;
+        float F14 = 0f;
+        float F15 = 0f;
 
 
-        //1MB Memory Array//
+        //==1MB Memory Array==//
         //============================================================//
         String[,] Memory = new String[65536, 17];
-
 
 
         //List of all assembly instructions
@@ -112,8 +114,6 @@ namespace Team4_Project3
         bool rF2 = true;
 
 
-
-
         //GUIForm Constructor
         #region GUIForm Constructor
         /// <summary>
@@ -135,6 +135,76 @@ namespace Team4_Project3
         private void informationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ProgramController.openInformation();
+        }
+
+        /// <summary>
+        /// Resets everything for new simulation
+        /// </summary>
+        /// <param name="sender">object that raised the event (auto-generated, unused here)</param>
+        /// <param name="e">arguments for event (auto-generated, unused here)</param>
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Reset all variables within GUIForm
+            resetAllVariables();
+
+            //Reset Dynamic Phase textboxes
+            issueTextBox.Text = string.Empty;
+            dynamicExecuteTextBox.Text = string.Empty;
+            memoryReadTextBox.Text = string.Empty;
+            writeTextBox.Text = string.Empty;
+            commitTextBox.Text = string.Empty;
+
+            //Reset Static Phase textboxes
+            fetchStallTextbox.Text = string.Empty;
+            decodeStallTextbox.Text= string.Empty;
+            executeStallTextbox.Text = string.Empty;
+            storeTextBox.Text = string.Empty;
+
+            //Reset Register textboxes
+            r0TextBox.Text = "0";
+            r1TextBox.Text = "0";
+            r2TextBox.Text = "0";
+            r3TextBox.Text = "0";
+            r4TextBox.Text = "0";
+            r5TextBox.Text = "0";
+            r6TextBox.Text = "0";
+            r7TextBox.Text = "0";
+            r8TextBox.Text = "0";
+            r9TextBox.Text = "0";
+            r10TextBox.Text = "0";
+            r11TextBox.Text = "0";
+            f12TextBox.Text = "0.0";
+            f13TextBox.Text = "0.0";
+            f14TextBox.Text = "0.0";
+            f15TextBox.Text = "0.0";
+
+            //Reset Cycle Counter textbox
+            counterTextBox.Text = "0";
+
+            //Reset Hazards textboxes
+            structHTextBox.Text = "0";
+            dataHTextBox.Text = "0";
+            controlHTextBox.Text = "0";
+
+            //Reset Dependencies textboxes
+            rawTextBox.Text = "0";
+            warTextBox.Text = "0";
+            wawTextBox.Text = "0";
+
+            //Reset Stalls textboxes
+            fetchStallTextbox.Text = "0";
+            decodeStallTextbox.Text = "0";
+            executeStallTextbox.Text = "0";
+            storeStallTextbox.Text = "0";
+
+            //Reset Pipeline Output and Memory Output textboxes
+            pipeLineOutText.Text = string.Empty;
+            memOutputText.Text = string.Empty;
+
+            //Re-enables Assembly textbox and Start Simulation buttons
+            assemblyTextBox.Enabled = true;
+            startDynamicButton.Enabled = true;
+            startStaticButton.Enabled = true;
         }
 
         /// <summary>
@@ -214,12 +284,24 @@ namespace Team4_Project3
 
         #region Pipeline Simulation GUI Buttons
         /// <summary>
+        /// Starts Dynamic Pipeline Simulation
+        /// </summary>
+        /// <param name="sender">object that raised the event (auto-generated, unused here)</param>
+        /// <param name="e">arguments for event (auto-generated, unused here)</param>
+        private void startDynamicButton_Click(object sender, EventArgs e)
+        {
+            isDynamic = true;
+        }
+
+        /// <summary>
         /// Starts Static Pipeline Simulation
         /// </summary>
         /// <param name="sender">object that raised the event (auto-generated, unused here)</param>
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
-        private void startButton_Click(object sender, EventArgs e)
+        private void startStaticButton_Click(object sender, EventArgs e)
         {
+            isDynamic = false;
+
             //Instantiate Memory (1MB)
             int memHelp = 0;
             for (int i = 0; i < 65536; i++)
@@ -281,7 +363,7 @@ namespace Team4_Project3
 
                 //Enables nextPhaseButton to be pressed when simulation has began and disables startButton
                 nextCycleButton.Enabled = true;
-                startButton.Enabled = false;
+                startStaticButton.Enabled = false;
             }
         }
 
@@ -292,301 +374,419 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void nextCycleButton_Click(object sender, EventArgs e)
         {
-            if (start == true)
-            {
-                dWall = true;
-                sWall = true;
-                eWall = true;
-            }
-
-            if (pipeStore.Count > 0)
-            {
-                if (pipeStore.Count > 0)
-                    pipeStore[0].Store--;
-                if (pipeStore[0].Store == 0)
-                {
-                    pipeStore.RemoveAt(0);
-                    sGo = false;
-                    sWall = true;
-
-                }
-                if (ifStop == true && pipeStore.Count == 0)
-                {
-                    nextCycleButton.Enabled = false;
-                    pipeLineOutText.Text = ProgramController.outputPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
-                }
-            }
-
-            if (pipeExecute.Count > 0)
-            {
-
-                if (sGo != true)
-                {
-                    pipeExecute[0].Execute--;
-                }
-                ifStop = ProgramController.execute(pipeExecute[0].InstLit);
-                if (pipeExecute[0].Execute <= 0 && ifStop == false)
-                {
-                    sGo = true;
-
-                }
-                if (sGo == true && sWall == true)
-                {
-
-                    pipeStore.Add(pipeExecute[0]);
-                    sWall = false;
-                    pipeExecute.RemoveAt(0);
-                    eWall = true;
-
-                    eGo = false;
-                    sGo = false;
-
-                    eFlagCount = true;
-                }
-                if (sGo == true && sWall == false && pipeExecute.Count > 0)
-                {
-                    eStall++;
-                    executeStallTextbox.Text = eStall.ToString();
-
-                    if (eFlagCount == true)
-                    {
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
-
-                        eFlagCount = false;
-                    }
-
-                }
-
-            }
-
-            if (pipeDecode.Count > 0)
-            {
-
-
-                if (eGo != true)
-                {
-                    pipeDecode[0].Decode--;
-                }
-                if (pipeDecode[0].Decode <= 0)
-                {
-                    eGo = true;
-                }
-                if (eGo == true && eWall == true && rawFlag == true)
-                {
-                    pipeExecute.Add(pipeDecode[0]);
-                    eWall = false;
-                    pipeDecode.RemoveAt(0);
-                    dWall = true;
-                    dGo = false;
-                    eGo = false;
-
-                    dFlagCount = true;
-                }
-                if (eGo == true && eWall == false && pipeDecode.Count > 0)
-                {
-                    dStall++;
-                    decodeStallTextbox.Text = dStall.ToString();
-
-                    if (dFlagCount == true)
-                    {
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
-
-                        dFlagCount = false;
-                    }
-
-                }
-
-            }
-
-            if (pipeFetch.Count > 0)
-            {
-
-                if (dGo != true)
-                {
-                    pipeFetch[0].Fetch--;
-                }
-                if (pipeFetch[0].Fetch <= 0)
-                {
-                    dGo = true;
-                }
-                if (dGo == true && dWall == true)
-                {
-                    (store, param1, param2) = ProgramController.decode(pipeFetch[0]);
-                    pipeDecode.Add(pipeFetch[0]);
-                    dWall = false;
-                    pipeFetch.RemoveAt(0);
-                    fWall = true;
-                    fGo = false;
-                    dGo = false;
-
-                    fFlagCount = true;
-                }
-                if (dGo == true && dWall == false && pipeFetch.Count > 0)
-                {
-                    fStall++;
-                    fetchStallTextbox.Text = fStall.ToString();
-
-                    if (fFlagCount == true)
-                    {
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
-
-                        fFlagCount = false;
-                    }
-
-                }
-
-                if (pipeExecute.Count > 0 && rawFlag == true)
-                {
-                    if (pipeExecute[0].SRegister == pipeDecode[0].P1Register || pipeExecute[0].SRegister == pipeDecode[0].P2Register)
-                    {
-                        rawFlag = false;
-
-                        rawCount++;
-                        rawTextBox.Text = rawCount.ToString();
-
-                        dataHCount++;
-                        dataHTextBox.Text = dataHCount.ToString();
-
-                        rF1 = false;
-                    }
-                }
-                if (pipeStore.Count > 0 && rawFlag == true)
-                {
-                    if (pipeStore[0].SRegister == pipeDecode[0].P1Register || pipeStore[0].SRegister == pipeDecode[0].P2Register)
-                    {
-                        rawFlag = false;
-
-                        rawCount++;
-                        rawTextBox.Text = rawCount.ToString();
-
-                        dataHCount++;
-                        dataHTextBox.Text = dataHCount.ToString();
-
-                        rF2 = false;
-                    }
-                }
-
-                if (pipeExecute.Count > 0 && warFlag == true)
-                {
-                    if (pipeDecode[0].SRegister == pipeExecute[0].P1Register || pipeDecode[0].SRegister == pipeExecute[0].P2Register)
-                    {
-                        warFlag = false;
-
-                        warCount++;
-                        warTextBox.Text = warCount.ToString();
-
-                        dataHCount++;
-                        dataHTextBox.Text = dataHCount.ToString();
-
-                        rF1 = false;
-                    }
-                }
-
-                if (pipeStore.Count > 0 && warFlag == true)
-                {
-                    if (pipeDecode[0].SRegister == pipeStore[0].P1Register || pipeDecode[0].SRegister == pipeStore[0].P2Register)
-                    {
-                        warFlag = false;
-
-                        warCount++;
-                        warTextBox.Text = warCount.ToString();
-
-                        dataHCount++;
-                        dataHTextBox.Text = dataHCount.ToString();
-
-                        rF2 = false;
-                    }
-                }
-                if (rawFlag == false)
-                {
-                    if (pipeExecute.Count == 0 && pipeStore.Count == 0 && rF1 == false)
-                    {
-                        rawFlag = true;
-                        rF1 = true;
-                    }
-                    if (pipeExecute.Count == 0 && rF2 == false)
-                    {
-                        rawFlag = true;
-                        rF2 = true;
-                    }
-                }
-
-                if (warFlag == false)
-                {
-
-                    if (pipeExecute.Count == 0 && pipeStore.Count == 0 || rF1 == false)
-                    {
-                        warFlag = true;
-                        rF1 = true;
-                    }
-
-                    if (pipeExecute.Count == 0 || rF2 == false)
-                    {
-                        warFlag = true;
-                        rF2 = true;
-                    }
-                }
-            }
-
-
-            if (start == true)
-            {
-                (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
-                r0TextBox.Text = R0.ToString();
-                start = false;
-
-            }
-            if (pipeFetch.Count == 0 && stopF == 0)
-            {
-                (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
-                r0TextBox.Text = R0.ToString();
-            }
-
-
-            if (pipeFetch.Count >= 1)
-            {
-                instructOneText.Text = pipeFetch[0].InstLit;
-            }
-            else
-            {
-                instructOneText.Text = "";
-            }
-            if (pipeDecode.Count >= 1)
-            {
-                decodeTextBox.Text = pipeDecode[0].InstLit;
-            }
-            else
-            {
-                decodeTextBox.Text = "";
-            }
-            if (pipeExecute.Count >= 1)
-            {
-                executeTextBox.Text = pipeExecute[0].InstLit;
-            }
-            else
-            {
-                executeTextBox.Text = "";
-            }
-            if (pipeStore.Count >= 1)
-            {
-                storeTextBox.Text = pipeStore[0].InstLit;
-            }
-            else
-            {
-                storeTextBox.Text = "";
-            }
-            if (nextCycleButton.Enabled == true)
+            //Dynamic Pipeline Simulation Code
+            if (isDynamic == true)
             {
                 //Increase cycle counter by one
                 incrementCycleCounter();
-            }
+
+            }//end Dynamic Pipeline Simulation Code
+            //Static Pipeline Simulation Code
+            else
+            {
+                if (start == true)
+                {
+                    dWall = true;
+                    sWall = true;
+                    eWall = true;
+                }
+
+                if (pipeStore.Count > 0)
+                {
+                    if (pipeStore.Count > 0)
+                        pipeStore[0].Store--;
+                    if (pipeStore[0].Store == 0)
+                    {
+                        pipeStore.RemoveAt(0);
+                        sGo = false;
+                        sWall = true;
+
+                    }
+                    if (ifStop == true && pipeStore.Count == 0)
+                    {
+                        nextCycleButton.Enabled = false;
+                        pipeLineOutText.Text = ProgramController.outputPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
+                    }
+                }
+
+                if (pipeExecute.Count > 0)
+                {
+
+                    if (sGo != true)
+                    {
+                        pipeExecute[0].Execute--;
+                    }
+                    ifStop = ProgramController.execute(pipeExecute[0].InstLit);
+                    if (pipeExecute[0].Execute <= 0 && ifStop == false)
+                    {
+                        sGo = true;
+
+                    }
+                    if (sGo == true && sWall == true)
+                    {
+
+                        pipeStore.Add(pipeExecute[0]);
+                        sWall = false;
+                        pipeExecute.RemoveAt(0);
+                        eWall = true;
+
+                        eGo = false;
+                        sGo = false;
+
+                        eFlagCount = true;
+                    }
+                    if (sGo == true && sWall == false && pipeExecute.Count > 0)
+                    {
+                        eStall++;
+                        executeStallTextbox.Text = eStall.ToString();
+
+                        if (eFlagCount == true)
+                        {
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+
+                            eFlagCount = false;
+                        }
+
+                    }
+
+                }
+
+                if (pipeDecode.Count > 0)
+                {
+
+
+                    if (eGo != true)
+                    {
+                        pipeDecode[0].Decode--;
+                    }
+                    if (pipeDecode[0].Decode <= 0)
+                    {
+                        eGo = true;
+                    }
+                    if (eGo == true && eWall == true && rawFlag == true)
+                    {
+                        pipeExecute.Add(pipeDecode[0]);
+                        eWall = false;
+                        pipeDecode.RemoveAt(0);
+                        dWall = true;
+                        dGo = false;
+                        eGo = false;
+
+                        dFlagCount = true;
+                    }
+                    if (eGo == true && eWall == false && pipeDecode.Count > 0)
+                    {
+                        dStall++;
+                        decodeStallTextbox.Text = dStall.ToString();
+
+                        if (dFlagCount == true)
+                        {
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+
+                            dFlagCount = false;
+                        }
+
+                    }
+
+                }
+
+                if (pipeFetch.Count > 0)
+                {
+
+                    if (dGo != true)
+                    {
+                        pipeFetch[0].Fetch--;
+                    }
+                    if (pipeFetch[0].Fetch <= 0)
+                    {
+                        dGo = true;
+                    }
+                    if (dGo == true && dWall == true)
+                    {
+                        (store, param1, param2) = ProgramController.decode(pipeFetch[0]);
+                        pipeDecode.Add(pipeFetch[0]);
+                        dWall = false;
+                        pipeFetch.RemoveAt(0);
+                        fWall = true;
+                        fGo = false;
+                        dGo = false;
+
+                        fFlagCount = true;
+                    }
+                    if (dGo == true && dWall == false && pipeFetch.Count > 0)
+                    {
+                        fStall++;
+                        fetchStallTextbox.Text = fStall.ToString();
+
+                        if (fFlagCount == true)
+                        {
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+
+                            fFlagCount = false;
+                        }
+
+                    }
+
+                    if (pipeExecute.Count > 0 && rawFlag == true)
+                    {
+                        if (pipeExecute[0].SRegister == pipeDecode[0].P1Register || pipeExecute[0].SRegister == pipeDecode[0].P2Register)
+                        {
+                            rawFlag = false;
+
+                            rawCount++;
+                            rawTextBox.Text = rawCount.ToString();
+
+                            dataHCount++;
+                            dataHTextBox.Text = dataHCount.ToString();
+
+                            rF1 = false;
+                        }
+                    }
+                    if (pipeStore.Count > 0 && rawFlag == true)
+                    {
+                        if (pipeStore[0].SRegister == pipeDecode[0].P1Register || pipeStore[0].SRegister == pipeDecode[0].P2Register)
+                        {
+                            rawFlag = false;
+
+                            rawCount++;
+                            rawTextBox.Text = rawCount.ToString();
+
+                            dataHCount++;
+                            dataHTextBox.Text = dataHCount.ToString();
+
+                            rF2 = false;
+                        }
+                    }
+
+                    if (pipeExecute.Count > 0 && warFlag == true)
+                    {
+                        if (pipeDecode[0].SRegister == pipeExecute[0].P1Register || pipeDecode[0].SRegister == pipeExecute[0].P2Register)
+                        {
+                            warFlag = false;
+
+                            warCount++;
+                            warTextBox.Text = warCount.ToString();
+
+                            dataHCount++;
+                            dataHTextBox.Text = dataHCount.ToString();
+
+                            rF1 = false;
+                        }
+                    }
+
+                    if (pipeStore.Count > 0 && warFlag == true)
+                    {
+                        if (pipeDecode[0].SRegister == pipeStore[0].P1Register || pipeDecode[0].SRegister == pipeStore[0].P2Register)
+                        {
+                            warFlag = false;
+
+                            warCount++;
+                            warTextBox.Text = warCount.ToString();
+
+                            dataHCount++;
+                            dataHTextBox.Text = dataHCount.ToString();
+
+                            rF2 = false;
+                        }
+                    }
+                    if (rawFlag == false)
+                    {
+                        if (pipeExecute.Count == 0 && pipeStore.Count == 0 && rF1 == false)
+                        {
+                            rawFlag = true;
+                            rF1 = true;
+                        }
+                        if (pipeExecute.Count == 0 && rF2 == false)
+                        {
+                            rawFlag = true;
+                            rF2 = true;
+                        }
+                    }
+
+                    if (warFlag == false)
+                    {
+
+                        if (pipeExecute.Count == 0 && pipeStore.Count == 0 || rF1 == false)
+                        {
+                            warFlag = true;
+                            rF1 = true;
+                        }
+
+                        if (pipeExecute.Count == 0 || rF2 == false)
+                        {
+                            warFlag = true;
+                            rF2 = true;
+                        }
+                    }
+                }
+
+
+                if (start == true)
+                {
+                    (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
+                    r0TextBox.Text = R0.ToString();
+                    start = false;
+
+                }
+                if (pipeFetch.Count == 0 && stopF == 0)
+                {
+                    (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
+                    r0TextBox.Text = R0.ToString();
+                }
+
+
+                if (pipeFetch.Count >= 1)
+                {
+                    instructOneText.Text = pipeFetch[0].InstLit;
+                }
+                else
+                {
+                    instructOneText.Text = "";
+                }
+                if (pipeDecode.Count >= 1)
+                {
+                    decodeTextBox.Text = pipeDecode[0].InstLit;
+                }
+                else
+                {
+                    decodeTextBox.Text = "";
+                }
+                if (pipeExecute.Count >= 1)
+                {
+                    executeTextBox.Text = pipeExecute[0].InstLit;
+                }
+                else
+                {
+                    executeTextBox.Text = "";
+                }
+                if (pipeStore.Count >= 1)
+                {
+                    storeTextBox.Text = pipeStore[0].InstLit;
+                }
+                else
+                {
+                    storeTextBox.Text = "";
+                }
+                if (nextCycleButton.Enabled == true)
+                {
+                    //Increase cycle counter by one
+                    incrementCycleCounter();
+                }
+
+            }//end Static Pipeline Simulation Code
         }
         #endregion
 
         //GUIForm Regular Methods
+        #region resetAllVariables() Method
+        /// <summary>
+        /// Method for resetting all variables in GUIFOrm to start another simulation without closing program
+        /// </summary>
+        public void resetAllVariables()
+        {
+            //Conducting Static or Dynamic Simulation Bool
+            isDynamic = false;
+
+            //==Counters==//
+            //============================================================//
+            //Cycle Counter
+            cycleCounter = 0;
+
+            //Hazard Counters
+            structHCount = 0;
+            dataHCount = 0;
+            controlHCounter = 0;
+
+            //Dependency Counters
+            rawCount = 0;
+            warCount = 0;
+            wawCount = 0;
+
+            //Stall Counters
+            fStall = 0;
+            dStall = 0;
+            eStall = 0;
+            sStall = 0;
+
+
+            //==Flags==//
+            //============================================================//
+            //Dependency Flags
+            rawFlag = true;
+            warFlag = true;
+            wawFlag = true;
+
+            //Stall Flags
+            fFlagCount = true;
+            dFlagCount = true;
+            eFlagCount = true;
+            sFlagCount = true;
+
+
+            //==Registers==//
+            //============================================================//
+            //Regular Registers
+            R0 = 0; //Program Counter
+            R1 = 0; //Flag
+            R2 = 0; //Flag
+            R3 = 0; //Flag
+            R4 = 0;
+            R5 = 0;
+            R6 = 0;
+            R7 = 0;
+            R8 = 0;
+            R9 = 0;
+            R10 = 0;
+            R11 = 0;
+
+            //Floating-Point Registers
+            F12 = 0f;
+            F13 = 0f;
+            F14 = 0f;
+            F15 = 0f;
+
+
+            //==1MB Memory Array==//
+            //============================================================//
+            Memory = new String[65536, 17];
+
+
+            //List of all assembly instructions
+            instructions = new List<string>();
+
+            //Currently fetched instructions
+            pipeFetch = new List<Instruction>();
+            pipeDecode = new List<Instruction>();
+            pipeExecute = new List<Instruction>();
+            pipeStore = new List<Instruction>();
+
+            programIndex = 0;
+            start = true;
+
+            fWall = true;
+            dWall = true;
+            eWall = true; 
+            sWall = true;
+            fGo = false;
+            dGo = false;
+            eGo = false;
+            sGo = false;
+
+            stopF = 0;
+            ifStop = false;
+
+            param1 = string.Empty;
+            param2 = string.Empty;
+            store = string.Empty;
+
+            rF1 = true;
+            rF2 = true;
+
+        }//end resetAllVariables()
+        #endregion    
         #region incrementCycleCounter() Method
         /// <summary>
         /// Method for incrementing cycle counter and updating gui to reflect it
