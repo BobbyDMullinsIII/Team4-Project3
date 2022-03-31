@@ -623,7 +623,7 @@ namespace Team4_Project3
         #endregion
 
 
-        //Pipeline Phase Methods
+        //Static Pipeline Phase Methods
         #region fetch() Method
         /// <summary>
         /// Method for fetching instruction phase in pipeline
@@ -904,10 +904,6 @@ namespace Team4_Project3
                 param2 = pipeInts.P2Register;
             }
 
-            //=============================//
-            //INSERT CODE FOR DECODING HERE//
-            //=============================//
-
             return (store: pipeInts.SRegister, param1: pipeInts.P1Register, param2: pipeInts.P2Register);
 
         }//end decode()
@@ -977,8 +973,9 @@ namespace Team4_Project3
         }
         #endregion
 
+
         //Pipeline Output Methods
-        #region outputPipelineStats() Method
+        #region outputStaticPipelineStats() Method
         /// <summary>
         /// Method for outputting static pipeline simulation statistics
         /// </summary>
@@ -994,7 +991,7 @@ namespace Team4_Project3
         /// <param name="store">Store cycles stalled</param>
         /// <param name="cycles">Total cycles of static pipeline simulation</param>
         /// <returns>Statistics of the pipeline from the static pipeline simulation</returns>
-        public static string outputPipelineStats(int structural,
+        public static string outputStaticPipelineStats(int structural,
                                                  int data,
                                                  int control,
                                                  int RAW,
@@ -1032,10 +1029,33 @@ namespace Team4_Project3
                    $"============\r\n" +
                    $"{cycles}\r\n";
 
-        }//end outputPipelineStats()
+        }//end outputStaticPipelineStats()
         #endregion
 
-        //Control Logic Methods
+        #region outputDynamicPipelineStats() Method
+        /// <summary>
+        /// Method for outputting dynamic pipeline simulation statistics
+        /// </summary>
+        /// <param name="buffer">Reorder Buffer delays</param>
+        /// <param name="station">Reservation Station delays</param>
+        /// <param name="conflict">Data Memory Conflict delays</param>
+        /// <param name="dependence">True Dependence delays</param>
+        /// <returns>Statistics of the pipeline from the dynamic pipeline simulation</returns>
+        public static string outputDynamicPipelineStats(int buffer, int station, int conflict, int dependence)
+        {
+            return $"Delays\r\n" +
+                   $"======\r\n" +
+                   $"reorder buffer delays: {buffer}\r\n" +
+                   $"reservation station delays: {station}\r\n" +
+                   $"data memory conflict delays: {conflict}\r\n" +
+                   $"true dependence delays: {dependence}\r\n" +
+                   $"\r\n";
+
+        }//end outputDynamicPipelineStats()
+        #endregion
+
+
+        //Instruction Control Logic Methods
         #region LDRE() Method
         /// <summary>
         /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions for ints

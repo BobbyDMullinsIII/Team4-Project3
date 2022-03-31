@@ -47,6 +47,12 @@ namespace Team4_Project3
         int eStall = 0;
         int sStall = 0;
 
+        //Delay Counters
+        int bufferD = 0;
+        int stationD = 0;
+        int conflictD = 0;
+        int dependenceD = 0;
+
 
         //==Flags==//
         //============================================================//
@@ -93,7 +99,7 @@ namespace Team4_Project3
         //List of all assembly instructions
         List<string> instructions = new List<string>();
 
-        //Currently fetched instructions
+        //Current statically fetched instructions
         List<Instruction> pipeFetch = new List<Instruction>();
         List<Instruction> pipeDecode = new List<Instruction>();
         List<Instruction> pipeExecute = new List<Instruction>();
@@ -404,7 +410,7 @@ namespace Team4_Project3
                     if (ifStop == true && pipeStore.Count == 0)
                     {
                         nextCycleButton.Enabled = false;
-                        pipeLineOutText.Text = ProgramController.outputPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
+                        pipeLineOutText.Text = ProgramController.outputStaticPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
                     }
                 }
 
@@ -786,6 +792,7 @@ namespace Team4_Project3
 
         }//end resetAllVariables()
         #endregion    
+
         #region incrementCycleCounter() Method
         /// <summary>
         /// Method for incrementing cycle counter and updating gui to reflect it
