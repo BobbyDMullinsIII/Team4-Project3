@@ -155,9 +155,9 @@ namespace Team4_Project3
             commitTextBox.Text = string.Empty;
 
             //Reset Static Phase textboxes
-            fetchStallTextbox.Text = string.Empty;
-            decodeStallTextbox.Text= string.Empty;
-            executeStallTextbox.Text = string.Empty;
+            fetchTextBox.Text = string.Empty;
+            decodeTextBox.Text= string.Empty;
+            executeTextBox.Text = string.Empty;
             storeTextBox.Text = string.Empty;
 
             //Reset Register textboxes
@@ -197,9 +197,8 @@ namespace Team4_Project3
             executeStallTextbox.Text = "0";
             storeStallTextbox.Text = "0";
 
-            //Reset Pipeline Output and Memory Output textboxes
+            //Reset Pipeline Output textboxe
             pipeLineOutText.Text = string.Empty;
-            memOutputText.Text = string.Empty;
 
             //Re-enables Assembly textbox and Start Simulation buttons
             assemblyTextBox.Enabled = true;
@@ -640,11 +639,11 @@ namespace Team4_Project3
 
                 if (pipeFetch.Count >= 1)
                 {
-                    instructOneText.Text = pipeFetch[0].InstLit;
+                    fetchTextBox.Text = pipeFetch[0].InstLit;
                 }
                 else
                 {
-                    instructOneText.Text = "";
+                    fetchTextBox.Text = "";
                 }
                 if (pipeDecode.Count >= 1)
                 {

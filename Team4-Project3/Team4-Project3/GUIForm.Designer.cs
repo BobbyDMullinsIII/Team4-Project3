@@ -32,6 +32,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.filesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.instructionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.assemblyPanel = new System.Windows.Forms.Panel();
             this.saveAssemblyButton = new System.Windows.Forms.Button();
@@ -117,7 +118,7 @@
             this.executeTextBox = new System.Windows.Forms.TextBox();
             this.storeTextBox = new System.Windows.Forms.TextBox();
             this.decodeTextBox = new System.Windows.Forms.TextBox();
-            this.instructOneText = new System.Windows.Forms.TextBox();
+            this.fetchTextBox = new System.Windows.Forms.TextBox();
             this.nextCycleButton = new System.Windows.Forms.Button();
             this.startStaticButton = new System.Windows.Forms.Button();
             this.executeLabel = new System.Windows.Forms.Label();
@@ -128,7 +129,6 @@
             this.pipeLineOutText = new System.Windows.Forms.TextBox();
             this.memoryOutput = new System.Windows.Forms.TabPage();
             this.memOutputText = new System.Windows.Forms.TextBox();
-            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.assemblyPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
@@ -174,14 +174,21 @@
             // instructionsToolStripMenuItem
             // 
             this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
-            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.instructionsToolStripMenuItem.Text = "Information";
             this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.informationToolStripMenuItem_Click);
+            // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -350,7 +357,7 @@
             this.simulationPanel.Controls.Add(this.executeTextBox);
             this.simulationPanel.Controls.Add(this.storeTextBox);
             this.simulationPanel.Controls.Add(this.decodeTextBox);
-            this.simulationPanel.Controls.Add(this.instructOneText);
+            this.simulationPanel.Controls.Add(this.fetchTextBox);
             this.simulationPanel.Controls.Add(this.nextCycleButton);
             this.simulationPanel.Controls.Add(this.startStaticButton);
             this.simulationPanel.Controls.Add(this.executeLabel);
@@ -1186,14 +1193,14 @@
             this.decodeTextBox.Size = new System.Drawing.Size(250, 26);
             this.decodeTextBox.TabIndex = 32;
             // 
-            // instructOneText
+            // fetchTextBox
             // 
-            this.instructOneText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.instructOneText.Location = new System.Drawing.Point(12, 309);
-            this.instructOneText.Name = "instructOneText";
-            this.instructOneText.ReadOnly = true;
-            this.instructOneText.Size = new System.Drawing.Size(250, 26);
-            this.instructOneText.TabIndex = 19;
+            this.fetchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fetchTextBox.Location = new System.Drawing.Point(12, 309);
+            this.fetchTextBox.Name = "fetchTextBox";
+            this.fetchTextBox.ReadOnly = true;
+            this.fetchTextBox.Size = new System.Drawing.Size(250, 26);
+            this.fetchTextBox.TabIndex = 19;
             // 
             // nextCycleButton
             // 
@@ -1315,13 +1322,6 @@
             this.memOutputText.Size = new System.Drawing.Size(302, 572);
             this.memOutputText.TabIndex = 0;
             // 
-            // resetToolStripMenuItem
-            // 
-            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.resetToolStripMenuItem.Text = "Reset";
-            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
-            // 
             // GUIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1378,7 +1378,7 @@
         private System.Windows.Forms.TextBox executeTextBox;
         private System.Windows.Forms.TextBox storeTextBox;
         private System.Windows.Forms.TextBox decodeTextBox;
-        private System.Windows.Forms.TextBox instructOneText;
+        private System.Windows.Forms.TextBox fetchTextBox;
         private System.Windows.Forms.Label cyclesLabel;
         private System.Windows.Forms.TextBox counterTextBox;
         private System.Windows.Forms.Label stallsLabel;
