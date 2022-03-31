@@ -623,7 +623,7 @@ namespace Team4_Project3
         #endregion
 
 
-        //Pipeline Phase Methods
+        //Static Pipeline Phase Methods
         #region fetch() Method
         /// <summary>
         /// Method for fetching instruction phase in pipeline
@@ -904,10 +904,6 @@ namespace Team4_Project3
                 param2 = pipeInts.P2Register;
             }
 
-            //=============================//
-            //INSERT CODE FOR DECODING HERE//
-            //=============================//
-
             return (store: pipeInts.SRegister, param1: pipeInts.P1Register, param2: pipeInts.P2Register);
 
         }//end decode()
@@ -977,8 +973,9 @@ namespace Team4_Project3
         }
         #endregion
 
+
         //Pipeline Output Methods
-        #region outputPipelineStats() Method
+        #region outputStaticPipelineStats() Method
         /// <summary>
         /// Method for outputting static pipeline simulation statistics
         /// </summary>
@@ -994,7 +991,7 @@ namespace Team4_Project3
         /// <param name="store">Store cycles stalled</param>
         /// <param name="cycles">Total cycles of static pipeline simulation</param>
         /// <returns>Statistics of the pipeline from the static pipeline simulation</returns>
-        public static string outputPipelineStats(int structural,
+        public static string outputStaticPipelineStats(int structural,
                                                  int data,
                                                  int control,
                                                  int RAW,
@@ -1032,7 +1029,285 @@ namespace Team4_Project3
                    $"============\r\n" +
                    $"{cycles}\r\n";
 
-        }//end outputPipelineStats()
+        }//end outputStaticPipelineStats()
+        #endregion
+
+        #region outputDynamicPipelineStats() Method
+        /// <summary>
+        /// Method for outputting dynamic pipeline simulation statistics
+        /// </summary>
+        /// <param name="buffer">Reorder Buffer delays</param>
+        /// <param name="station">Reservation Station delays</param>
+        /// <param name="conflict">Data Memory Conflict delays</param>
+        /// <param name="dependence">True Dependence delays</param>
+        /// <returns>Statistics of the pipeline from the dynamic pipeline simulation</returns>
+        public static string outputDynamicPipelineStats(int buffer, int station, int conflict, int dependence)
+        {
+            return $"Delays\r\n" +
+                   $"======\r\n" +
+                   $"reorder buffer delays: {buffer}\r\n" +
+                   $"reservation station delays: {station}\r\n" +
+                   $"data memory conflict delays: {conflict}\r\n" +
+                   $"true dependence delays: {dependence}\r\n" +
+                   $"\r\n";
+
+        }//end outputDynamicPipelineStats()
+        #endregion
+
+
+        //Instruction Control Logic Methods
+        #region LDRE() Method
+        /// <summary>
+        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions for ints
+        /// </summary>
+        /// <param name="reg2">Register/Immediate/Memory to load from</param>
+        /// <returns>Value to store in reg1</returns>
+        public static int LDRE(int reg2)
+        {
+            return reg2;
+
+        }//end LDRE()
+        #endregion
+
+        #region LDREfloat() Method
+        /// <summary>
+        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions for floats
+        /// </summary>
+        /// <param name="reg2">Register/Immediate/Memory to load from</param>
+        /// <returns>Value to store in reg1</returns>
+        public static float LDREfloat(float reg2)
+        {
+            return reg2;
+
+        }//end LDREfloat()
+        #endregion
+
+        #region STRE() Method
+        /// <summary>
+        /// Method for STRE &R,R instruction
+        /// </summary>
+        /// <param name="reg2">Register to be loaded into memory</param>
+        /// <returns>Value to store in memory</returns>
+        public static int STRE(int reg2)
+        {
+            return reg2;
+
+        }//end STRE()
+        #endregion
+
+        #region COMP() Method
+        /// <summary>
+        /// Method for COMP R,R,R instruction
+        /// </summary>
+        /// <param name="reg2">First register to be compared (Second total parameter)</param>
+        /// <param name="reg3">Second register to be compared (Third total parameter)</param>
+        /// <returns>Value to store in reg1</returns>
+        public static int COMP(int reg2, int reg3)
+        {
+            if(reg2 < reg3)
+            {
+                return -1;  //Return -1 if reg2 less than reg 3
+            }
+            else if (reg2 == reg3)
+            {
+                return 0;   //Return 0 if reg2 equal to reg 3
+            }
+            else
+            {
+                return 1;   //Return 1 if reg2 more than reg 3
+            }
+
+        }//end COMP()
+        #endregion
+
+        #region ANDD() Method
+        /// <summary>
+        /// Method for ANDD R,R,R instruction
+        /// </summary>
+        /// <param name="reg2">First register to be AND-ed (Second total parameter)</param>
+        /// <param name="reg3">Second register to be AND-ed (Third total parameter)</param>
+        /// <returns>Value to store in reg1</returns>
+        public static int ANDD(int reg2, int reg3)
+        {
+            return reg2 & reg3; //CODE PROBABLY DOESNT GIVE CORRECT OUTPUT CURRENTLY (Try to fix if you think it's broken)
+
+        }//end ANDD()
+        #endregion
+
+        #region OORR() Method
+        /// <summary>
+        /// Method for OORR R,R,R instruction
+        /// </summary>
+        /// <param name="reg2">First register to be OR-ed (Second total parameter)</param>
+        /// <param name="reg3">Second register to be OR-ed (Third total parameter)</param>
+        /// <returns>Value to store in reg1</returns>
+        public static int OORR(int reg2, int reg3)
+        {
+            return reg2 | reg3; //CODE PROBABLY DOESNT GIVE CORRECT OUTPUT CURRENTLY (Try to fix if you think it's broken)
+
+        }//end OORR()
+        #endregion
+
+        #region BRGT() Method
+        /// <summary>
+        /// Method for BRGT R,R instruction
+        /// </summary>
+        /// <param name="reg1">First register to be compared</param>
+        /// <param name="reg2">Second register to be compared</param>
+        /// <returns>hether or not reg1 is greater than reg2</returns>
+        public static bool BRGT(int reg1, int reg2)
+        {
+            return reg1 > reg2;
+
+        }//end BRGT()
+        #endregion
+
+        #region BRLT() Method
+        /// <summary>
+        /// Method for BRLT R,R instruction
+        /// </summary>
+        /// <param name="reg1">First register to be compared</param>
+        /// <param name="reg2">Second register to be compared</param>
+        /// <returns>Whether or not reg1 is less than reg2</returns>
+        public static bool BRLT(int reg1, int reg2)
+        {
+            return reg1 < reg2;
+
+        }//end BRLT()
+        #endregion
+
+        #region BREQ() Method
+        /// <summary>
+        /// Method for BREQ R,R instruction
+        /// </summary>
+        /// <param name="reg1">First register to be compared</param>
+        /// <param name="reg2">Second register to be compared</param>
+        /// <returns>Whether or not reg1 is equal to reg2</returns>
+        public static bool BREQ(int reg1, int reg2)
+        {
+            return reg1 == reg2;
+
+        }//end BREQ()
+        #endregion
+
+        #region BRAN() Method
+        /// <summary>
+        /// Method for BRAN R,R instruction
+        /// </summary>
+        /// <param name="reg1">First register to be compared</param>
+        /// <param name="reg2">Second register to be compared</param>
+        /// <returns>???</returns>
+        public static void BRAN(int reg1, int reg2)
+        {
+            //NOT SURE WHAT TO PUT HERE (We may not need registers for this instruction in the first place)
+
+        }//end BRAN()
+        #endregion
+
+        #region ADDI() Method
+        /// <summary>
+        /// Method for ADDI R,R,R instruction
+        /// </summary>
+        /// <param name="reg2">First register to be added (Second total parameter)</param>
+        /// <param name="reg3">Second register to be added (Third total parameter)</param>
+        /// <returns>Sum value to store in reg1</returns>
+        public static int ADDI(int reg2, int reg3)
+        {
+            return reg2 + reg3;
+
+        }//end ADDI()
+        #endregion
+
+        #region SUBT() Method
+        /// <summary>
+        /// Method for SUBT R,R,R instruction
+        /// </summary>
+        /// <param name="reg2">First register to be subtracted from (Second total parameter)</param>
+        /// <param name="reg3">Second register to subtract (Third total parameter)</param>
+        /// <returns>Difference value to store in freg1</returns>
+        public static int SUBT(int reg2, int reg3)
+        {
+            return reg2 - reg3;
+
+        }//end SUBT()
+        #endregion
+
+        #region FADD() Method
+        /// <summary>
+        /// Method for FADD F,F,F instruction
+        /// </summary>
+        /// <param name="freg2">First floating-point register to be added (Second total parameter)</param>
+        /// <param name="freg3">Second floating-point register to be added (Third total parameter)</param>
+        /// <returns>Sum value to store in freg1</returns>
+        public static float FADD(float freg2, float freg3)
+        {
+            return freg2 + freg3;
+
+        }//end FADD()
+        #endregion
+
+        #region FSUB() Method
+        /// <summary>
+        /// Method for FSUB F,F,F instruction
+        /// </summary>
+        /// <param name="freg2">First floating-point register to be subtracted from (Second total parameter)</param>
+        /// <param name="freg3">Second floating-point register to subtract (Third total parameter)</param>
+        /// <returns>Difference value to store in freg1</returns>
+        public static float FSUB(float freg2, float freg3)
+        {
+            return freg2 - freg3;
+
+        }//end FSUB()
+        #endregion
+
+        #region FMUL() Method
+        /// <summary>
+        /// Method for FMUL F,F,F instruction
+        /// </summary>
+        /// <param name="freg2">First floating-point register to be multiplied (Second total parameter)</param>
+        /// <param name="freg3">Second floating-point register to be multiplied (Third total parameter)</param>
+        /// <returns>Product value to store in freg1</returns>
+        public static float FMUL(float freg2, float freg3)
+        {
+            return freg2 * freg3;
+
+        }//end FMUL()
+        #endregion
+
+        #region FDIV() Method
+        /// <summary>
+        /// Method for FDIV F,F,F instruction
+        /// </summary>
+        /// <param name="freg2">First floating-point register to be divided from (Second total parameter)</param>
+        /// <param name="freg3">Second floating-point register to divide (Third total parameter)</param>
+        /// <returns>Quotient value to store in freg1</returns>
+        public static float FDIV(float freg2, float freg3)
+        {
+            return freg2 / freg3;
+
+        }//end FDIV()
+        #endregion
+
+        #region NOOP() Method
+        /// <summary>
+        /// Method for NOOP instruction
+        /// </summary>
+        public static void NOOP()
+        {
+            //Placeholder method that may not be used
+
+        }//end NOOP()
+        #endregion
+
+        #region STOP() Method
+        /// <summary>
+        /// Method for STOP instruction
+        /// </summary>
+        public static void STOP()
+        {
+            //Placeholder method that may not be used
+
+        }//end STOP()
         #endregion
 
     }//end ProgramController class
