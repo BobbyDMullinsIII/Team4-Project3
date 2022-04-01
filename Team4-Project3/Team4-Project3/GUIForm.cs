@@ -558,9 +558,10 @@ namespace Team4_Project3
             //Make textbox for assembly language readonly during simulation to not mess anything up
             assemblyTextBox.ReadOnly = true;
 
-            //Enables nextPhaseButton to be pressed when simulation has began and disables startButton
+            //Enables nextPhaseButton to be pressed when simulation has began and disables both start buttons
             nextCycleButton.Enabled = true;
             startStaticButton.Enabled = false;
+            startDynamicButton.Enabled = false;
 
         }//end initialPipelineSetup()
         #endregion  
