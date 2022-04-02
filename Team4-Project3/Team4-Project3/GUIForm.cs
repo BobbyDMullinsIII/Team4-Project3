@@ -389,39 +389,42 @@ namespace Team4_Project3
             //Static Pipeline Simulation Code
             else
             {
+                //if first cycle of simulation set wall = true
                 if (start == true)
                 {
                     dWall = true;
                     sWall = true;
                     eWall = true;
                 }
-
+                // if there is anything in the store pipe que
                 if (pipeStore.Count > 0)
                 {
                     if (pipeStore.Count > 0)
-                        pipeStore[0].Store--;
+                        pipeStore[0].Store--;               // Decrement store cycles for instruction object in store que
+                    //if instruction in store que has no cycles left remove that instruction 
                     if (pipeStore[0].Store == 0)
                     {
-                        pipeStore.RemoveAt(0);
+                        pipeStore.RemoveAt(0);              // remove instruction from store que
                         sGo = false;
                         sWall = true;
 
                     }
+                    // if stop has been executed and there is nothing left in store que dont allow next cycle to be hit and print out pipeline stats
                     if (ifStop == true && pipeStore.Count == 0)
                     {
                         nextCycleButton.Enabled = false;
                         pipeLineOutText.Text = ProgramController.outputStaticPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
                     }
                 }
-
+                // if there is something in execute que
                 if (pipeExecute.Count > 0)
                 {
-
+                    //if there is nothing in the store que
                     if (sGo != true)
                     {
-                        pipeExecute[0].Execute--;
+                        pipeExecute[0].Execute--;       // Decrement execute cycles of object in execute que
                     }
-                    ifStop = ProgramController.execute(pipeExecute[0].InstLit);
+                    ifStop = ProgramController.execute(pipeExecute[0].InstLit);     // set ifStop = to current instruction in executes PNuemonic 
                     if (pipeExecute[0].Execute <= 0 && ifStop == false)
                     {
                         sGo = true;
