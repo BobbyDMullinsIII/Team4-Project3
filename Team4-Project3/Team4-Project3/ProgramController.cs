@@ -973,8 +973,121 @@ namespace Team4_Project3
         }
         #endregion
 
+        //Dynamic Pipeline Phase Methods
+        #region issue() Method
+        /// <summary>
+        /// Method for issue phase in dynamic pipeline
+        /// </summary>
+        /// <returns></returns>
+        public static string issue()
+        {
+            string issueOutput = "";
+
+            //======================================//
+            //INSERT CODE FOR ISSUING HERE//
+            //======================================//
+
+            return issueOutput;
+
+        }//end issue()
+        #endregion
+
+        #region dynamicExecute() Method
+        /// <summary>
+        /// Method for execute phase in dynamic pipeline
+        /// </summary>
+        /// <returns></returns>
+        public static string dynamicExecute()
+        {
+            string executeOutput = "";
+
+            //======================================//
+            //INSERT CODE FOR DYNAMIC EXECUTING HERE//
+            //======================================//
+
+            return executeOutput;
+
+        }//end dynamicExecute()
+        #endregion
+
+        #region memoryRead() Method
+        /// <summary>
+        /// Method for memory read phase in dynamic pipeline
+        /// </summary>
+        /// <returns></returns>
+        public static string memoryRead()
+        {
+            string memReadOutput = "";
+
+            //======================================//
+            //INSERT CODE FOR MEMORY READING HERE//
+            //======================================//
+
+            return memReadOutput;
+
+        }//end memoryRead()
+        #endregion
+
+        #region write() Method
+        /// <summary>
+        /// Method for write phase in dynamic pipeline
+        /// </summary>
+        /// <returns></returns>
+        public static string write()
+        {
+            string writeOutput = "";
+
+            //======================================//
+            //INSERT CODE FOR WRITING HERE//
+            //======================================//
+
+            return writeOutput;
+
+        }//end write()
+        #endregion
+
+        #region commit() Method
+        /// <summary>
+        /// Method for write phase in dynamic pipeline
+        /// </summary>
+        /// <returns></returns>
+        public static string commit()
+        {
+            string commitOutput = "";
+
+            //======================================//
+            //INSERT CODE FOR COMMITTING HERE//
+            //======================================//
+
+            return commitOutput;
+
+        }//end commit()
+        #endregion
+
 
         //Pipeline Output Methods
+        #region outputDynamicPipelineStats() Method
+        /// <summary>
+        /// Method for outputting dynamic pipeline simulation statistics
+        /// </summary>
+        /// <param name="buffer">Reorder Buffer delays</param>
+        /// <param name="station">Reservation Station delays</param>
+        /// <param name="conflict">Data Memory Conflict delays</param>
+        /// <param name="dependence">True Dependence delays</param>
+        /// <returns>Statistics of the pipeline from the dynamic pipeline simulation</returns>
+        public static string outputDynamicPipelineStats(int buffer, int station, int conflict, int dependence)
+        {
+            return $"Delays\r\n" +
+                   $"======\r\n" +
+                   $"reorder buffer delays: {buffer}\r\n" +
+                   $"reservation station delays: {station}\r\n" +
+                   $"data memory conflict delays: {conflict}\r\n" +
+                   $"true dependence delays: {dependence}\r\n" +
+                   $"\r\n";
+
+        }//end outputDynamicPipelineStats()
+        #endregion
+
         #region outputStaticPipelineStats() Method
         /// <summary>
         /// Method for outputting static pipeline simulation statistics
@@ -1030,28 +1143,6 @@ namespace Team4_Project3
                    $"{cycles}\r\n";
 
         }//end outputStaticPipelineStats()
-        #endregion
-
-        #region outputDynamicPipelineStats() Method
-        /// <summary>
-        /// Method for outputting dynamic pipeline simulation statistics
-        /// </summary>
-        /// <param name="buffer">Reorder Buffer delays</param>
-        /// <param name="station">Reservation Station delays</param>
-        /// <param name="conflict">Data Memory Conflict delays</param>
-        /// <param name="dependence">True Dependence delays</param>
-        /// <returns>Statistics of the pipeline from the dynamic pipeline simulation</returns>
-        public static string outputDynamicPipelineStats(int buffer, int station, int conflict, int dependence)
-        {
-            return $"Delays\r\n" +
-                   $"======\r\n" +
-                   $"reorder buffer delays: {buffer}\r\n" +
-                   $"reservation station delays: {station}\r\n" +
-                   $"data memory conflict delays: {conflict}\r\n" +
-                   $"true dependence delays: {dependence}\r\n" +
-                   $"\r\n";
-
-        }//end outputDynamicPipelineStats()
         #endregion
 
 

@@ -32,14 +32,16 @@ namespace Team4_Project3
         int fetch, decode, execute, store, name = 0;
 
         /// <summary>
-        /// Parameterized Constructor for Instruction
+        /// Parameterized Constructor for Instruction with 1 register
         /// </summary>
         /// <param name="name">Name</param>
         /// <param name="fetch">Number of fetch cycles</param>
         /// <param name="decode">Number of decode cycles</param>
         /// <param name="execute">Number of execute cycles</param>
         /// <param name="store">Number of register cycles</param>
-        /// <param name="register">Register currently being worked on</param>
+        /// <param name="sRegister"></param>
+        /// <param name="p1Register"></param>
+        /// <param name="instLit"></param>
         public Instruction(int name, int fetch, int decode, int execute, int store, string sRegister, string p1Register, string instLit)
         {
             this.name = name;
@@ -52,6 +54,20 @@ namespace Team4_Project3
             this.instLit = instLit;
 
         }//end Instruction()
+
+
+        /// <summary>
+        /// Parameterized Constructor for Instruction with 2 registers
+        /// </summary>
+        /// <param name="name">Name</param>
+        /// <param name="fetch">Number of fetch cycles</param>
+        /// <param name="decode">Number of decode cycles</param>
+        /// <param name="execute">Number of execute cycles</param>
+        /// <param name="store">Number of register cycles</param>
+        /// <param name="sRegister"></param>
+        /// <param name="p1Register"></param>
+        /// <param name="p2Register"></param>
+        /// <param name="instLit"></param>
         public Instruction(int name, int fetch, int decode, int execute, int store, string sRegister, string p1Register, string p2Register, string instLit)
         {
             this.name = name;
