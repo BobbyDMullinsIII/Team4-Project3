@@ -26,6 +26,7 @@ namespace Team4_Project3
         //Conducting Static or Dynamic Simulation Bool
         bool isDynamic = false;
 
+
         //==Counters==//
         //============================================================//
         //Cycle Counter
@@ -295,7 +296,15 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void startDynamicButton_Click(object sender, EventArgs e)
         {
+            //Tells program that current simulation is dynamic
             isDynamic = true;
+
+            //Instantiate and display initial memory
+            instantiateMemory();
+            storeMemoryInString();
+
+            //Start dynamic pipeline simulation
+            startSimulation();
         }
 
         /// <summary>
@@ -305,71 +314,15 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void startStaticButton_Click(object sender, EventArgs e)
         {
+            //Tells program that current simulation is static
             isDynamic = false;
 
-            //Instantiate Memory (1MB)
-            int memHelp = 0;
-            for (int i = 0; i < 65536; i++)
-            {
-                for (int j = 0; j < 17; j++)
-                {
-                    if (j == 0)
-                    {
-                        Memory[i, j] = $"{string.Format("{0}",memHelp.ToString("X5"))} \t";
-                        memHelp += 16;
-                    }
-                    else 
-                    {
-                        Memory[i, j] = "0  ";
-                    }
-                }
-            }
+            //Instantiate and display initial memory
+            instantiateMemory();
+            storeMemoryInString();
 
-            //Store all memory into single string
-            StringBuilder memString = new StringBuilder();
-            for (int i = 0; i < 65536; i++)
-            {
-                for (int j = 0; j < 17; j++)
-                {
-                    if (j == 16)
-                    {
-                        memString.Append(Memory[i, j]);
-                        memString.Append( "\r\n");
-                    }
-                    else
-                    {
-                        memString.Append( Memory[i, j]);
-                    }
-                }
-            }
-
-            //Output memString to Textbox
-            memOutputText.Text = Convert.ToString(memString);
-
-
-            //If assemblyTextBox has no code in it, show error message
-            if (String.IsNullOrWhiteSpace(assemblyTextBox.Text) == true)
-            {
-                MessageBox.Show("There is no assembly code to start the simulation.",
-                                "Error - No Code To Process",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-            }
-            //Else, start static pipeline simulation
-            else
-            {
-                foreach (string var in assemblyTextBox.Text.Split())
-                {
-                    instructions.Add(var);
-                }
-
-                //Make textbox for assembly language readonly during simulation to not mess anything up
-                assemblyTextBox.ReadOnly = true;
-
-                //Enables nextPhaseButton to be pressed when simulation has began and disables startButton
-                nextCycleButton.Enabled = true;
-                startStaticButton.Enabled = false;
-            }
+            //Start static pipeline simulation
+            startSimulation();
         }
 
         /// <summary>
@@ -379,16 +332,13 @@ namespace Team4_Project3
         /// <param name="e">arguments for event (auto-generated, unused here)</param>
         private void nextCycleButton_Click(object sender, EventArgs e)
         {
-            //Dynamic Pipeline Simulation Code
             if (isDynamic == true)
             {
-                //Increase cycle counter by one
-                incrementCycleCounter();
-
-            }//end Dynamic Pipeline Simulation Code
-            //Static Pipeline Simulation Code
+                nextDynamicCycle();
+            }
             else
             {
+
                 //if first cycle of simulation set wall = true
                 if (start == true)
                 {
@@ -685,7 +635,10 @@ namespace Team4_Project3
                 }
 
             }//end Static Pipeline Simulation Code
-        }
+
+                nextStaticCycle();  
+            }
+
         #endregion
 
         //GUIForm Regular Methods
@@ -808,5 +761,424 @@ namespace Team4_Project3
         }//end incrementCycleCounter()
         #endregion    
 
+        #region instantiateMemory() Method
+        /// <summary>
+        /// Method for instantiating memory array
+        /// </summary>
+        public void instantiateMemory()
+        {
+            //Instantiate Memory (1MB)
+            int memHelp = 0;
+            for (int i = 0; i < 65536; i++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    if (j == 0)
+                    {
+                        Memory[i, j] = $"{string.Format("{0}", memHelp.ToString("X5"))} \t";
+                        memHelp += 16;
+                    }
+                    else
+                    {
+                        Memory[i, j] = "0  ";
+                    }
+                }
+            }
+
+        }//end instantiateMemory()
+        #endregion   
+
+        #region storeMemoryInString() Method
+        /// <summary>
+        /// Method for storing memory into single string for a textbox
+        /// </summary>
+        public void storeMemoryInString()
+        {
+            //Store all memory into single string
+            StringBuilder memString = new StringBuilder();
+            for (int i = 0; i < 65536; i++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    if (j == 16)
+                    {
+                        memString.Append(Memory[i, j]);
+                        memString.Append("\r\n");
+                    }
+                    else
+                    {
+                        memString.Append(Memory[i, j]);
+                    }
+                }
+            }
+
+            //Output memString to Textbox
+            memOutputText.Text = Convert.ToString(memString);
+
+        }//end storeMemoryInString()
+        #endregion  
+
+        #region startSimulation() Method
+        /// <summary>
+        /// Method for starting either static or dynamic pipeline simulation
+        /// </summary>
+        public void startSimulation()
+        {
+            //If assemblyTextBox has no code in it, show error message
+            if (string.IsNullOrWhiteSpace(assemblyTextBox.Text) == true)
+            {
+                MessageBox.Show("There is no assembly code to start the simulation.",
+                                "Error - No Code To Process",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+            //Else, start initial pipeline simulation setup
+            else
+            {
+                initialPipelineSetup();
+            }
+
+        }//end startSimulation()
+        #endregion  
+
+        #region initialPipelineSetup() Method
+        /// <summary>
+        /// Method for setting up initial static or dynamicpipeline simulation instructions and buttons
+        /// </summary>
+        public void initialPipelineSetup()
+        {
+            //Store each instruction into instructions list for current pipeline simulation
+            foreach (string var in assemblyTextBox.Text.Split())
+            {
+                instructions.Add(var);
+            }
+
+            //Make textbox for assembly language readonly during simulation to not mess anything up
+            assemblyTextBox.ReadOnly = true;
+
+            //Enables nextPhaseButton to be pressed when simulation has began and disables both start buttons
+            nextCycleButton.Enabled = true;
+            startStaticButton.Enabled = false;
+            startDynamicButton.Enabled = false;
+
+        }//end initialPipelineSetup()
+        #endregion  
+
+        #region nextDynamicCycle() Method
+        /// <summary>
+        /// Method for going to next cycle in dynamic pipeline simulation
+        /// </summary>
+        public void nextDynamicCycle()
+        {
+            //===========================================================//
+            //INSERT CODE HERE FOR DYNAMIC PIPELINE SIMULATION NEXT CYCLE//
+            //===========================================================//
+
+            //Increase cycle counter by one
+            incrementCycleCounter();
+            
+        }//end nextDynamicCycle()
+        #endregion 
+
+        #region nextStaticCycle() Method
+        /// <summary>
+        /// Method for going to next cycle in static pipeline simulation
+        /// </summary>
+        public void nextStaticCycle()
+        {
+            if (start == true)
+            {
+                dWall = true;
+                sWall = true;
+                eWall = true;
+            }
+
+            if (pipeStore.Count > 0)
+            {
+                if (pipeStore.Count > 0)
+                    pipeStore[0].Store--;
+                if (pipeStore[0].Store == 0)
+                {
+                    pipeStore.RemoveAt(0);
+                    sGo = false;
+                    sWall = true;
+
+                }
+                if (ifStop == true && pipeStore.Count == 0)
+                {
+                    nextCycleButton.Enabled = false;
+                    pipeLineOutText.Text = ProgramController.outputStaticPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
+                }
+            }
+
+            if (pipeExecute.Count > 0)
+            {
+
+                if (sGo != true)
+                {
+                    pipeExecute[0].Execute--;
+                }
+                ifStop = ProgramController.execute(pipeExecute[0].InstLit);
+                if (pipeExecute[0].Execute <= 0 && ifStop == false)
+                {
+                    sGo = true;
+
+                }
+                if (sGo == true && sWall == true)
+                {
+
+                    pipeStore.Add(pipeExecute[0]);
+                    sWall = false;
+                    pipeExecute.RemoveAt(0);
+                    eWall = true;
+
+                    eGo = false;
+                    sGo = false;
+
+                    eFlagCount = true;
+                }
+                if (sGo == true && sWall == false && pipeExecute.Count > 0)
+                {
+                    eStall++;
+                    executeStallTextbox.Text = eStall.ToString();
+
+                    if (eFlagCount == true)
+                    {
+                        structHCount++;
+                        structHTextBox.Text = structHCount.ToString();
+
+                        eFlagCount = false;
+                    }
+
+                }
+
+            }
+
+            if (pipeDecode.Count > 0)
+            {
+
+
+                if (eGo != true)
+                {
+                    pipeDecode[0].Decode--;
+                }
+                if (pipeDecode[0].Decode <= 0)
+                {
+                    eGo = true;
+                }
+                if (eGo == true && eWall == true && rawFlag == true)
+                {
+                    pipeExecute.Add(pipeDecode[0]);
+                    eWall = false;
+                    pipeDecode.RemoveAt(0);
+                    dWall = true;
+                    dGo = false;
+                    eGo = false;
+
+                    dFlagCount = true;
+                }
+                if (eGo == true && eWall == false && pipeDecode.Count > 0)
+                {
+                    dStall++;
+                    decodeStallTextbox.Text = dStall.ToString();
+
+                    if (dFlagCount == true)
+                    {
+                        structHCount++;
+                        structHTextBox.Text = structHCount.ToString();
+
+                        dFlagCount = false;
+                    }
+
+                }
+
+            }
+
+            if (pipeFetch.Count > 0)
+            {
+
+                if (dGo != true)
+                {
+                    pipeFetch[0].Fetch--;
+                }
+                if (pipeFetch[0].Fetch <= 0)
+                {
+                    dGo = true;
+                }
+                if (dGo == true && dWall == true)
+                {
+                    (store, param1, param2) = ProgramController.decode(pipeFetch[0]);
+                    pipeDecode.Add(pipeFetch[0]);
+                    dWall = false;
+                    pipeFetch.RemoveAt(0);
+                    fWall = true;
+                    fGo = false;
+                    dGo = false;
+
+                    fFlagCount = true;
+                }
+                if (dGo == true && dWall == false && pipeFetch.Count > 0)
+                {
+                    fStall++;
+                    fetchStallTextbox.Text = fStall.ToString();
+
+                    if (fFlagCount == true)
+                    {
+                        structHCount++;
+                        structHTextBox.Text = structHCount.ToString();
+
+                        fFlagCount = false;
+                    }
+
+                }
+
+                if (pipeExecute.Count > 0 && rawFlag == true)
+                {
+                    if (pipeExecute[0].SRegister == pipeDecode[0].P1Register || pipeExecute[0].SRegister == pipeDecode[0].P2Register)
+                    {
+                        rawFlag = false;
+
+                        rawCount++;
+                        rawTextBox.Text = rawCount.ToString();
+
+                        dataHCount++;
+                        dataHTextBox.Text = dataHCount.ToString();
+
+                        rF1 = false;
+                    }
+                }
+                if (pipeStore.Count > 0 && rawFlag == true)
+                {
+                    if (pipeStore[0].SRegister == pipeDecode[0].P1Register || pipeStore[0].SRegister == pipeDecode[0].P2Register)
+                    {
+                        rawFlag = false;
+
+                        rawCount++;
+                        rawTextBox.Text = rawCount.ToString();
+
+                        dataHCount++;
+                        dataHTextBox.Text = dataHCount.ToString();
+
+                        rF2 = false;
+                    }
+                }
+
+                if (pipeExecute.Count > 0 && warFlag == true)
+                {
+                    if (pipeDecode[0].SRegister == pipeExecute[0].P1Register || pipeDecode[0].SRegister == pipeExecute[0].P2Register)
+                    {
+                        warFlag = false;
+
+                        warCount++;
+                        warTextBox.Text = warCount.ToString();
+
+                        dataHCount++;
+                        dataHTextBox.Text = dataHCount.ToString();
+
+                        rF1 = false;
+                    }
+                }
+
+                if (pipeStore.Count > 0 && warFlag == true)
+                {
+                    if (pipeDecode[0].SRegister == pipeStore[0].P1Register || pipeDecode[0].SRegister == pipeStore[0].P2Register)
+                    {
+                        warFlag = false;
+
+                        warCount++;
+                        warTextBox.Text = warCount.ToString();
+
+                        dataHCount++;
+                        dataHTextBox.Text = dataHCount.ToString();
+
+                        rF2 = false;
+                    }
+                }
+                if (rawFlag == false)
+                {
+                    if (pipeExecute.Count == 0 && pipeStore.Count == 0 && rF1 == false)
+                    {
+                        rawFlag = true;
+                        rF1 = true;
+                    }
+                    if (pipeExecute.Count == 0 && rF2 == false)
+                    {
+                        rawFlag = true;
+                        rF2 = true;
+                    }
+                }
+
+                if (warFlag == false)
+                {
+
+                    if (pipeExecute.Count == 0 && pipeStore.Count == 0 || rF1 == false)
+                    {
+                        warFlag = true;
+                        rF1 = true;
+                    }
+
+                    if (pipeExecute.Count == 0 || rF2 == false)
+                    {
+                        warFlag = true;
+                        rF2 = true;
+                    }
+                }
+            }
+
+
+            if (start == true)
+            {
+                (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
+                r0TextBox.Text = R0.ToString();
+                start = false;
+
+            }
+            if (pipeFetch.Count == 0 && stopF == 0)
+            {
+                (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
+                r0TextBox.Text = R0.ToString();
+            }
+
+
+            if (pipeFetch.Count >= 1)
+            {
+                fetchTextBox.Text = pipeFetch[0].InstLit;
+            }
+            else
+            {
+                fetchTextBox.Text = "";
+            }
+            if (pipeDecode.Count >= 1)
+            {
+                decodeTextBox.Text = pipeDecode[0].InstLit;
+            }
+            else
+            {
+                decodeTextBox.Text = "";
+            }
+            if (pipeExecute.Count >= 1)
+            {
+                executeTextBox.Text = pipeExecute[0].InstLit;
+            }
+            else
+            {
+                executeTextBox.Text = "";
+            }
+            if (pipeStore.Count >= 1)
+            {
+                storeTextBox.Text = pipeStore[0].InstLit;
+            }
+            else
+            {
+                storeTextBox.Text = "";
+            }
+            if (nextCycleButton.Enabled == true)
+            {
+                //Increase cycle counter by one
+                incrementCycleCounter();
+            }
+
+        }//end nextStaticCycle()
+        #endregion  
     }
 }
