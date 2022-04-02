@@ -32,27 +32,27 @@ namespace Team4_Project3
         //Cycle Counter
         int cycleCounter = 0;
 
-        //Hazard Counters
-        int structHCount = 0;
-        int dataHCount = 0;
-        int controlHCounter = 0;
-
-        //Dependency Counters
-        int rawCount = 0;
-        int warCount = 0;
-        int wawCount = 0;
-
-        //Stall Counters
-        int fStall = 0;
-        int dStall = 0;
-        int eStall = 0;
-        int sStall = 0;
-
-        //Delay Counters
+        //Delay Counters (Dynamic)
         int bufferD = 0;
         int stationD = 0;
         int conflictD = 0;
         int dependenceD = 0;
+
+        //Hazard Counters (Static)
+        int structHCount = 0;
+        int dataHCount = 0;
+        int controlHCounter = 0;
+
+        //Dependency Counters (Static)
+        int rawCount = 0;
+        int warCount = 0;
+        int wawCount = 0;
+
+        //Stall Counters (Static)
+        int fStall = 0;
+        int dStall = 0;
+        int eStall = 0;
+        int sStall = 0;
 
 
         //==Flags==//
@@ -73,9 +73,9 @@ namespace Team4_Project3
         //============================================================//
         //Regular Registers
         int R0 = 0; //Program Counter
-        int R1 = 0; //Flag
-        int R2 = 0; //Flag
-        int R3 = 0; //Flag
+        int R1 = 0; //Z (Zero) Flag
+        int R2 = 0; //C (Carry) Flag
+        int R3 = 0; //S (Sign) Flag
         int R4 = 0;
         int R5 = 0;
         int R6 = 0;
@@ -358,6 +358,12 @@ namespace Team4_Project3
             //Cycle Counter
             cycleCounter = 0;
 
+            //Delay Counters
+            bufferD = 0;
+            stationD = 0;
+            conflictD = 0;
+            dependenceD = 0;
+
             //Hazard Counters
             structHCount = 0;
             dataHCount = 0;
@@ -393,9 +399,9 @@ namespace Team4_Project3
             //============================================================//
             //Regular Registers
             R0 = 0; //Program Counter
-            R1 = 0; //Flag
-            R2 = 0; //Flag
-            R3 = 0; //Flag
+            R1 = 0; //Flag Z (Zero)
+            R2 = 0; //Flag C (Carry)
+            R3 = 0; //Flag S (Sign)
             R4 = 0;
             R5 = 0;
             R6 = 0;
@@ -572,13 +578,17 @@ namespace Team4_Project3
         /// </summary>
         public void nextDynamicCycle()
         {
-            //===========================================================//
-            //INSERT CODE HERE FOR DYNAMIC PIPELINE SIMULATION NEXT CYCLE//
-            //===========================================================//
+            //=========================================================================//
+            //INSERT CODE WITHIN THIS METHOD FOR DYNAMIC PIPELINE SIMULATION NEXT CYCLE//
+            //=========================================================================//
 
             //Increase cycle counter by one
             incrementCycleCounter();
-            
+
+            //Output Dynamic Pipeline Simulation Final Statistics
+            ProgramController.outputDynamicPipelineStats(bufferD, stationD, conflictD, dependenceD);
+
+
         }//end nextDynamicCycle()
         #endregion 
 
@@ -881,6 +891,6 @@ namespace Team4_Project3
             }
 
         }//end nextStaticCycle()
-        #endregion  
+        #endregion
     }
 }
