@@ -157,7 +157,6 @@ namespace Team4_Project3
             //Reset Dynamic Phase textboxes
             issueTextBox.Text = string.Empty;
             dynamicExecuteTextBox.Text = string.Empty;
-            memoryReadTextBox.Text = string.Empty;
             writeTextBox.Text = string.Empty;
             commitTextBox.Text = string.Empty;
 
@@ -578,9 +577,9 @@ namespace Team4_Project3
         /// </summary>
         public void nextDynamicCycle()
         {
-            //=========================================================================//
-            //INSERT CODE WITHIN THIS METHOD FOR DYNAMIC PIPELINE SIMULATION NEXT CYCLE//
-            //=========================================================================//
+            //==============================================================//
+            //INSERT CODE WITHIN THIS METHOD FOR DYNAMIC PIPELINE SIMULATION//
+            //==============================================================//
 
             //Increase cycle counter by one
             incrementCycleCounter();

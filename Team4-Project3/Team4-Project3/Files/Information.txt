@@ -1,24 +1,23 @@
 ﻿=Instruction Name=			=Instruction=		=Opcode=		=Register=	=Addressing Mode=	=Data=				=Cycles=	=Cycle Breakdown=
-Load Register (Register from Register)	LDRE R,R		0x0(00000XXX)		0x0(X<8)	(00)			(XXX0000000000000000000XX) 	5		1 Fetch, 1 Decode, 1 Load Operation, 2 Write to Register
-Load Register (Register from Immediate) LDRE R,Immediate	0x0(00001XXX)		0x0(X>7)	(01)			(XXXXXXXXXXXXXXXX000000XX) 	5		1 Fetch, 1 Decode, 1 Load Operation, 2 Write to Register
-Load Register (Register from Memory)	LDRE R,Memory		0x1(00010XXX)		0x1(X<8)	(10)			(XXXXXXXXXXXXXXXXXXXX00XX) 	7		1 Fetch, 1 Decode, 3 Load Memory, 2 Write to Register
-Store Register (Store from Register)	STRE &R,R		0x1(00011XXX)		0x1(X>7)	(00)			(XXXXXXXXXXXXXXXX000000XX) 	7		1 Fetch, 1 Decode, 3 Store Operation, 2 Write to Register
-Move					MOVE R,R		0x2(00100XXX)		0x2(X<8)	(00)			(XXX0000000000000000000XX)	4		1 Fetch, 1 Decode, 1 Move Operation, 1 Write to Register
-Compare Registers			COMP R,R,R		0x2(00101XXX)		0x2(X>7)	(11)			(XXXXXX0000000000000000XX) 	5		1 Fetch, 1 Decode, 1 Compare Operation, 2 Write to Register
-And Bitwise Operation			ANDD R,R,R		0x3(00110XXX)		0x3(X<8)	(11)			(XXXXXX0000000000000000XX) 	5		1 Fetch, 1 Decode, 1 Bitwise Operation, 2 Write to Register
-Or Bitwise Operation			OORR R,R,R		0x3(00111XXX)		0x3(X>7)	(11)			(XXXXXX0000000000000000XX) 	5		1 Fetch, 1 Decode, 1 Bitwise Operation, 2 Write to Register
-Branch if Less Than			BRLT R,R		0x4(01000XXX)		0x4(X<8)	(00)			(XXX0000000000000000000XX) 	4		1 Fetch, 1 Decode, 1 Branch Operation, 1 Write to Register
-Branch if Greater Than			BRGT R,R		0x4(01001XXX)		0x4(X>7)	(00)			(XXX0000000000000000000XX) 	4		1 Fetch, 1 Decode, 1 Branch Operation, 1 Write to Register
-Branch if Equal To			BREQ R,R		0x5(01010XXX)		0x5(X<8)	(00)			(XXX0000000000000000000XX) 	4		1 Fetch, 1 Decode, 1 Branch Operation, 1 Write to Register
-Branch					BRAN R,R		0x5(01011XXX)		0x5(X>7)	(00)			(XXX0000000000000000000XX) 	4		1 Fetch, 1 Decode, 1 Branch Operation, 1 Write to Register
-Integer Addition			ADDI R,R,R		0x6(01100XXX)		0x6(X<8)	(11)			(XXXXXX0000000000000000XX) 	5		1 Fetch, 1 Decode, 1 Integer Addition, 2 Write to Register
-Integer Subtraction			SUBT R,R,R		0x6(01101XXX)		0x6(X>7)	(11)			(XXXXXX0000000000000000XX)	5		1 Fetch, 1 Decode, 1 Integer Subtraction, 2 Write to Register
-Floating-Point Addition			FADD F,F,F		0x7(01110XXX)		0x7(X<8)	(11)			(XXXXXX0000000000000000XX)	6		1 Fetch, 1 Decode, 2 Floating-Point Addition, 2 Write to Register
-Floating-Point Subtraction		FSUB F,F,F		0x7(01111XXX)		0x7(X>7)	(11)			(XXXXXX0000000000000000XX)	6		1 Fetch, 1 Decode, 2 Floating-Point Subtraction, 2 Write to Register
-Floating-Point Multiplication		FMUL F,F,F		0x8(10000XXX)		0x8(X<8)	(11)			(XXXXXX0000000000000000XX)	9		1 Fetch, 1 Decode, 5 Floating-Point Multiplication, 2 Write to Register
-Floating-Point Division			FDIV F,F,F		0x8(10001XXX)		0x8(X>7)	(11)			(XXXXXX0000000000000000XX)	14		1 Fetch, 1 Decode, 10 Floating-Point Division, 2 Write to Register
-No Operation				NOOP			0xFF(11111110)		N/A		N/A			N/A 				4		1 Fetch, 1 Decode, 1 Placeholder Operation, 1 Write to Register
-Stop					STOP			0xFF(11111111)		N/A		N/A			N/A				4		1 Fetch, 1 Decode, 1 Stop Operation, 1 Write to Register
+Load Register (Register from Register)	LDRE R,R		0x0(00000XXX)		0x0(X<8)	(00)			(XXX0000000000000000000XX) 	5		2 Issue, 1 Load Operation, 2 Write, 1 Commit
+Load Register (Register from Immediate) LDRE R,Immediate	0x0(00001XXX)		0x0(X>7)	(01)			(XXXXXXXXXXXXXXXX000000XX) 	5		2 Issue, 1 Load Operation, 2 Write, 1 Commit
+Load Register (Register from)		LDRE R,Memory		0x1(00010XXX)		0x1(X<8)	(10)			(XXXXXXXXXXXXXXXXXXXX00XX) 	7		2 Issue, 3 Load Memory, 2 Write, 1 Commit
+Store Register (Store from Register)	STRE &R,R		0x1(00011XXX)		0x1(X>7)	(00)			(XXXXXXXXXXXXXXXX000000XX) 	7		2 Issue, 3 Store Operation, 2 Write, 1 Commit
+Compare Registers			COMP R,R,R		0x2(00101XXX)		0x2(X>7)	(11)			(XXXXXX0000000000000000XX) 	5		2 Issue, 1 Compare Operation, 2 Write, 1 Commit
+And Bitwise Operation			ANDD R,R,R		0x3(00110XXX)		0x3(X<8)	(11)			(XXXXXX0000000000000000XX) 	5		2 Issue, 1 Bitwise Operation, 2 Write, 1 Commit
+Or Bitwise Operation			OORR R,R,R		0x3(00111XXX)		0x3(X>7)	(11)			(XXXXXX0000000000000000XX) 	5		2 Issue, 1 Bitwise Operation, 2 Write, 1 Commit
+Branch if Less Than			BRLT R,R		0x4(01000XXX)		0x4(X<8)	(00)			(XXX0000000000000000000XX) 	4		2 Issue, 1 Branch Operation, 2 Write, 1 Commit
+Branch if Greater Than			BRGT R,R		0x4(01001XXX)		0x4(X>7)	(00)			(XXX0000000000000000000XX) 	4		2 Issue, 1 Branch Operation, 2 Write, 1 Commit
+Branch if Equal To			BREQ R,R		0x5(01010XXX)		0x5(X<8)	(00)			(XXX0000000000000000000XX) 	4		2 Issue, 1 Branch Operation, 2 Write, 1 Commit
+Branch					BRAN R,R		0x5(01011XXX)		0x5(X>7)	(00)			(XXX0000000000000000000XX) 	4		2 Issue, 1 Branch Operation, 2 Write, 1 Commit
+Integer Addition			ADDI R,R,R		0x6(01100XXX)		0x6(X<8)	(11)			(XXXXXX0000000000000000XX) 	5		2 Issue, 1 Integer Addition, 2 Write, 1 Commit
+Integer Subtraction			SUBT R,R,R		0x6(01101XXX)		0x6(X>7)	(11)			(XXXXXX0000000000000000XX)	5		2 Issue, 1 Integer Subtraction, 2 Write, 1 Commit
+Floating-Point Addition			FADD F,F,F		0x7(01110XXX)		0x7(X<8)	(11)			(XXXXXX0000000000000000XX)	6		2 Issue, 2 Floating-Point Addition, 2 Write, 1 Commit
+Floating-Point Subtraction		FSUB F,F,F		0x7(01111XXX)		0x7(X>7)	(11)			(XXXXXX0000000000000000XX)	6		2 Issue, 2 Floating-Point Subtraction, 2 Write, 1 Commit
+Floating-Point Multiplication		FMUL F,F,F		0x8(10000XXX)		0x8(X<8)	(11)			(XXXXXX0000000000000000XX)	9		2 Issue, 5 Floating-Point Multiplication, 2 Write, 1 Commit
+Floating-Point Division			FDIV F,F,F		0x8(10001XXX)		0x8(X>7)	(11)			(XXXXXX0000000000000000XX)	14		2 Issue, 10 Floating-Point Division, 2 Write, 1 Commit
+No Operation				NOOP			0xFF(11111110)		N/A		N/A			N/A 				4		2 Issue, 1 No Operation
+Stop					STOP			0xFF(11111111)		N/A		N/A			N/A				4		2 Issue, 1 Stop Operation
 
 =Computing Model=
 Register to Register
@@ -28,7 +27,6 @@ Register to Register
 (01)	Immediate
 (10)	Memory
 (11)	2 Registers
-
 
 =Registers=
 R0	PC
@@ -49,8 +47,14 @@ F13	GP
 F14	GP
 F15	GP
 
-=Pipeline Phases=
+=Static Pipeline Phases=
 Fetch		1
 Decode		2
 Execute		3
 Store/Finish	4
+
+=Dynamic Pipeline Phases=
+Issue		1
+Execute		2
+Write		3
+Commit		4

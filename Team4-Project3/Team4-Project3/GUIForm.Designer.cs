@@ -60,11 +60,9 @@
             this.fetchLabel = new System.Windows.Forms.Label();
             this.commitTextBox = new System.Windows.Forms.TextBox();
             this.writeTextBox = new System.Windows.Forms.TextBox();
-            this.memoryReadTextBox = new System.Windows.Forms.TextBox();
             this.issueTextBox = new System.Windows.Forms.TextBox();
             this.commitLabel = new System.Windows.Forms.Label();
             this.writeLabel = new System.Windows.Forms.Label();
-            this.memoryReadLabel = new System.Windows.Forms.Label();
             this.issueLabel = new System.Windows.Forms.Label();
             this.r0Label = new System.Windows.Forms.Label();
             this.f15Label = new System.Windows.Forms.Label();
@@ -307,11 +305,9 @@
             this.simulationPanel.Controls.Add(this.fetchLabel);
             this.simulationPanel.Controls.Add(this.commitTextBox);
             this.simulationPanel.Controls.Add(this.writeTextBox);
-            this.simulationPanel.Controls.Add(this.memoryReadTextBox);
             this.simulationPanel.Controls.Add(this.issueTextBox);
             this.simulationPanel.Controls.Add(this.commitLabel);
             this.simulationPanel.Controls.Add(this.writeLabel);
-            this.simulationPanel.Controls.Add(this.memoryReadLabel);
             this.simulationPanel.Controls.Add(this.issueLabel);
             this.simulationPanel.Controls.Add(this.r0Label);
             this.simulationPanel.Controls.Add(this.f15Label);
@@ -486,7 +482,7 @@
             this.startDynamicButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
             this.startDynamicButton.ForeColor = System.Drawing.Color.Black;
             this.startDynamicButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.startDynamicButton.Location = new System.Drawing.Point(12, 196);
+            this.startDynamicButton.Location = new System.Drawing.Point(12, 164);
             this.startDynamicButton.Margin = new System.Windows.Forms.Padding(1);
             this.startDynamicButton.Name = "startDynamicButton";
             this.startDynamicButton.Size = new System.Drawing.Size(220, 40);
@@ -581,7 +577,7 @@
             // commitTextBox
             // 
             this.commitTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commitTextBox.Location = new System.Drawing.Point(12, 166);
+            this.commitTextBox.Location = new System.Drawing.Point(12, 134);
             this.commitTextBox.Name = "commitTextBox";
             this.commitTextBox.ReadOnly = true;
             this.commitTextBox.Size = new System.Drawing.Size(250, 26);
@@ -590,20 +586,11 @@
             // writeTextBox
             // 
             this.writeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeTextBox.Location = new System.Drawing.Point(12, 134);
+            this.writeTextBox.Location = new System.Drawing.Point(12, 102);
             this.writeTextBox.Name = "writeTextBox";
             this.writeTextBox.ReadOnly = true;
             this.writeTextBox.Size = new System.Drawing.Size(250, 26);
             this.writeTextBox.TabIndex = 101;
-            // 
-            // memoryReadTextBox
-            // 
-            this.memoryReadTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.memoryReadTextBox.Location = new System.Drawing.Point(12, 102);
-            this.memoryReadTextBox.Name = "memoryReadTextBox";
-            this.memoryReadTextBox.ReadOnly = true;
-            this.memoryReadTextBox.Size = new System.Drawing.Size(250, 26);
-            this.memoryReadTextBox.TabIndex = 100;
             // 
             // issueTextBox
             // 
@@ -620,7 +607,7 @@
             this.commitLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.commitLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.commitLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commitLabel.Location = new System.Drawing.Point(268, 166);
+            this.commitLabel.Location = new System.Drawing.Point(268, 134);
             this.commitLabel.Name = "commitLabel";
             this.commitLabel.Size = new System.Drawing.Size(81, 27);
             this.commitLabel.TabIndex = 98;
@@ -632,23 +619,11 @@
             this.writeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.writeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.writeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeLabel.Location = new System.Drawing.Point(268, 133);
+            this.writeLabel.Location = new System.Drawing.Point(268, 102);
             this.writeLabel.Name = "writeLabel";
             this.writeLabel.Size = new System.Drawing.Size(60, 27);
             this.writeLabel.TabIndex = 97;
             this.writeLabel.Text = "Write";
-            // 
-            // memoryReadLabel
-            // 
-            this.memoryReadLabel.AutoSize = true;
-            this.memoryReadLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.memoryReadLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.memoryReadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.memoryReadLabel.Location = new System.Drawing.Point(268, 102);
-            this.memoryReadLabel.Name = "memoryReadLabel";
-            this.memoryReadLabel.Size = new System.Drawing.Size(136, 27);
-            this.memoryReadLabel.TabIndex = 96;
-            this.memoryReadLabel.Text = "Memory Read";
             // 
             // issueLabel
             // 
@@ -1541,13 +1516,11 @@
         private System.Windows.Forms.TabPage memoryOutput;
         private System.Windows.Forms.TextBox memOutputText;
         private System.Windows.Forms.TextBox pipeLineOutText;
-        private System.Windows.Forms.Label memoryReadLabel;
         private System.Windows.Forms.Label issueLabel;
         private System.Windows.Forms.Label commitLabel;
         private System.Windows.Forms.Label writeLabel;
         private System.Windows.Forms.TextBox commitTextBox;
         private System.Windows.Forms.TextBox writeTextBox;
-        private System.Windows.Forms.TextBox memoryReadTextBox;
         private System.Windows.Forms.TextBox issueTextBox;
         private System.Windows.Forms.Label storeLabel;
         private System.Windows.Forms.Label decodeLabel;
