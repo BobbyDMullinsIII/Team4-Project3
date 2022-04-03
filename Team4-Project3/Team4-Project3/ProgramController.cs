@@ -1010,24 +1010,6 @@ namespace Team4_Project3
         }//end dynamicExecute()
         #endregion
 
-        #region memoryRead() Method
-        /// <summary>
-        /// Method for memory read phase in dynamic pipeline
-        /// </summary>
-        /// <returns></returns>
-        public static string memoryRead()
-        {
-            string memReadOutput = "";
-
-            //======================================//
-            //INSERT CODE FOR MEMORY READING HERE//
-            //======================================//
-
-            return memReadOutput;
-
-        }//end memoryRead()
-        #endregion
-
         #region write() Method
         /// <summary>
         /// Method for write phase in dynamic pipeline
@@ -1149,7 +1131,7 @@ namespace Team4_Project3
         //Instruction Control Logic Methods
         #region LDRE() Method
         /// <summary>
-        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions for ints
+        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory for ints
         /// </summary>
         /// <param name="reg2">Register/Immediate/Memory to load from</param>
         /// <returns>Value to store in reg1</returns>
@@ -1162,7 +1144,7 @@ namespace Team4_Project3
 
         #region LDREfloat() Method
         /// <summary>
-        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory | MOVE R,R instructions for floats
+        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory for floats
         /// </summary>
         /// <param name="reg2">Register/Immediate/Memory to load from</param>
         /// <returns>Value to store in reg1</returns>
