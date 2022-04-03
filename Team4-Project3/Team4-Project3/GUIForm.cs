@@ -374,29 +374,33 @@ namespace Team4_Project3
                         pipeExecute[0].Execute--;       // Decrement execute cycles of object in execute que
                     }
                     ifStop = ProgramController.execute(pipeExecute[0].InstLit);     // set ifStop = to current instruction in executes PNuemonic 
+                    // if pipe execute is empty and a stop insdtruction has not been incoded set store go equal to true
                     if (pipeExecute[0].Execute <= 0 && ifStop == false)
                     {
                         sGo = true;
 
                     }
+                    //if the current instruction is ready to go to store and were not stalling on store  
                     if (sGo == true && sWall == true)
                     {
-
+                        ProgramController.execute(pipeExecute[0]);
                         pipeStore.Add(pipeExecute[0]);
-                        sWall = false;
+                        sWall = false;                  //set swall back to false to prevent other instruction from going into this area 
                         pipeExecute.RemoveAt(0);
-                        eWall = true;
+                        eWall = true;                   //set execute wall equalk to true as new instruction can flow int execute pipe
 
-                        eGo = false;
+                        eGo = false;                    
                         sGo = false;
 
                         eFlagCount = true;
                     }
-                    if (sGo == true && sWall == false && pipeExecute.Count > 0)
+                    // if execute is ready to send an instruction but there is still an instruction in store increment the estall counter  
+                    if (sGo == true && sWall == false && pipeExecute.Count > 0) 
                     {
                         eStall++;
-                        executeStallTextbox.Text = eStall.ToString();
+                        executeStallTextbox.Text = eStall.ToString(); 
 
+                        // 
                         if (eFlagCount == true)
                         {
                             structHCount++;
@@ -408,22 +412,25 @@ namespace Team4_Project3
                     }
 
                 }
-
+                //if there is an instruction in  the decode pipe
                 if (pipeDecode.Count > 0)
                 {
 
-
+                    // if the current instruction is not ready to be sent to execute  
                     if (eGo != true)
                     {
                         pipeDecode[0].Decode--;
                     }
+                    //if the decode cycle counter for the instruction currently in decode is empty 
                     if (pipeDecode[0].Decode <= 0)
                     {
                         eGo = true;
                     }
+                    //if the instruction is ready to go to execute and execute is not stalling 
                     if (eGo == true && eWall == true && rawFlag == true)
                     {
                         pipeExecute.Add(pipeDecode[0]);
+
                         eWall = false;
                         pipeDecode.RemoveAt(0);
                         dWall = true;
@@ -1188,6 +1195,123 @@ namespace Team4_Project3
             }
 
         }//end nextStaticCycle()
+        #endregion
+        #region updateReg
+        public void updateRegister(string param, float update)
+        {
+            switch (param)
+            {
+                case string n when (n == "R0"):
+                   r0TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R1"):
+                    r1TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R2"):
+                    r2TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R3"):
+                    r3TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R4"):
+                    r4TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R5"):
+                    r5TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R6"):
+                    r6TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R7"):
+                    r7TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R8"):
+                    r8TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R9"):
+                    r9TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R10"):
+                    r10TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R11"):
+                    r11TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "F12"):
+                    f12TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "F13"):
+                    f13TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "F14"):
+                    f14TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "f15"):
+                    f15TextBox.Text = update.ToString();
+                    break;
+            }
+
+
+        }
+        #endregion
+        #region getReg
+        public float getReg(string param)
+        {
+            switch (param)
+            {
+                case string n when (n == "R0"):
+                    return float.Parse(r0TextBox.Text);
+                    break;
+                case string n when (n == "R1"):
+                    return float.Parse(r1TextBox.Text);
+                    break;
+                case string n when (n == "R2"):
+                    return float.Parse(r2TextBox.Text);
+                    break;
+                case string n when (n == "R3"):
+                    return float.Parse(r3TextBox.Text);
+                    break;
+                case string n when (n == "R4"):
+                    return float.Parse(r4TextBox.Text);
+                    break;
+                case string n when (n == "R5"):
+                    return float.Parse(r5TextBox.Text);
+                    break;
+                case string n when (n == "R6"):
+                    return float.Parse(r6TextBox.Text);
+                    break;
+                case string n when (n == "R7"):
+                    return float.Parse(r7TextBox.Text);
+                    break;
+                case string n when (n == "R8"):
+                    return float.Parse(r8TextBox.Text);
+                    break;
+                case string n when (n == "R9"):
+                    return float.Parse(r9TextBox.Text);
+                    break;
+                case string n when (n == "R10"):
+                    return float.Parse(r10TextBox.Text);
+                    break;
+                case string n when (n == "R11"):
+                    return float.Parse(r11TextBox.Text);
+                    break;
+                case string n when (n == "F12"):
+                    return float.Parse(f12TextBox.Text);
+                    break;
+                case string n when (n == "F13"):
+                    return float.Parse(f13TextBox.Text);
+                    break;
+                case string n when (n == "F14"):
+                    return float.Parse(f14TextBox.Text);
+                    break;
+                case string n when (n == "f15"):
+                    return float.Parse(f15TextBox.Text);
+                    break;
+                default:
+                    return 0;
+            }
+            
+        }
         #endregion
     }
 }

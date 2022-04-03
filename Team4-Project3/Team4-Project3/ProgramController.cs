@@ -638,7 +638,7 @@ namespace Team4_Project3
             {
                 case string n when (n == "LDRE"):
                     char loadType = checkAddressing(instructions[i + 2]);
-                    if (loadType == 'r')
+                    if (loadType == 'R')
                     {
                         instLit += instructions[i];
                         instLit += " ";
@@ -926,6 +926,74 @@ namespace Team4_Project3
 
             return ifStop;
 
+        }
+        public static void execute(Instruction pipeInts)
+        {
+            // switch statement to call appropiate instruction method for instruction currently in pipe
+            switch ($"{pipeInts.InstLit[0]}{pipeInts.InstLit[1]}{pipeInts.InstLit[2]}{pipeInts.InstLit[3]}")
+            {
+                case string n when (n == "LDRE"):
+                    if (pipeInts.InstLit[7] == 'R')
+                    {
+                        LDRER(pipeInts);
+                    }
+                    else if (pipeInts.InstLit[7] == 'R')
+                    { }
+                    else
+                    { }
+                        break;
+                case string n when (n == "STRE"):
+
+                    break;
+                case string n when (n == "COMP"):
+
+                    break;
+                case string n when (n == "ANDD"):
+
+                    break;
+                case string n when (n == "OORR"):
+
+                    break;
+                case string n when (n == "BRLT"):
+
+                    break;
+                case string n when (n == "BRGT"):
+
+                    break;
+                case string n when (n == "BREQ"):
+
+                    break;
+                case string n when (n == "BRAN"):
+
+                    break;
+                case string n when (n == "ADDI"):
+
+                    break;
+                case string n when (n == "SUBT"):
+
+                    break;
+                case string n when (n == "FADD"):
+
+                    break;
+                case string n when (n == "FSUB"):
+
+                    break;
+                case string n when (n == "FMUL"):
+
+                    break;
+                case string n when (n == "FDIV"):
+
+                    break;
+                case string n when (n == "NOOP"):
+                    
+                    break;
+                case string n when (n == "STOP"):
+
+                    break;
+
+
+            }
+
         }//end execute()
         #endregion
 
@@ -1129,15 +1197,40 @@ namespace Team4_Project3
 
 
         //Instruction Control Logic Methods
-        #region LDRE() Method
+        #region LDRER() Method
         /// <summary>
         /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory for ints
         /// </summary>
         /// <param name="reg2">Register/Immediate/Memory to load from</param>
         /// <returns>Value to store in reg1</returns>
-        public static int LDRE(int reg2)
+        public static void LDRER(Instruction pipeInts)
+        {
+            float ret =  guiForm.getReg(pipeInts.P1Register);
+            guiForm.updateRegister(pipeInts.SRegister,ret);
+
+        }//end LDRE()
+        #endregion
+        #region LDREI() Method
+        /// <summary>
+        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory for ints
+        /// </summary>
+        /// <param name="reg2">Register/Immediate/Memory to load from</param>
+        /// <returns>Value to store in reg1</returns>
+        public static int LDREI(int reg2)
         {
             return reg2;
+
+        }//end LDRE()
+        #endregion
+        #region LDREM() Method
+        /// <summary>
+        /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory for ints
+        /// </summary>
+        /// <param name="reg2">Register/Immediate/Memory to load from</param>
+        /// <returns>Value to store in reg1</returns>
+        public static int LDREM(int i)
+        {
+            return 0;
 
         }//end LDRE()
         #endregion
