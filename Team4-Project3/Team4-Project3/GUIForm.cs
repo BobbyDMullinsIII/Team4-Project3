@@ -337,9 +337,314 @@ namespace Team4_Project3
             }
             else
             {
+
+                //if first cycle of simulation set wall = true
+                if (start == true)
+                {
+                    dWall = true;
+                    sWall = true;
+                    eWall = true;
+                }
+                // if there is anything in the store pipe que
+                if (pipeStore.Count > 0)
+                {
+                    if (pipeStore.Count > 0)
+                        pipeStore[0].Store--;               // Decrement store cycles for instruction object in store que
+                    //if instruction in store que has no cycles left remove that instruction 
+                    if (pipeStore[0].Store == 0)
+                    {
+                        pipeStore.RemoveAt(0);              // remove instruction from store que
+                        sGo = false;
+                        sWall = true;
+
+                    }
+                    // if stop has been executed and there is nothing left in store que dont allow next cycle to be hit and print out pipeline stats
+                    if (ifStop == true && pipeStore.Count == 0)
+                    {
+                        nextCycleButton.Enabled = false;
+                        pipeLineOutText.Text = ProgramController.outputStaticPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
+                    }
+                }
+                // if there is something in execute que
+                if (pipeExecute.Count > 0)
+                {
+                    //if there is nothing in the store que
+                    if (sGo != true)
+                    {
+                        pipeExecute[0].Execute--;       // Decrement execute cycles of object in execute que
+                    }
+                    ifStop = ProgramController.execute(pipeExecute[0].InstLit);     // set ifStop = to current instruction in executes PNuemonic 
+                    // if pipe execute is empty and a stop insdtruction has not been incoded set store go equal to true
+                    if (pipeExecute[0].Execute <= 0 && ifStop == false)
+                    {
+                        sGo = true;
+
+                    }
+                    //if the current instruction is ready to go to store and were not stalling on store  
+                    if (sGo == true && sWall == true)
+                    {
+                        ProgramController.execute(pipeExecute[0]);
+                        pipeStore.Add(pipeExecute[0]);
+                        sWall = false;                  //set swall back to false to prevent other instruction from going into this area 
+                        pipeExecute.RemoveAt(0);
+                        eWall = true;                   //set execute wall equalk to true as new instruction can flow int execute pipe
+
+                        eGo = false;                    
+                        sGo = false;
+
+                        eFlagCount = true;
+                    }
+                    // if execute is ready to send an instruction but there is still an instruction in store increment the estall counter  
+                    if (sGo == true && sWall == false && pipeExecute.Count > 0) 
+                    {
+                        eStall++;
+                        executeStallTextbox.Text = eStall.ToString(); 
+
+                        // 
+                        if (eFlagCount == true)
+                        {
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+
+                            eFlagCount = false;
+                        }
+
+                    }
+
+                }
+                //if there is an instruction in  the decode pipe
+                if (pipeDecode.Count > 0)
+                {
+
+                    // if the current instruction is not ready to be sent to execute  
+                    if (eGo != true)
+                    {
+                        pipeDecode[0].Decode--;
+                    }
+                    //if the decode cycle counter for the instruction currently in decode is empty 
+                    if (pipeDecode[0].Decode <= 0)
+                    {
+                        eGo = true;
+                    }
+                    //if the instruction is ready to go to execute and execute is not stalling 
+                    if (eGo == true && eWall == true && rawFlag == true)
+                    {
+                        pipeExecute.Add(pipeDecode[0]);
+
+                        eWall = false;
+                        pipeDecode.RemoveAt(0);
+                        dWall = true;
+                        dGo = false;
+                        eGo = false;
+
+                        dFlagCount = true;
+                    }
+                    if (eGo == true && eWall == false && pipeDecode.Count > 0)
+                    {
+                        dStall++;
+                        decodeStallTextbox.Text = dStall.ToString();
+
+                        if (dFlagCount == true)
+                        {
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+
+                            dFlagCount = false;
+                        }
+
+                    }
+
+                }
+
+                if (pipeFetch.Count > 0)
+                {
+
+                    if (dGo != true)
+                    {
+                        pipeFetch[0].Fetch--;
+                    }
+                    if (pipeFetch[0].Fetch <= 0)
+                    {
+                        dGo = true;
+                    }
+                    if (dGo == true && dWall == true)
+                    {
+                        (store, param1, param2) = ProgramController.decode(pipeFetch[0]);
+                        pipeDecode.Add(pipeFetch[0]);
+                        dWall = false;
+                        pipeFetch.RemoveAt(0);
+                        fWall = true;
+                        fGo = false;
+                        dGo = false;
+
+                        fFlagCount = true;
+                    }
+                    if (dGo == true && dWall == false && pipeFetch.Count > 0)
+                    {
+                        fStall++;
+                        fetchStallTextbox.Text = fStall.ToString();
+
+                        if (fFlagCount == true)
+                        {
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+
+                            fFlagCount = false;
+                        }
+
+                    }
+
+                    if (pipeExecute.Count > 0 && rawFlag == true)
+                    {
+                        if (pipeExecute[0].SRegister == pipeDecode[0].P1Register || pipeExecute[0].SRegister == pipeDecode[0].P2Register)
+                        {
+                            rawFlag = false;
+
+                            rawCount++;
+                            rawTextBox.Text = rawCount.ToString();
+
+                            dataHCount++;
+                            dataHTextBox.Text = dataHCount.ToString();
+
+                            rF1 = false;
+                        }
+                    }
+                    if (pipeStore.Count > 0 && rawFlag == true)
+                    {
+                        if (pipeStore[0].SRegister == pipeDecode[0].P1Register || pipeStore[0].SRegister == pipeDecode[0].P2Register)
+                        {
+                            rawFlag = false;
+
+                            rawCount++;
+                            rawTextBox.Text = rawCount.ToString();
+
+                            dataHCount++;
+                            dataHTextBox.Text = dataHCount.ToString();
+
+                            rF2 = false;
+                        }
+                    }
+
+                    if (pipeExecute.Count > 0 && warFlag == true)
+                    {
+                        if (pipeDecode[0].SRegister == pipeExecute[0].P1Register || pipeDecode[0].SRegister == pipeExecute[0].P2Register)
+                        {
+                            warFlag = false;
+
+                            warCount++;
+                            warTextBox.Text = warCount.ToString();
+
+                            dataHCount++;
+                            dataHTextBox.Text = dataHCount.ToString();
+
+                            rF1 = false;
+                        }
+                    }
+
+                    if (pipeStore.Count > 0 && warFlag == true)
+                    {
+                        if (pipeDecode[0].SRegister == pipeStore[0].P1Register || pipeDecode[0].SRegister == pipeStore[0].P2Register)
+                        {
+                            warFlag = false;
+
+                            warCount++;
+                            warTextBox.Text = warCount.ToString();
+
+                            dataHCount++;
+                            dataHTextBox.Text = dataHCount.ToString();
+
+                            rF2 = false;
+                        }
+                    }
+                    if (rawFlag == false)
+                    {
+                        if (pipeExecute.Count == 0 && pipeStore.Count == 0 && rF1 == false)
+                        {
+                            rawFlag = true;
+                            rF1 = true;
+                        }
+                        if (pipeExecute.Count == 0 && rF2 == false)
+                        {
+                            rawFlag = true;
+                            rF2 = true;
+                        }
+                    }
+
+                    if (warFlag == false)
+                    {
+
+                        if (pipeExecute.Count == 0 && pipeStore.Count == 0 || rF1 == false)
+                        {
+                            warFlag = true;
+                            rF1 = true;
+                        }
+
+                        if (pipeExecute.Count == 0 || rF2 == false)
+                        {
+                            warFlag = true;
+                            rF2 = true;
+                        }
+                    }
+                }
+
+
+                if (start == true)
+                {
+                    (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
+                    r0TextBox.Text = R0.ToString();
+                    start = false;
+
+                }
+                if (pipeFetch.Count == 0 && stopF == 0)
+                {
+                    (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
+                    r0TextBox.Text = R0.ToString();
+                }
+
+
+                if (pipeFetch.Count >= 1)
+                {
+                    fetchTextBox.Text = pipeFetch[0].InstLit;
+                }
+                else
+                {
+                    fetchTextBox.Text = "";
+                }
+                if (pipeDecode.Count >= 1)
+                {
+                    decodeTextBox.Text = pipeDecode[0].InstLit;
+                }
+                else
+                {
+                    decodeTextBox.Text = "";
+                }
+                if (pipeExecute.Count >= 1)
+                {
+                    executeTextBox.Text = pipeExecute[0].InstLit;
+                }
+                else
+                {
+                    executeTextBox.Text = "";
+                }
+                if (pipeStore.Count >= 1)
+                {
+                    storeTextBox.Text = pipeStore[0].InstLit;
+                }
+                else
+                {
+                    storeTextBox.Text = "";
+                }
+                if (nextCycleButton.Enabled == true)
+                {
+                    //Increase cycle counter by one
+                    incrementCycleCounter();
+                }
+
+            }//end Static Pipeline Simulation Code
+
                 nextStaticCycle();  
             }
-        }
+
         #endregion
 
         //GUIForm Regular Methods
@@ -890,6 +1195,123 @@ namespace Team4_Project3
             }
 
         }//end nextStaticCycle()
+        #endregion
+        #region updateReg
+        public void updateRegister(string param, float update)
+        {
+            switch (param)
+            {
+                case string n when (n == "R0"):
+                   r0TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R1"):
+                    r1TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R2"):
+                    r2TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R3"):
+                    r3TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R4"):
+                    r4TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R5"):
+                    r5TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R6"):
+                    r6TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R7"):
+                    r7TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R8"):
+                    r8TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R9"):
+                    r9TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R10"):
+                    r10TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "R11"):
+                    r11TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "F12"):
+                    f12TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "F13"):
+                    f13TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "F14"):
+                    f14TextBox.Text = update.ToString();
+                    break;
+                case string n when (n == "f15"):
+                    f15TextBox.Text = update.ToString();
+                    break;
+            }
+
+
+        }
+        #endregion
+        #region getReg
+        public float getReg(string param)
+        {
+            switch (param)
+            {
+                case string n when (n == "R0"):
+                    return float.Parse(r0TextBox.Text);
+                    break;
+                case string n when (n == "R1"):
+                    return float.Parse(r1TextBox.Text);
+                    break;
+                case string n when (n == "R2"):
+                    return float.Parse(r2TextBox.Text);
+                    break;
+                case string n when (n == "R3"):
+                    return float.Parse(r3TextBox.Text);
+                    break;
+                case string n when (n == "R4"):
+                    return float.Parse(r4TextBox.Text);
+                    break;
+                case string n when (n == "R5"):
+                    return float.Parse(r5TextBox.Text);
+                    break;
+                case string n when (n == "R6"):
+                    return float.Parse(r6TextBox.Text);
+                    break;
+                case string n when (n == "R7"):
+                    return float.Parse(r7TextBox.Text);
+                    break;
+                case string n when (n == "R8"):
+                    return float.Parse(r8TextBox.Text);
+                    break;
+                case string n when (n == "R9"):
+                    return float.Parse(r9TextBox.Text);
+                    break;
+                case string n when (n == "R10"):
+                    return float.Parse(r10TextBox.Text);
+                    break;
+                case string n when (n == "R11"):
+                    return float.Parse(r11TextBox.Text);
+                    break;
+                case string n when (n == "F12"):
+                    return float.Parse(f12TextBox.Text);
+                    break;
+                case string n when (n == "F13"):
+                    return float.Parse(f13TextBox.Text);
+                    break;
+                case string n when (n == "F14"):
+                    return float.Parse(f14TextBox.Text);
+                    break;
+                case string n when (n == "f15"):
+                    return float.Parse(f15TextBox.Text);
+                    break;
+                default:
+                    return 0;
+            }
+            
+        }
         #endregion
     }
 }
