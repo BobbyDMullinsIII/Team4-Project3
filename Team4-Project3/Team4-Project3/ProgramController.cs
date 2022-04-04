@@ -1078,6 +1078,24 @@ namespace Team4_Project3
         }//end dynamicExecute()
         #endregion
 
+        #region memoryRead() Method
+        /// <summary>
+        /// Method for memory read phase in dynamic pipeline
+        /// </summary>
+        /// <returns></returns>
+        public static string memoryRead()
+        {
+            string executeOutput = "";
+
+            //===================================//
+            //INSERT CODE FOR MEMORY READING HERE//
+            //===================================//
+
+            return executeOutput;
+
+        }//end memoryRead()
+        #endregion
+
         #region write() Method
         /// <summary>
         /// Method for write phase in dynamic pipeline
