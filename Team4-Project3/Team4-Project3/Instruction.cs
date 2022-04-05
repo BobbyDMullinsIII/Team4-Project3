@@ -9,7 +9,7 @@
 //	                   Christopher Poteet, poteetc1@etsu.edu
 //	                   William Simmons, simmonswa@etsu.edu
 //                     Isaiah Jayne, jaynei@etsu.edu
-//	Created:           Monday, March  8, 2022
+//	Created:           Monday, March 8, 2022
 //	Copyright:         Team 4
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
