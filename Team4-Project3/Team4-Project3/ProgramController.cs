@@ -1138,20 +1138,55 @@ namespace Team4_Project3
         /// <summary>
         /// Method for outputting dynamic pipeline simulation statistics
         /// </summary>
+        /// <param name="structural">Structural hazards</param>
+        /// <param name="data">Data hazards</param>
+        /// <param name="control">Control hazards</param>
+        /// <param name="RAW">read-after-write dependencies</param>
+        /// <param name="WAR">write-after-read dependencies</param>
+        /// <param name="WAW">write-after-write dependencies</param>
         /// <param name="buffer">Reorder Buffer delays</param>
         /// <param name="station">Reservation Station delays</param>
         /// <param name="conflict">Data Memory Conflict delays</param>
         /// <param name="dependence">True Dependence delays</param>
+        /// <param name="cycles">Total cycles of dynamic pipeline simulation</param>
         /// <returns>Statistics of the pipeline from the dynamic pipeline simulation</returns>
-        public static string outputDynamicPipelineStats(int buffer, int station, int conflict, int dependence)
+        public static string outputDynamicPipelineStats(int structural,
+                                                 int data,
+                                                 int control,
+                                                 int RAW,
+                                                 int WAR,
+                                                 int WAW, 
+                                                 int buffer, 
+                                                 int station, 
+                                                 int conflict, 
+                                                 int dependence,
+                                                 int cycles)
         {
-            return $"Delays\r\n" +
+            return $"Hazards\r\n" +
+                   $"=======\r\n" +
+                   $"structural: {structural}\r\n" +
+                   $"data: {data}\r\n" +
+                   $"control: {control}\r\n" +
+                   $"\r\n" +
+
+                   $"Dependencies\r\n" +
+                   $"============\r\n" +
+                   $"read-after-write: {RAW}\r\n" +
+                   $"write-after-read: {WAR}\r\n" +
+                   $"write-after-write: {WAW}\r\n" +
+                   $"\r\n" +
+
+                   $"Delays\r\n" +
                    $"======\r\n" +
                    $"reorder buffer delays: {buffer}\r\n" +
                    $"reservation station delays: {station}\r\n" +
                    $"data memory conflict delays: {conflict}\r\n" +
                    $"true dependence delays: {dependence}\r\n" +
-                   $"\r\n";
+                   $"\r\n" +
+
+                   $"Total Cycles\r\n" +
+                   $"============\r\n" +
+                   $"{cycles}\r\n";
 
         }//end outputDynamicPipelineStats()
         #endregion
