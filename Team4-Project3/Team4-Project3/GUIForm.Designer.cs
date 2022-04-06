@@ -41,6 +41,12 @@
             this.assemblyTextBox = new System.Windows.Forms.TextBox();
             this.assemblyLabel = new System.Windows.Forms.Label();
             this.simulationPanel = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dynamicFExecTextBox = new System.Windows.Forms.TextBox();
+            this.dynamicLSExecTBox = new System.Windows.Forms.TextBox();
+            this.dynamicMemExecTBox = new System.Windows.Forms.TextBox();
             this.memReadLabel = new System.Windows.Forms.Label();
             this.memReadTextBox = new System.Windows.Forms.TextBox();
             this.trueDependenceLabel = new System.Windows.Forms.Label();
@@ -138,12 +144,6 @@
             this.memoryOutput = new System.Windows.Forms.TabPage();
             this.memOutputText = new System.Windows.Forms.TextBox();
             this.memSlider = new System.Windows.Forms.TrackBar();
-            this.dynamicMemExecTBox = new System.Windows.Forms.TextBox();
-            this.dynamicLSExecTBox = new System.Windows.Forms.TextBox();
-            this.dynamicFExecTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.assemblyPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
@@ -398,6 +398,70 @@
             this.simulationPanel.Size = new System.Drawing.Size(946, 631);
             this.simulationPanel.TabIndex = 3;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(167, 102);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(115, 27);
+            this.label3.TabIndex = 128;
+            this.label3.Text = "LS Execute";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(443, 69);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(134, 27);
+            this.label2.TabIndex = 127;
+            this.label2.Text = "Mem Execute";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(444, 103);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(133, 27);
+            this.label1.TabIndex = 126;
+            this.label1.Text = "Float Execute";
+            // 
+            // dynamicFExecTextBox
+            // 
+            this.dynamicFExecTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dynamicFExecTextBox.Location = new System.Drawing.Point(289, 102);
+            this.dynamicFExecTextBox.Name = "dynamicFExecTextBox";
+            this.dynamicFExecTextBox.ReadOnly = true;
+            this.dynamicFExecTextBox.Size = new System.Drawing.Size(149, 26);
+            this.dynamicFExecTextBox.TabIndex = 125;
+            this.dynamicFExecTextBox.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // dynamicLSExecTBox
+            // 
+            this.dynamicLSExecTBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dynamicLSExecTBox.Location = new System.Drawing.Point(12, 104);
+            this.dynamicLSExecTBox.Name = "dynamicLSExecTBox";
+            this.dynamicLSExecTBox.ReadOnly = true;
+            this.dynamicLSExecTBox.Size = new System.Drawing.Size(149, 26);
+            this.dynamicLSExecTBox.TabIndex = 124;
+            // 
+            // dynamicMemExecTBox
+            // 
+            this.dynamicMemExecTBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dynamicMemExecTBox.Location = new System.Drawing.Point(289, 70);
+            this.dynamicMemExecTBox.Name = "dynamicMemExecTBox";
+            this.dynamicMemExecTBox.ReadOnly = true;
+            this.dynamicMemExecTBox.Size = new System.Drawing.Size(149, 26);
+            this.dynamicMemExecTBox.TabIndex = 123;
+            // 
             // memReadLabel
             // 
             this.memReadLabel.AutoSize = true;
@@ -522,7 +586,7 @@
             this.startDynamicButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
             this.startDynamicButton.ForeColor = System.Drawing.Color.Black;
             this.startDynamicButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.startDynamicButton.Location = new System.Drawing.Point(12, 241);
+            this.startDynamicButton.Location = new System.Drawing.Point(12, 230);
             this.startDynamicButton.Margin = new System.Windows.Forms.Padding(1);
             this.startDynamicButton.Name = "startDynamicButton";
             this.startDynamicButton.Size = new System.Drawing.Size(220, 40);
@@ -617,7 +681,7 @@
             // commitTextBox
             // 
             this.commitTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commitTextBox.Location = new System.Drawing.Point(12, 207);
+            this.commitTextBox.Location = new System.Drawing.Point(12, 200);
             this.commitTextBox.Name = "commitTextBox";
             this.commitTextBox.ReadOnly = true;
             this.commitTextBox.Size = new System.Drawing.Size(250, 26);
@@ -647,7 +711,7 @@
             this.commitLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.commitLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.commitLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commitLabel.Location = new System.Drawing.Point(269, 206);
+            this.commitLabel.Location = new System.Drawing.Point(269, 200);
             this.commitLabel.Name = "commitLabel";
             this.commitLabel.Size = new System.Drawing.Size(81, 27);
             this.commitLabel.TabIndex = 98;
@@ -1447,70 +1511,6 @@
             this.memSlider.TabIndex = 18;
             this.memSlider.Value = 1;
             this.memSlider.Scroll += new System.EventHandler(this.memSlider_Scroll);
-            // 
-            // dynamicMemExecTBox
-            // 
-            this.dynamicMemExecTBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dynamicMemExecTBox.Location = new System.Drawing.Point(289, 70);
-            this.dynamicMemExecTBox.Name = "dynamicMemExecTBox";
-            this.dynamicMemExecTBox.ReadOnly = true;
-            this.dynamicMemExecTBox.Size = new System.Drawing.Size(149, 26);
-            this.dynamicMemExecTBox.TabIndex = 123;
-            // 
-            // dynamicLSExecTBox
-            // 
-            this.dynamicLSExecTBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dynamicLSExecTBox.Location = new System.Drawing.Point(12, 104);
-            this.dynamicLSExecTBox.Name = "dynamicLSExecTBox";
-            this.dynamicLSExecTBox.ReadOnly = true;
-            this.dynamicLSExecTBox.Size = new System.Drawing.Size(149, 26);
-            this.dynamicLSExecTBox.TabIndex = 124;
-            // 
-            // dynamicFExecTextBox
-            // 
-            this.dynamicFExecTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dynamicFExecTextBox.Location = new System.Drawing.Point(289, 102);
-            this.dynamicFExecTextBox.Name = "dynamicFExecTextBox";
-            this.dynamicFExecTextBox.ReadOnly = true;
-            this.dynamicFExecTextBox.Size = new System.Drawing.Size(149, 26);
-            this.dynamicFExecTextBox.TabIndex = 125;
-            this.dynamicFExecTextBox.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(444, 103);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 27);
-            this.label1.TabIndex = 126;
-            this.label1.Text = "Float Execute";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(443, 69);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 27);
-            this.label2.TabIndex = 127;
-            this.label2.Text = "Mem Execute";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(167, 102);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(115, 27);
-            this.label3.TabIndex = 128;
-            this.label3.Text = "LS Execute";
             // 
             // GUIForm
             // 

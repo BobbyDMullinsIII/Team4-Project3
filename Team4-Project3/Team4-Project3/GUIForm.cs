@@ -757,14 +757,12 @@ namespace Team4_Project3
                     loadStoreExec1.Peek().instruction.execute--;
                 }
             }
+
             //Sort ROB (Reorder Buffer)
             reorderBuffer.Sort((x, y) => x.dest.CompareTo(y.dest));
 
-            // Use whenever modifying R0 Program Counter (Same for all other registers)
-            // r0TextBox.Text = ((int)regArray[0]).ToString();
-
             //Output Dynamic Pipeline Simulation Final Statistics
-            ProgramController.outputDynamicPipelineStats(structHCount,
+            pipeLineOutText.Text = ProgramController.outputDynamicPipelineStats(structHCount,
                                                          dataHCount,
                                                          controlHCount,
                                                          rawCount,
@@ -1629,6 +1627,9 @@ namespace Team4_Project3
             //Reset Dynamic Phase textboxes
             issueTextBox.Text = string.Empty;
             dynamicIntExecuteTextBox.Text = string.Empty;
+            dynamicMemExecTBox.Text = string.Empty;
+            dynamicLSExecTBox.Text = string.Empty;
+            dynamicFExecTextBox.Text = string.Empty;
             writeTextBox.Text = string.Empty;
             commitTextBox.Text = string.Empty;
 
