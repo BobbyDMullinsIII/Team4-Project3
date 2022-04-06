@@ -27,9 +27,8 @@ namespace Team4_Project3
     /// </summary>
     public class Instruction
     {
-        string instLit, p1Register, p2Register = string.Empty;
-        string sRegister = string.Empty;
-        int fetch, decode, execute, store, name = 0;
+        public string instLit, sRegister, p1Register, p2Register = string.Empty;
+        public int fetch, decode, execute, store, name = 0;
 
         /// <summary>
         /// Parameterized Constructor for Instruction with 1 register

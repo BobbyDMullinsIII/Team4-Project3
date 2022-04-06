@@ -12,7 +12,7 @@
 //	Created:           Monday, February  14, 2022
 //	Copyright:         Team 4
 //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using System;
 using System.Collections.Generic;
@@ -27,8 +27,8 @@ namespace Team4_Project3
         bool isDynamic = false;
 
         //CDB (Common Data Bus)
-        string name,Qj,Qk, Vj,Vk,A  = string.Empty;
-        
+        string name, Qj, Qk, Vj, Vk, A = string.Empty;
+
 
         //==Counters==//
         //============================================================//
@@ -73,25 +73,11 @@ namespace Team4_Project3
 
         //==Registers==//
         //============================================================//
-        //Regular Registers
-        int R0 = 0; //Program Counter
-        int R1 = 0; //Z (Zero) Flag
-        int R2 = 0; //C (Carry) Flag
-        int R3 = 0; //S (Sign) Flag
-        int R4 = 0;
-        int R5 = 0;
-        int R6 = 0;
-        int R7 = 0;
-        int R8 = 0;
-        int R9 = 0;
-        int R10 = 0;
-        int R11 = 0;
-
-        //Floating-Point Registers
-        float F12 = 0f;
-        float F13 = 0f;
-        float F14 = 0f;
-        float F15 = 0f;
+        float[] regArray = new float[16];
+        //R0 - Program Counter
+        //R1 - Z (Zero) Flag
+        //R2 - C (Carry) Flag
+        //R3 - S (Sign) Flag
 
 
         //==1MB Memory Array==//
@@ -118,7 +104,7 @@ namespace Team4_Project3
         bool sWall = true;
         bool fGo = false;
         bool dGo = false;
-        bool eGo = false; 
+        bool eGo = false;
         bool sGo = false;
 
         int stopF = 0;
@@ -133,19 +119,18 @@ namespace Team4_Project3
         //============================================================//
         Queue<Instruction> instructionQueue = new Queue<Instruction>(9);
         List<Instruction> reorderBuffer = new List<Instruction>();
-        Queue<Instruction> fExec1 = new Queue<Instruction>(1);
-        Queue<Instruction> intExec1 = new Queue<Instruction>(1);
-        Queue<Instruction> loadStoreExec1 = new Queue<Instruction>(1);
-        Queue<Instruction> resFExec1 = new Queue<Instruction>(2);
-        Queue<Instruction> resIntExec1 = new Queue<Instruction>(2);
-        Queue<Instruction> resLoadStoreExec1 = new Queue<Instruction>(2);
-        Queue<Instruction> resStatFExec1 = new Queue<Instruction>(2);
-        Queue<Instruction> resStatIntExec1 = new Queue<Instruction>(2);
-        Queue<Instruction> resStatLoadStoreExec1 = new Queue<Instruction>(2);
-        Queue<Instruction> statFExec1 = new Queue<Instruction>(1);
-        Queue<Instruction> statIntExec1 = new Queue<Instruction>(1);
-        Queue<Instruction> statLoadStoreExec1 = new Queue<Instruction>(1);
+        Queue<Station> fExec1 = new Queue<Station>(1);
+        Queue<Station> intExec1 = new Queue<Station>(1);
+        Queue<Station> loadStoreExec1 = new Queue<Station>(1);
+        Queue<Station> memExec1 = new Queue<Station>(1);
 
+        Queue<Station> resFExec1 = new Queue<Station>(2);
+        Queue<Station> resIntExec1 = new Queue<Station>(2);
+        Queue<Station> resLoadStoreExec1 = new Queue<Station>(2);
+        Queue<Station> resMem = new Queue<Station>(2);
+        String[] Qi = new String[16];
+
+        int destinationCounter = 0;
 
         //GUIForm Constructor
         #region GUIForm Constructor
@@ -257,9 +242,11 @@ namespace Team4_Project3
             //Tells program that current simulation is dynamic
             isDynamic = true;
 
-            //Instantiate and display initial memory
+            //Instantiate initial memory
             instantiateMemory();
-            storeMemoryInString();
+
+            //Display first 32nd of memory to GUI
+            storeMemoryInString32nd(1);
 
             //Start dynamic pipeline simulation
             startSimulation();
@@ -275,9 +262,11 @@ namespace Team4_Project3
             //Tells program that current simulation is static
             isDynamic = false;
 
-            //Instantiate and display initial memory
+            //Instantiate initial memory
             instantiateMemory();
-            storeMemoryInString();
+
+            //Display first 32nd of memory to GUI
+            storeMemoryInString32nd(1);
 
             //Start static pipeline simulation
             startSimulation();
@@ -359,30 +348,51 @@ namespace Team4_Project3
         {
             //Increase cycle counter by one
             incrementCycleCounter();
-          
+
             //Create new list of currently fetched instructions and fetch instructions of queue count is less than 9
             List<Instruction> fetchedIntructs = new List<Instruction>();
             if (instructionQueue.Count < 9)
             {
-                (fetchedIntructs, R0, i, stopF) = ProgramController.fetch(instructions, fetchedIntructs, R0, i);
+                (fetchedIntructs, regArray[0], i, stopF) = ProgramController.fetch(instructions, fetchedIntructs, (int)regArray[0], i);
                 instructionQueue.Enqueue(fetchedIntructs[fetchedIntructs.Count - 1]);
             }
 
+            //Issue Phase
             //Gets instruction pneumonic from instructionlit in instruction object
             string name = $"{instructionQueue.Peek().InstLit[0]}{instructionQueue.Peek().InstLit[1]}{instructionQueue.Peek().InstLit[2]}{instructionQueue.Peek().InstLit[3]}";
             switch (name)
             {
                 case string n when (n == "LDRE"):
-                    if (resLoadStoreExec1.Count == 2)
+                    Instruction temp = instructionQueue.Peek();
+                    if (temp.P1Register[0] == '&')
                     {
-                        //Increase structural hazard count and display update to GUI
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
+                        if (resMem.Count == 2)
+                        {
+                            //Increase structural hazard count and display update to GUI
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+                        }
+                        else
+                        {
+                            destinationCounter++;
+                            Station resStatMem = new Station($"Load{resMem.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                            resMem.Enqueue(resStatMem);
+                        }
                     }
                     else
                     {
-                        //============*************use register status on onenote*************============//
-                        resLoadStoreExec1.Enqueue(instructionQueue.Dequeue());
+                        if (resLoadStoreExec1.Count == 2)
+                        {
+                            //Increase structural hazard count and display update to GUI
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+                        }
+                        else
+                        {
+                            destinationCounter++;
+                            Station resStatLoadStoreExec1 = new Station($"Load{resLoadStoreExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                            resLoadStoreExec1.Enqueue(resStatLoadStoreExec1);
+                        }
                     }
                     break;
 
@@ -395,8 +405,11 @@ namespace Team4_Project3
                     }
                     else
                     {
-                        resLoadStoreExec1.Enqueue(instructionQueue.Dequeue());
+                        destinationCounter++;
+                        Station resStatLoadStoreExec1 = new Station($"Load{resMem.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        resMem.Enqueue(resStatLoadStoreExec1);
                     }
+
                     break;
 
                 case string n when (n == "FADD"):
@@ -408,7 +421,9 @@ namespace Team4_Project3
                     }
                     else
                     {
-                        resFExec1.Enqueue(instructionQueue.Dequeue());
+                        destinationCounter++;
+                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
 
@@ -421,7 +436,9 @@ namespace Team4_Project3
                     }
                     else
                     {
-                        resFExec1.Enqueue(instructionQueue.Dequeue());
+                        destinationCounter++;
+                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
 
@@ -434,7 +451,9 @@ namespace Team4_Project3
                     }
                     else
                     {
-                        resFExec1.Enqueue(instructionQueue.Dequeue());
+                        destinationCounter++;
+                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
 
@@ -447,7 +466,9 @@ namespace Team4_Project3
                     }
                     else
                     {
-                        resFExec1.Enqueue(instructionQueue.Dequeue());
+                        destinationCounter++;
+                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
 
@@ -460,19 +481,263 @@ namespace Team4_Project3
                     }
                     else
                     {
-                        resIntExec1.Enqueue(instructionQueue.Dequeue());
+                        destinationCounter++;
+                        Station resStatIntExec1 = new Station($"Load{resIntExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        resIntExec1.Enqueue(resStatIntExec1);
                     }
                     break;
             }
 
+            //Execute Phase 
+            if (resLoadStoreExec1.Peek().instruction.fetch == 0)
+            {
+                if (string.IsNullOrEmpty(resLoadStoreExec1.Peek().Qj) == true)
+                {
+                    Qi[Convert.ToInt32(resLoadStoreExec1.Peek().instruction.sRegister.Remove(0, 1))] = resLoadStoreExec1.Peek().Name;
+                    loadStoreExec1.Enqueue(resLoadStoreExec1.Dequeue());
+                    resLoadStoreExec1.Peek().instruction.fetch++;
+                }
+                else if (Qj == resLoadStoreExec1.Peek().Qj)
+                {
+                    resLoadStoreExec1.Peek().Qj = string.Empty;
+                    resLoadStoreExec1.Peek().Vj = setVj(resLoadStoreExec1.Peek().instruction);
+                }
+
+            }
+            else
+            {
+                resLoadStoreExec1.Peek().instruction.fetch--;
+            }
+            if (resMem.Peek().instruction.fetch == 0)
+            {
+                if (string.IsNullOrEmpty(resMem.Peek().Qj) == true)
+                {
+                    Qi[Convert.ToInt32(resMem.Peek().instruction.sRegister.Remove(0, 1))] = resMem.Peek().Name;
+                    memExec1.Enqueue(resMem.Dequeue());
+                    resMem.Peek().instruction.fetch++;
+                }
+                else if (Qj == resMem.Peek().Qj)
+                {
+                    resMem.Peek().Qj = string.Empty;
+                    resMem.Peek().Vj = setVj(resMem.Peek().instruction);
+                }
+            }
+            else
+            {
+                resMem.Peek().instruction.fetch--;
+            }
+            if (resFExec1.Peek().instruction.fetch == 0)
+            {
+                if (string.IsNullOrEmpty(resFExec1.Peek().Qk) == true && string.IsNullOrEmpty(resFExec1.Peek().Qk) == true)
+                {
+                    Qi[Convert.ToInt32(resFExec1.Peek().instruction.sRegister.Remove(0, 1))] = resFExec1.Peek().Name;
+                    fExec1.Enqueue(resFExec1.Dequeue());
+                    resFExec1.Peek().instruction.fetch++;
+                }
+                else if (Qj == resFExec1.Peek().Qj)
+                {
+                    resFExec1.Peek().Qj = string.Empty;
+                    resFExec1.Peek().Vj = setVj(resFExec1.Peek().instruction);
+                }
+                else if (Qk == resFExec1.Peek().Qk)
+                {
+                    resFExec1.Peek().Qk = string.Empty;
+                    resFExec1.Peek().Vk = setVk(resFExec1.Peek().instruction);
+                }
+            }
+            else
+            {
+                resFExec1.Peek().instruction.fetch--;
+            }
+            if (resIntExec1.Peek().instruction.fetch == 0)
+            {
+                if (string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true && string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true)
+                {
+                    Qi[Convert.ToInt32(resIntExec1.Peek().instruction.sRegister.Remove(0, 1))] = resIntExec1.Peek().Name;
+                    intExec1.Enqueue(resIntExec1.Dequeue());
+                    resIntExec1.Peek().instruction.fetch++;
+                }
+                else if (Qj == resIntExec1.Peek().Qj)
+                {
+                    resIntExec1.Peek().Qj = string.Empty;
+                    resIntExec1.Peek().Vj = setVj(resIntExec1.Peek().instruction);
+                }
+                else if (Qk == resIntExec1.Peek().Qk)
+                {
+                    resIntExec1.Peek().Qk = string.Empty;
+                    resIntExec1.Peek().Vk = setVk(resIntExec1.Peek().instruction);
+                }
+            }
+            else
+            {
+                resIntExec1.Peek().instruction.fetch--;
+            }
+            //Memory Read
+            if (memExec1.Peek().instruction.fetch == 0)
+            {
+                memExec1.Peek().instruction.fetch++;
+            }
+            else
+            {
+                memExec1.Peek().instruction.fetch--;
+            }
+            //Write
+            if (memExec1.Peek().instruction.fetch == 0)
+            {
+                Qj = memExec1.Peek().Name;
+                Qk = memExec1.Peek().Name;
+            }
+            else
+            {
+                memExec1.Peek().instruction.fetch--;
+            }
+            if (intExec1.Peek().instruction.execute == 0)
+            {
+                Qj = intExec1.Peek().Name;
+                Qk = intExec1.Peek().Name;
+            }
+            else
+            {
+                intExec1.Peek().instruction.execute--;
+            }
+            if (fExec1.Peek().instruction.execute == 0)
+            {
+                Qj = fExec1.Peek().Name;
+                Qk = fExec1.Peek().Name;
+            }
+            else
+            {
+                fExec1.Peek().instruction.execute--;
+            }
+            if (loadStoreExec1.Peek().instruction.execute == 0)
+            {
+                Qj = loadStoreExec1.Peek().Name;
+                Qk = loadStoreExec1.Peek().Name;
+            }
+            else
+            {
+                loadStoreExec1.Peek().instruction.execute--;
+            }
+
             // Use whenever modifying R0 Program Counter (Same for all other registers)
-            // r0TextBox.Text = R0.ToString();
+            // r0TextBox.Text = ((int)regArray[0]).ToString();
 
             //Output Dynamic Pipeline Simulation Final Statistics
-            ProgramController.outputDynamicPipelineStats(structHCount, dataHCount, controlHCount, rawCount, warCount, wawCount, bufferD, stationD, conflictD, dependenceD, cycleCounter);
+            ProgramController.outputDynamicPipelineStats(structHCount,
+                                                         dataHCount,
+                                                         controlHCount,
+                                                         rawCount,
+                                                         warCount,
+                                                         wawCount,
+                                                         bufferD,
+                                                         stationD,
+                                                         conflictD,
+                                                         dependenceD,
+                                                         cycleCounter);
 
         }//end nextDynamicCycle()
-        #endregion 
+        #endregion
+
+        #region returnOp() Method
+        /// <summary>
+        /// Method for returning the operation to perform on source operands
+        /// </summary>
+        private string returnOp(Queue<Instruction> ints)
+        {
+            Instruction temp = ints.Peek();
+
+            return $"{temp.InstLit[0]}{temp.InstLit[1]}{temp.InstLit[2]}{temp.InstLit[3]}";
+
+        }//end returnOp()
+        #endregion
+
+        #region setQj() Method
+        /// <summary>
+        /// Method for setting Qj reservation station
+        /// </summary>
+        private string setQj(Instruction ints)
+        {
+
+            ints.P1Register.Remove(0, 1);
+
+            if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P1Register)]) == false)
+            {
+                return Qi[Convert.ToInt32(ints.P1Register)];
+            }
+            else
+            {
+                return "";
+            }
+
+        }//end setQj()
+        #endregion
+
+        #region setQk() Method
+        /// <summary>
+        /// Method for setting Qk reservation station
+        /// </summary> 
+        private string setQk(Instruction ints)
+        {
+            if (ints.P2Register != string.Empty)
+            {
+                ints.P2Register.Remove(0, 1);
+
+                if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P2Register)]) == false)
+                {
+                    return Qi[Convert.ToInt32(ints.P2Register)];
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            else
+            {
+                return "";
+            }
+
+        }//end setQk()
+        #endregion
+
+        #region setVj() Method
+        /// <summary>
+        /// Method for setting Vj 
+        /// </summary> 
+        private float setVj(Instruction ints)
+        {
+            if (string.IsNullOrEmpty(setQj(ints)) == false)
+            {
+                ints.P1Register.Remove(0, 1);
+                return regArray[Convert.ToInt32(ints.P1Register)];
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }//end setVj()
+        #endregion
+
+        #region setVk() Method
+        /// <summary>
+        /// Method for setting Vk 
+        /// </summary> 
+        private float setVk(Instruction ints)
+        {
+            if (string.IsNullOrEmpty(setQk(ints)) == false)
+            {
+                ints.P2Register.Remove(0, 1);
+                return regArray[Convert.ToInt32(ints.P2Register)];
+            }
+            else
+            {
+                return 0;
+            }
+
+
+        }//end setVk()
+        #endregion
 
         #region nextStaticCycle() Method
         /// <summary>
@@ -501,7 +766,17 @@ namespace Team4_Project3
                 if (ifStop == true && pipeStore.Count == 0)
                 {
                     nextCycleButton.Enabled = false;
-                    pipeLineOutText.Text = ProgramController.outputStaticPipelineStats(structHCount, dataHCount, 0, rawCount, warCount, 0, fStall, dStall, eStall, sStall, cycleCounter);
+                    pipeLineOutText.Text = ProgramController.outputStaticPipelineStats(structHCount,
+                                                                                       dataHCount,
+                                                                                       controlHCount,
+                                                                                       rawCount,
+                                                                                       warCount,
+                                                                                       wawCount,
+                                                                                       fStall,
+                                                                                       dStall,
+                                                                                       eStall,
+                                                                                       sStall,
+                                                                                       cycleCounter);
                 }
             }
 
@@ -721,15 +996,15 @@ namespace Team4_Project3
 
             if (start == true)
             {
-                (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
-                r0TextBox.Text = R0.ToString();
+                (pipeFetch, regArray[0], programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, (int)regArray[0], programIndex);
+                r0TextBox.Text = ((int)regArray[0]).ToString();
                 start = false;
 
             }
             if (pipeFetch.Count == 0 && stopF == 0)
             {
-                (pipeFetch, R0, programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, R0, programIndex);
-                r0TextBox.Text = R0.ToString();
+                (pipeFetch, regArray[0], programIndex, stopF) = ProgramController.fetch(instructions, pipeFetch, (int)regArray[0], programIndex);
+                r0TextBox.Text = ((int)regArray[0]).ToString();
             }
 
 
@@ -796,83 +1071,83 @@ namespace Team4_Project3
             switch (param)
             {
                 case string n when (n == "R0"):
-                    R0 = (int)update;
-                   r0TextBox.Text = R0.ToString();
+                    regArray[0] = (int)update;
+                    r0TextBox.Text = ((int)regArray[0]).ToString();
                     break;
 
                 case string n when (n == "R1"):
-                    R1 = (int)update;
-                    r1TextBox.Text = R1.ToString();
+                    regArray[1] = (int)update;
+                    r1TextBox.Text = ((int)regArray[1]).ToString();
                     break;
 
                 case string n when (n == "R2"):
-                    R2 = (int)update;
-                    r2TextBox.Text = R2.ToString();
+                    regArray[2] = (int)update;
+                    r2TextBox.Text = ((int)regArray[2]).ToString();
                     break;
 
                 case string n when (n == "R3"):
-                    R3 = (int)update;
-                    r3TextBox.Text = R3.ToString();
+                    regArray[3] = (int)update;
+                    r3TextBox.Text = ((int)regArray[3]).ToString();
                     break;
 
                 case string n when (n == "R4"):
-                    R4 = (int)update;
-                    r4TextBox.Text = R4.ToString();
+                    regArray[4] = (int)update;
+                    r4TextBox.Text = ((int)regArray[4]).ToString();
                     break;
 
                 case string n when (n == "R5"):
-                    R5 = (int)update;
-                    r5TextBox.Text = R5.ToString();
+                    regArray[5] = (int)update;
+                    r5TextBox.Text = ((int)regArray[5]).ToString();
                     break;
 
                 case string n when (n == "R6"):
-                    R6 = (int)update;
-                    r6TextBox.Text = R6.ToString();
+                    regArray[6] = (int)update;
+                    r6TextBox.Text = ((int)regArray[6]).ToString();
                     break;
 
                 case string n when (n == "R7"):
-                    R7 = (int)update;
-                    r7TextBox.Text = R7.ToString();
+                    regArray[7] = (int)update;
+                    r7TextBox.Text = ((int)regArray[7]).ToString();
                     break;
 
                 case string n when (n == "R8"):
-                    R8 = (int)update;
-                    r8TextBox.Text = R8.ToString();
+                    regArray[8] = (int)update;
+                    r8TextBox.Text = ((int)regArray[8]).ToString();
                     break;
 
                 case string n when (n == "R9"):
-                    R9 = (int)update;
-                    r9TextBox.Text = R9.ToString();
+                    regArray[9] = (int)update;
+                    r9TextBox.Text = ((int)regArray[9]).ToString();
                     break;
 
                 case string n when (n == "R10"):
-                    R10 = (int)update;
-                    r10TextBox.Text = R10.ToString();
+                    regArray[10] = (int)update;
+                    r10TextBox.Text = ((int)regArray[10]).ToString();
                     break;
 
                 case string n when (n == "R11"):
-                    R11 = (int)update;
-                    r11TextBox.Text = R11.ToString();
+                    regArray[11] = (int)update;
+                    r11TextBox.Text = ((int)regArray[11]).ToString();
                     break;
 
                 case string n when (n == "F12"):
-                    F12 = update;
-                    f12TextBox.Text = F12.ToString();
+                    regArray[12] = update;
+                    f12TextBox.Text = regArray[12].ToString();
                     break;
 
                 case string n when (n == "F13"):
-                    F13 = update;
-                    f13TextBox.Text = F13.ToString();
+                    regArray[13] = update;
+                    f13TextBox.Text = regArray[13].ToString();
                     break;
 
                 case string n when (n == "F14"):
-                    F14 = update;
-                    f14TextBox.Text = F14.ToString();
+                    regArray[14] = update;
+                    f14TextBox.Text = regArray[14].ToString();
                     break;
 
                 case string n when (n == "f15"):
-                    F15 = update;
-                    f15TextBox.Text = F15.ToString();
+                    regArray[15] = update;
+                    f15TextBox.Text = regArray[15].ToString();
                     break;
             }
 
@@ -888,73 +1163,57 @@ namespace Team4_Project3
             switch (param)
             {
                 case string n when (n == "R0"):
-                    return R0;
-                    break;
+                    return (int)regArray[0];
 
                 case string n when (n == "R1"):
-                    return R1;
-                    break;
+                    return (int)regArray[1];
 
                 case string n when (n == "R2"):
-                    return R2;
-                    break;
+                    return (int)regArray[2];
 
                 case string n when (n == "R3"):
-                    return R3;
-                    break;
+                    return (int)regArray[3];
 
                 case string n when (n == "R4"):
-                    return R4;
-                    break;
+                    return (int)regArray[4];
 
                 case string n when (n == "R5"):
-                    return R5;
-                    break;
+                    return (int)regArray[5];
 
                 case string n when (n == "R6"):
-                    return R6;
-                    break;
+                    return (int)regArray[6];
 
                 case string n when (n == "R7"):
-                    return R7;
-                    break;
+                    return (int)regArray[7];
 
                 case string n when (n == "R8"):
-                    return R8;
-                    break;
+                    return (int)regArray[8];
 
                 case string n when (n == "R9"):
-                    return R9;
-                    break;
+                    return (int)regArray[9];
 
                 case string n when (n == "R10"):
-                    return R10;
-                    break;
+                    return (int)regArray[10];
 
                 case string n when (n == "R11"):
-                    return R11;
-                    break;
+                    return (int)regArray[11];
 
                 case string n when (n == "F12"):
-                    return F12;
-                    break;
+                    return regArray[12];
 
                 case string n when (n == "F13"):
-                    return F13;
-                    break;
+                    return regArray[13];
 
                 case string n when (n == "F14"):
-                    return F14;
-                    break;
+                    return regArray[14];
 
                 case string n when (n == "f15"):
-                    return F15;
-                    break;
+                    return regArray[15];
 
                 default:
                     return 0;
             }
-            
+
         }//end getReg()
         #endregion
 
@@ -995,18 +1254,18 @@ namespace Team4_Project3
         {
             //Store all memory into single string
             StringBuilder memString = new StringBuilder();
-            for (int i = 0; i < 65536; i++)
+            for (int k = 0; k < 65536; k++)
             {
                 for (int j = 0; j < 17; j++)
                 {
                     if (j == 16)
                     {
-                        memString.Append(Memory[i, j]);
+                        memString.Append(Memory[k, j]);
                         memString.Append("\r\n");
                     }
                     else
                     {
-                        memString.Append(Memory[i, j]);
+                        memString.Append(Memory[k, j]);
                     }
                 }
             }
@@ -1015,7 +1274,177 @@ namespace Team4_Project3
             memOutputText.Text = Convert.ToString(memString);
 
         }//end storeMemoryInString()
-        #endregion  
+        #endregion
+
+        #region storeMemoryInString32nd() Method
+        /// <summary>
+        /// Method for storing 1/32 of memory array to reduce lag
+        /// </summary>
+        public void storeMemoryInString32nd(int sliderValue)
+        {
+            //Store all 1/32 of memory into memory textbox
+            switch (sliderValue)
+            {
+                case 1:
+                    memOutputText.Text = returnMemoryBetweenValues(0, 2047);
+                    break;
+
+                case 2:
+                    memOutputText.Text = returnMemoryBetweenValues(2048, 4095);
+                    break;
+
+                case 3:
+                    memOutputText.Text = returnMemoryBetweenValues(4096, 6143);
+                    break;
+
+                case 4:
+                    memOutputText.Text = returnMemoryBetweenValues(6144, 8191);
+                    break;
+
+                case 5:
+                    memOutputText.Text = returnMemoryBetweenValues(8192, 10239);
+                    break;
+
+                case 6:
+                    memOutputText.Text = returnMemoryBetweenValues(10240, 12287);
+                    break;
+
+                case 7:
+                    memOutputText.Text = returnMemoryBetweenValues(12288, 14335);
+                    break;
+
+                case 8:
+                    memOutputText.Text = returnMemoryBetweenValues(14336, 16383);
+                    break;
+
+                case 9:
+                    memOutputText.Text = returnMemoryBetweenValues(16384, 18431);
+                    break;
+
+                case 10:
+                    memOutputText.Text = returnMemoryBetweenValues(18432, 20479);
+                    break;
+
+                case 11:
+                    memOutputText.Text = returnMemoryBetweenValues(20480, 22527);
+                    break;
+
+                case 12:
+                    memOutputText.Text = returnMemoryBetweenValues(22528, 24575);
+                    break;
+
+                case 13:
+                    memOutputText.Text = returnMemoryBetweenValues(24576, 26623);
+                    break;
+
+                case 14:
+                    memOutputText.Text = returnMemoryBetweenValues(26624, 28671);
+                    break;
+
+                case 15:
+                    memOutputText.Text = returnMemoryBetweenValues(28672, 30719);
+                    break;
+
+                case 16:
+                    memOutputText.Text = returnMemoryBetweenValues(30720, 32767);
+                    break;
+
+                case 17:
+                    memOutputText.Text = returnMemoryBetweenValues(32768, 34815);
+                    break;
+
+                case 18:
+                    memOutputText.Text = returnMemoryBetweenValues(34816, 36863);
+                    break;
+
+                case 19:
+                    memOutputText.Text = returnMemoryBetweenValues(36864, 38911);
+                    break;
+
+                case 20:
+                    memOutputText.Text = returnMemoryBetweenValues(38912, 40959);
+                    break;
+
+                case 21:
+                    memOutputText.Text = returnMemoryBetweenValues(40960, 43007);
+                    break;
+
+                case 22:
+                    memOutputText.Text = returnMemoryBetweenValues(43008, 45055);
+                    break;
+
+                case 23:
+                    memOutputText.Text = returnMemoryBetweenValues(45056, 47103);
+                    break;
+
+                case 24:
+                    memOutputText.Text = returnMemoryBetweenValues(47104, 49151);
+                    break;
+
+                case 25:
+                    memOutputText.Text = returnMemoryBetweenValues(49152, 51199);
+                    break;
+
+                case 26:
+                    memOutputText.Text = returnMemoryBetweenValues(51200, 53247);
+                    break;
+
+                case 27:
+                    memOutputText.Text = returnMemoryBetweenValues(53248, 55295);
+                    break;
+
+                case 28:
+                    memOutputText.Text = returnMemoryBetweenValues(55296, 57343);
+                    break;
+
+                case 29:
+                    memOutputText.Text = returnMemoryBetweenValues(57344, 59391);
+                    break;
+
+                case 30:
+                    memOutputText.Text = returnMemoryBetweenValues(59392, 61439);
+                    break;
+
+                case 31:
+                    memOutputText.Text = returnMemoryBetweenValues(61440, 63487);
+                    break;
+
+                case 32:
+                    memOutputText.Text = returnMemoryBetweenValues(63488, 65535);
+                    break;
+            }
+
+        }//end storeMemoryInString32nd()
+        #endregion 
+
+        #region returnMemoryBetweenValues() Method
+        /// <summary>
+        /// Method for returning memory between 2 values
+        /// </summary>
+        public string returnMemoryBetweenValues(int a, int b)
+        {
+            StringBuilder memString = new StringBuilder();
+
+            for (int k = a; k <= b; k++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    if (j == 16)
+                    {
+                        memString.Append(Memory[k, j]);
+                        memString.Append("\r\n");
+                    }
+                    else
+                    {
+                        memString.Append(Memory[k, j]);
+                    }
+                }
+            }
+
+            return Convert.ToString(memString);
+
+        }//end returnMemoryBetweenValues()
+        #endregion
 
 
         //Reset Methods
@@ -1141,25 +1570,11 @@ namespace Team4_Project3
 
             //==Reset Registers==//
             //============================================================//
-            //Regular Registers
-            R0 = 0; //Program Counter
-            R1 = 0; //Flag Z (Zero)
-            R2 = 0; //Flag C (Carry)
-            R3 = 0; //Flag S (Sign)
-            R4 = 0;
-            R5 = 0;
-            R6 = 0;
-            R7 = 0;
-            R8 = 0;
-            R9 = 0;
-            R10 = 0;
-            R11 = 0;
-
-            //Floating-Point Registers
-            F12 = 0f;
-            F13 = 0f;
-            F14 = 0f;
-            F15 = 0f;
+            regArray = new float[16];
+            //R0 - Program Counter
+            //R1 - Z (Zero) Flag
+            //R2 - C (Carry) Flag
+            //R3 - S (Sign) Flag
 
 
             //==Reset 1MB Memory Array==//
@@ -1193,24 +1608,23 @@ namespace Team4_Project3
 
             rF1 = true;
             rF2 = true;
+
             i = 0;
 
             //==Reset Dynamic Pipeline Variables==//
             //============================================================//
             instructionQueue = new Queue<Instruction>(9);
             reorderBuffer = new List<Instruction>();
-            fExec1 = new Queue<Instruction>(1);
-            intExec1 = new Queue<Instruction>(1);
-            loadStoreExec1 = new Queue<Instruction>(1);
-            resFExec1 = new Queue<Instruction>(2);
-            resIntExec1 = new Queue<Instruction>(2);
-            resLoadStoreExec1 = new Queue<Instruction>(2);
-            resStatFExec1 = new Queue<Instruction>(2);
-            resStatIntExec1 = new Queue<Instruction>(2);
-            resStatLoadStoreExec1 = new Queue<Instruction>(2);
-            statFExec1 = new Queue<Instruction>(1);
-            statIntExec1 = new Queue<Instruction>(1);
-            statLoadStoreExec1 = new Queue<Instruction>(1);
+            fExec1 = new Queue<Station>(1);
+            intExec1 = new Queue<Station>(1);
+            loadStoreExec1 = new Queue<Station>(1);
+            memExec1 = new Queue<Station>(1);
+
+            resFExec1 = new Queue<Station>(2);
+            resIntExec1 = new Queue<Station>(2);
+            resLoadStoreExec1 = new Queue<Station>(2);
+            resMem = new Queue<Station>(2);
+            Qi = new String[16];
 
         }//end resetAllVariables()
         #endregion
