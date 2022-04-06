@@ -27,9 +27,8 @@ namespace Team4_Project3
     /// </summary>
     public class Instruction
     {
-        string instLit, p1Register, p2Register = string.Empty;
-        string sRegister = string.Empty;
-        int fetch, decode, execute, store, name = 0;
+        public string instLit, sRegister, p1Register, p2Register, location = string.Empty;
+        public int fetch, decode, execute, store, name = 0;
 
         /// <summary>
         /// Parameterized Constructor for Instruction with 1 register
@@ -78,6 +77,28 @@ namespace Team4_Project3
             this.sRegister = sRegister;
             this.p1Register = p1Register;
             this.p2Register = p2Register;
+            this.instLit = instLit;
+
+        }//end Instruction()
+
+        /// <summary>
+        /// Parameterized Constructor for Instruction with 2 registers
+        /// </summary>
+        /// <param name="name">Name</param>
+        /// <param name="fetch">Number of fetch cycles</param>
+        /// <param name="decode">Number of decode cycles</param>
+        /// <param name="execute">Number of execute cycles</param>
+        /// <param name="store">Number of register cycles</param>
+        /// <param name="location"></param>
+        /// <param name="instLit"></param>
+        public Instruction(int name, int fetch, int decode, int execute, int store, string location, string instLit)
+        {
+            this.name = name;
+            this.fetch = fetch;
+            this.decode = decode;
+            this.execute = execute;
+            this.store = store;
+            this.location = location;
             this.instLit = instLit;
 
         }//end Instruction()

@@ -634,6 +634,8 @@ namespace Team4_Project3
         {
             string instLit = string.Empty;
             int stopF = 0;
+            int stringLoc = 0;
+
             switch (instructions[i])
             {
                 case string n when (n == "LDRE"):
@@ -735,51 +737,75 @@ namespace Team4_Project3
 
                 case string n when (n == "BRLT"):
                     instLit += instructions[i];
-                    instLit += " ";
                     instLit += instructions[i + 1];
-                    instLit += " ";
-                    instLit += instructions[i + 2];
 
-                    Instruction BRLT = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instructions[i + 2], instLit);
-                    pipeInts.Add(BRLT);
-                    i += 4;
+                    stringLoc = instructions.IndexOf(instructions[i + 1] + ":");    //looks for jump point
+
+                    if (stringLoc == -1)
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        Instruction BRLT = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instLit);
+                        pipeInts.Add(BRLT);
+                        i = stringLoc;          //set jump point as next instruction
+                    }
                     break;
 
                 case string n when (n == "BRGT"):
                     instLit += instructions[i];
-                    instLit += " ";
                     instLit += instructions[i + 1];
-                    instLit += " ";
-                    instLit += instructions[i + 2];
 
-                    Instruction BRGT = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instructions[i + 2], instLit);
-                    pipeInts.Add(BRGT);
-                    i += 4;
+                    stringLoc = instructions.IndexOf(instructions[i + 1] + ":");    //looks for jump point
+
+                    if (stringLoc == -1)
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        Instruction BRGT = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instLit);
+                        pipeInts.Add(BRGT);
+                        i = stringLoc;          //set jump point as next instruction
+                    }
                     break;
 
                 case string n when (n == "BREQ"):
                     instLit += instructions[i];
-                    instLit += " ";
                     instLit += instructions[i + 1];
-                    instLit += " ";
-                    instLit += instructions[i + 2];
 
-                    Instruction BREQ = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instructions[i + 2], instLit);
-                    pipeInts.Add(BREQ);
-                    i += 4;
+                    stringLoc = instructions.IndexOf(instructions[i + 1] + ":");    //looks for jump point
+
+                    if (stringLoc == -1)
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        Instruction BREQ = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instLit);
+                        pipeInts.Add(BREQ);
+                        i = stringLoc;          //set jump point as next instruction
+                    }
                     break;
 
                 case string n when (n == "BRAN"):
                     instLit += instructions[i];
-                    instLit += " ";
                     instLit += instructions[i + 1];
-                    instLit += " ";
-                    instLit += instructions[i + 2];
 
+                    stringLoc = instructions.IndexOf(instructions[i + 1] + ":");    //looks for jump point
 
-                    Instruction BRAN = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instructions[i + 2], instLit);
-                    pipeInts.Add(BRAN);
-                    i += 4;
+                    if (stringLoc == -1)
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        Instruction BRAN = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instLit);
+                        pipeInts.Add(BRAN);
+                        i = stringLoc;          //set jump point as next instruction
+                    }
+
                     break;
 
                 case string n when (n == "ADDI"):
@@ -941,7 +967,7 @@ namespace Team4_Project3
                     { }
                     else
                     { }
-                        break;
+                    break;
                 case string n when (n == "STRE"):
 
                     break;
@@ -985,7 +1011,7 @@ namespace Team4_Project3
 
                     break;
                 case string n when (n == "NOOP"):
-                    
+
                     break;
                 case string n when (n == "STOP"):
 
@@ -1155,10 +1181,10 @@ namespace Team4_Project3
                                                  int control,
                                                  int RAW,
                                                  int WAR,
-                                                 int WAW, 
-                                                 int buffer, 
-                                                 int station, 
-                                                 int conflict, 
+                                                 int WAW,
+                                                 int buffer,
+                                                 int station,
+                                                 int conflict,
                                                  int dependence,
                                                  int cycles)
         {
@@ -1254,49 +1280,58 @@ namespace Team4_Project3
         /// <summary>
         /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory for ints
         /// </summary>
-        /// <param name="reg2">Register/Immediate/Memory to load from</param>
-        /// <returns>Value to store in reg1</returns>
+        /// <param name="pipeInts">Instruction ints</param>
+        /// <returns>Value to store in sRegister</returns>
         public static void LDRER(Instruction pipeInts)
         {
-            float ret =  guiForm.getReg(pipeInts.P1Register);
-            guiForm.updateRegister(pipeInts.SRegister,ret);
+            float ret = guiForm.getReg(pipeInts.p1Register);
 
-        }//end LDRE()
+            guiForm.updateRegister(pipeInts.sRegister, ret);
+
+        }//end LDRER()
         #endregion
+
         #region LDREI() Method
         /// <summary>
         /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory for ints
         /// </summary>
-        /// <param name="reg2">Register/Immediate/Memory to load from</param>
-        /// <returns>Value to store in reg1</returns>
-        public static int LDREI(int reg2)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void LDREI(Instruction pipeInts)
         {
-            return reg2;
+            float ret = guiForm.getReg(pipeInts.p1Register);
 
-        }//end LDRE()
+            guiForm.updateRegister(pipeInts.sRegister, ret);
+
+        }//end LDREI()
         #endregion
+
         #region LDREM() Method
         /// <summary>
         /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory for ints
         /// </summary>
-        /// <param name="reg2">Register/Immediate/Memory to load from</param>
-        /// <returns>Value to store in reg1</returns>
-        public static int LDREM(int i)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void LDREM(Instruction pipeInts)
         {
-            return 0;
+            float ret = guiForm.getReg(pipeInts.p1Register);
 
-        }//end LDRE()
+            guiForm.updateRegister(pipeInts.sRegister, ret);
+
+        }//end LDREM()
         #endregion
 
         #region LDREfloat() Method
         /// <summary>
         /// Method for LDRE R,R | LDRE R,Immediate | LDRE R,Memory for floats
         /// </summary>
-        /// <param name="reg2">Register/Immediate/Memory to load from</param>
-        /// <returns>Value to store in reg1</returns>
-        public static float LDREfloat(float reg2)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void LDREfloat(Instruction pipeInts)
         {
-            return reg2;
+            float ret = guiForm.getReg(pipeInts.p1Register);
+
+            guiForm.updateRegister(pipeInts.sRegister, ret);
 
         }//end LDREfloat()
         #endregion
@@ -1305,11 +1340,11 @@ namespace Team4_Project3
         /// <summary>
         /// Method for STRE &R,R instruction
         /// </summary>
-        /// <param name="reg2">Register to be loaded into memory</param>
+        /// <param name="pipeInts">Instruction to currently execute</param>
         /// <returns>Value to store in memory</returns>
-        public static int STRE(int reg2)
+        public static void STRE(Instruction pipeInts)
         {
-            return reg2;
+
 
         }//end STRE()
         #endregion
@@ -1318,22 +1353,24 @@ namespace Team4_Project3
         /// <summary>
         /// Method for COMP R,R,R instruction
         /// </summary>
-        /// <param name="reg2">First register to be compared (Second total parameter)</param>
-        /// <param name="reg3">Second register to be compared (Third total parameter)</param>
-        /// <returns>Value to store in reg1</returns>
-        public static int COMP(int reg2, int reg3)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void COMP(Instruction pipeInts)
         {
-            if(reg2 < reg3)
+            if (guiForm.getReg(pipeInts.p1Register) < guiForm.getReg(pipeInts.p2Register))
             {
-                return -1;  //Return -1 if reg2 less than reg 3
+                guiForm.updateRegister(pipeInts.SRegister, -1);  //Return -1 if p1Register less than p2Register
+                guiForm.updateRegister("R0", 0);    //De-activates Z (Zero) flag if operands are not equal
             }
-            else if (reg2 == reg3)
+            else if (guiForm.getReg(pipeInts.p1Register) == guiForm.getReg(pipeInts.p2Register))
             {
-                return 0;   //Return 0 if reg2 equal to reg 3
+                guiForm.updateRegister(pipeInts.SRegister, 0);   //Return 0 if p1Register equal to p2Register
+                guiForm.updateRegister("R0", 1);    //Activates Z (Zero) flag if operands are equal
             }
             else
             {
-                return 1;   //Return 1 if reg2 more than reg 3
+                guiForm.updateRegister(pipeInts.SRegister, 1);   //Return 1 if p1Register more than p2Register
+                guiForm.updateRegister("R0", 0);    //De-activates Z (Zero) flag if operands are not equal
             }
 
         }//end COMP()
@@ -1343,12 +1380,13 @@ namespace Team4_Project3
         /// <summary>
         /// Method for ANDD R,R,R instruction
         /// </summary>
-        /// <param name="reg2">First register to be AND-ed (Second total parameter)</param>
-        /// <param name="reg3">Second register to be AND-ed (Third total parameter)</param>
-        /// <returns>Value to store in reg1</returns>
-        public static int ANDD(int reg2, int reg3)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void ANDD(Instruction pipeInts)
         {
-            return reg2 & reg3; //CODE PROBABLY DOESNT GIVE CORRECT OUTPUT CURRENTLY (Try to fix if you think it's broken)
+            float ret = Convert.ToInt32(guiForm.getReg(pipeInts.p1Register)) & Convert.ToInt32(guiForm.getReg(pipeInts.p2Register));
+
+            guiForm.updateRegister(pipeInts.sRegister, ret);
 
         }//end ANDD()
         #endregion
@@ -1357,12 +1395,13 @@ namespace Team4_Project3
         /// <summary>
         /// Method for OORR R,R,R instruction
         /// </summary>
-        /// <param name="reg2">First register to be OR-ed (Second total parameter)</param>
-        /// <param name="reg3">Second register to be OR-ed (Third total parameter)</param>
-        /// <returns>Value to store in reg1</returns>
-        public static int OORR(int reg2, int reg3)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void OORR(Instruction pipeInts)
         {
-            return reg2 | reg3; //CODE PROBABLY DOESNT GIVE CORRECT OUTPUT CURRENTLY (Try to fix if you think it's broken)
+            float ret = Convert.ToInt32(guiForm.getReg(pipeInts.p1Register)) | Convert.ToInt32(guiForm.getReg(pipeInts.p2Register));
+
+            guiForm.updateRegister(pipeInts.sRegister, ret);
 
         }//end OORR()
         #endregion
@@ -1376,6 +1415,20 @@ namespace Team4_Project3
         /// <returns>hether or not reg1 is greater than reg2</returns>
         public static bool BRGT(int reg1, int reg2)
         {
+
+            /* pass return reg from compare
+             * check value for 1
+             * if 1, get location from passed register
+             * 
+             * br loop
+             * a
+             * a
+             * a
+             * a
+             * loop:
+             * 
+             * file.
+             */
             return reg1 > reg2;
 
         }//end BRGT()
@@ -1427,12 +1480,13 @@ namespace Team4_Project3
         /// <summary>
         /// Method for ADDI R,R,R instruction
         /// </summary>
-        /// <param name="reg2">First register to be added (Second total parameter)</param>
-        /// <param name="reg3">Second register to be added (Third total parameter)</param>
-        /// <returns>Sum value to store in reg1</returns>
-        public static int ADDI(int reg2, int reg3)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void ADDI(Instruction pipeInts)
         {
-            return reg2 + reg3;
+            float ret = Convert.ToInt32(guiForm.getReg(pipeInts.p1Register)) + Convert.ToInt32(guiForm.getReg(pipeInts.p2Register));
+
+            guiForm.updateRegister(pipeInts.sRegister, ret);
 
         }//end ADDI()
         #endregion
@@ -1441,12 +1495,13 @@ namespace Team4_Project3
         /// <summary>
         /// Method for SUBT R,R,R instruction
         /// </summary>
-        /// <param name="reg2">First register to be subtracted from (Second total parameter)</param>
-        /// <param name="reg3">Second register to subtract (Third total parameter)</param>
-        /// <returns>Difference value to store in freg1</returns>
-        public static int SUBT(int reg2, int reg3)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void SUBT(Instruction pipeInts)
         {
-            return reg2 - reg3;
+            float ret = Convert.ToInt32(guiForm.getReg(pipeInts.p1Register)) - Convert.ToInt32(guiForm.getReg(pipeInts.p2Register));
+
+            guiForm.updateRegister(pipeInts.sRegister, ret);
 
         }//end SUBT()
         #endregion
@@ -1455,12 +1510,13 @@ namespace Team4_Project3
         /// <summary>
         /// Method for FADD F,F,F instruction
         /// </summary>
-        /// <param name="freg2">First floating-point register to be added (Second total parameter)</param>
-        /// <param name="freg3">Second floating-point register to be added (Third total parameter)</param>
-        /// <returns>Sum value to store in freg1</returns>
-        public static float FADD(float freg2, float freg3)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void FADD(Instruction pipeInts)
         {
-            return freg2 + freg3;
+            float ret = guiForm.getReg(pipeInts.p1Register) + guiForm.getReg(pipeInts.p2Register);
+
+            guiForm.updateRegister(pipeInts.sRegister, ret);
 
         }//end FADD()
         #endregion
@@ -1469,12 +1525,13 @@ namespace Team4_Project3
         /// <summary>
         /// Method for FSUB F,F,F instruction
         /// </summary>
-        /// <param name="freg2">First floating-point register to be subtracted from (Second total parameter)</param>
-        /// <param name="freg3">Second floating-point register to subtract (Third total parameter)</param>
-        /// <returns>Difference value to store in freg1</returns>
-        public static float FSUB(float freg2, float freg3)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void FSUB(Instruction pipeInts)
         {
-            return freg2 - freg3;
+            float ret = guiForm.getReg(pipeInts.p1Register) - guiForm.getReg(pipeInts.p2Register);
+
+            guiForm.updateRegister(pipeInts.sRegister, ret);
 
         }//end FSUB()
         #endregion
@@ -1483,12 +1540,13 @@ namespace Team4_Project3
         /// <summary>
         /// Method for FMUL F,F,F instruction
         /// </summary>
-        /// <param name="freg2">First floating-point register to be multiplied (Second total parameter)</param>
-        /// <param name="freg3">Second floating-point register to be multiplied (Third total parameter)</param>
-        /// <returns>Product value to store in freg1</returns>
-        public static float FMUL(float freg2, float freg3)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void FMUL(Instruction pipeInts)
         {
-            return freg2 * freg3;
+            float ret = guiForm.getReg(pipeInts.p1Register) * guiForm.getReg(pipeInts.p2Register);
+
+            guiForm.updateRegister(pipeInts.sRegister, ret);
 
         }//end FMUL()
         #endregion
@@ -1497,12 +1555,13 @@ namespace Team4_Project3
         /// <summary>
         /// Method for FDIV F,F,F instruction
         /// </summary>
-        /// <param name="freg2">First floating-point register to be divided from (Second total parameter)</param>
-        /// <param name="freg3">Second floating-point register to divide (Third total parameter)</param>
-        /// <returns>Quotient value to store in freg1</returns>
-        public static float FDIV(float freg2, float freg3)
+        /// <param name="pipeInts">Instruction to currently execute</param>
+        /// <returns>Value to store in sRegister</returns>
+        public static void FDIV(Instruction pipeInts)
         {
-            return freg2 / freg3;
+            float ret = guiForm.getReg(pipeInts.p1Register) / guiForm.getReg(pipeInts.p2Register);
+
+            guiForm.updateRegister(pipeInts.sRegister, ret);
 
         }//end FDIV()
         #endregion

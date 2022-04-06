@@ -33,9 +33,12 @@ namespace Team4_Project3
         public string Op { get; set; }      //
         public string Qj { get; set; }      //
         public string Qk { get; set; }      //
-        public string Vj { get; set; }      //
-        public string Vk { get; set; }      //
+        public float Vj { get; set; }       //
+        public float Vk { get; set; }       //
         public string A { get; set; }       //
+        public Instruction instruction { get; set; }
+        public int dest { get; set; }
+        public string addressingMode { get; set; }
 
         /// <summary>
         /// Parameterized Constructor for Station
@@ -48,9 +51,10 @@ namespace Team4_Project3
             this.Op = null;
             this.Qj = null;
             this.Qk = null;
-            this.Vj = null;
-            this.Vk = null;
+            this.Vj = 0f;
+            this.Vk = 0f;
             this.A = null;
+            this.instruction = null;
 
         }//end Station()
 
@@ -65,7 +69,7 @@ namespace Team4_Project3
         /// <param name="Vj"></param>
         /// <param name="Vk"></param>
         /// <param name="A"></param>
-        public Station(string Name, bool Busy, string Op, string Qj, string Qk, string Vj, string Vk, string A)
+        public Station(string Name, bool Busy, string Op, string Qj, string Qk, float Vj, float Vk, string A, Instruction instruction, int dest, string addressingMode)
         {
             this.Name = Name;
             this.Busy = Busy;
@@ -75,6 +79,9 @@ namespace Team4_Project3
             this.Vj = Vj;
             this.Vk = Vk;
             this.A = A;
+            this.instruction = instruction;
+            this.dest=dest;
+            this.addressingMode = addressingMode;
 
         }//end Station()
 
