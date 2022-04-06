@@ -1426,13 +1426,14 @@
             // 
             // memSlider
             // 
-            this.memSlider.Location = new System.Drawing.Point(1272, 35);
+            this.memSlider.Location = new System.Drawing.Point(1272, 32);
             this.memSlider.Maximum = 32;
             this.memSlider.Minimum = 1;
             this.memSlider.Name = "memSlider";
             this.memSlider.Size = new System.Drawing.Size(309, 45);
             this.memSlider.TabIndex = 18;
             this.memSlider.Value = 1;
+            this.memSlider.Scroll += new System.EventHandler(this.memSlider_Scroll);
             // 
             // GUIForm
             // 

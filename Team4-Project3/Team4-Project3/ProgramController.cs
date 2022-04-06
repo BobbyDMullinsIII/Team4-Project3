@@ -634,6 +634,8 @@ namespace Team4_Project3
         {
             string instLit = string.Empty;
             int stopF = 0;
+            int stringLoc = 0;
+
             switch (instructions[i])
             {
                 case string n when (n == "LDRE"):
@@ -735,51 +737,75 @@ namespace Team4_Project3
 
                 case string n when (n == "BRLT"):
                     instLit += instructions[i];
-                    instLit += " ";
                     instLit += instructions[i + 1];
-                    instLit += " ";
-                    instLit += instructions[i + 2];
 
-                    Instruction BRLT = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instructions[i + 2], instLit);
-                    pipeInts.Add(BRLT);
-                    i += 4;
+                    stringLoc = instructions.IndexOf(instructions[i + 1] + ":");    //looks for jump point
+
+                    if (stringLoc == -1)
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        Instruction BRLT = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instLit);
+                        pipeInts.Add(BRLT);
+                        i = stringLoc;          //set jump point as next instruction
+                    }
                     break;
 
                 case string n when (n == "BRGT"):
                     instLit += instructions[i];
-                    instLit += " ";
                     instLit += instructions[i + 1];
-                    instLit += " ";
-                    instLit += instructions[i + 2];
 
-                    Instruction BRGT = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instructions[i + 2], instLit);
-                    pipeInts.Add(BRGT);
-                    i += 4;
+                    stringLoc = instructions.IndexOf(instructions[i + 1] + ":");    //looks for jump point
+
+                    if (stringLoc == -1)
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        Instruction BRGT = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instLit);
+                        pipeInts.Add(BRGT);
+                        i = stringLoc;          //set jump point as next instruction
+                    }
                     break;
 
                 case string n when (n == "BREQ"):
                     instLit += instructions[i];
-                    instLit += " ";
                     instLit += instructions[i + 1];
-                    instLit += " ";
-                    instLit += instructions[i + 2];
 
-                    Instruction BREQ = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instructions[i + 2], instLit);
-                    pipeInts.Add(BREQ);
-                    i += 4;
+                    stringLoc = instructions.IndexOf(instructions[i + 1] + ":");    //looks for jump point
+
+                    if (stringLoc == -1)
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        Instruction BREQ = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instLit);
+                        pipeInts.Add(BREQ);
+                        i = stringLoc;          //set jump point as next instruction
+                    }
                     break;
 
                 case string n when (n == "BRAN"):
                     instLit += instructions[i];
-                    instLit += " ";
                     instLit += instructions[i + 1];
-                    instLit += " ";
-                    instLit += instructions[i + 2];
 
+                    stringLoc = instructions.IndexOf(instructions[i + 1] + ":");    //looks for jump point
 
-                    Instruction BRAN = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instructions[i + 2], instLit);
-                    pipeInts.Add(BRAN);
-                    i += 4;
+                    if (stringLoc == -1)
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        Instruction BRAN = new Instruction(progCount += 4, 1, 1, 1, 1, instructions[i + 1], instLit);
+                        pipeInts.Add(BRAN);
+                        i = stringLoc;          //set jump point as next instruction
+                    }
+
                     break;
 
                 case string n when (n == "ADDI"):

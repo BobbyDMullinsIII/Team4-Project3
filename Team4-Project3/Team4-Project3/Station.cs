@@ -38,6 +38,7 @@ namespace Team4_Project3
         public string A { get; set; }       //
         public Instruction instruction { get; set; }
         public int dest { get; set; }
+        public string addressingMode { get; set; }
 
         /// <summary>
         /// Parameterized Constructor for Station
@@ -68,7 +69,7 @@ namespace Team4_Project3
         /// <param name="Vj"></param>
         /// <param name="Vk"></param>
         /// <param name="A"></param>
-        public Station(string Name, bool Busy, string Op, string Qj, string Qk, float Vj, float Vk, string A, Instruction instruction,int dest)
+        public Station(string Name, bool Busy, string Op, string Qj, string Qk, float Vj, float Vk, string A, Instruction instruction, int dest, string addressingMode)
         {
             this.Name = Name;
             this.Busy = Busy;
@@ -79,6 +80,7 @@ namespace Team4_Project3
             this.Vk = Vk;
             this.A = A;
             this.instruction = instruction;
+            this.addressingMode = addressingMode;
 
         }//end Station()
 

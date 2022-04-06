@@ -118,20 +118,21 @@ namespace Team4_Project3
         //==Dynamic Pipeline Variables==//
         //============================================================//
         Queue<Instruction> instructionQueue = new Queue<Instruction>(9);
-        List<Instruction> reorderBuffer = new List<Instruction>();
+        List<Station> reorderBuffer = new List<Station>();
         Queue<Station> fExec1 = new Queue<Station>(1);
         Queue<Station> intExec1 = new Queue<Station>(1);
         Queue<Station> loadStoreExec1 = new Queue<Station>(1);
         Queue<Station> memExec1 = new Queue<Station>(1);
 
+        //Reservation Stations
         Queue<Station> resFExec1 = new Queue<Station>(2);
         Queue<Station> resIntExec1 = new Queue<Station>(2);
         Queue<Station> resLoadStoreExec1 = new Queue<Station>(2);
         Queue<Station> resMem = new Queue<Station>(2);
         String[] Qi = new String[16];
-
         int destinationCounter = 0;
 
+        int loadCounter = 0;
         //GUIForm Constructor
         #region GUIForm Constructor
         /// <summary>
@@ -246,7 +247,7 @@ namespace Team4_Project3
             instantiateMemory();
 
             //Display first 32nd of memory to GUI
-            storeMemoryInString32nd(1);
+            displayMemoryInString32nd(1);
 
             //Start dynamic pipeline simulation
             startSimulation();
@@ -266,7 +267,7 @@ namespace Team4_Project3
             instantiateMemory();
 
             //Display first 32nd of memory to GUI
-            storeMemoryInString32nd(1);
+            displayMemoryInString32nd(1);
 
             //Start static pipeline simulation
             startSimulation();
@@ -287,6 +288,16 @@ namespace Team4_Project3
             {
                 nextStaticCycle();
             }
+        }
+
+        /// <summary>
+        ///  Slider for going through each 1/32 of 1MB memory array
+        /// </summary>
+        /// <param name="sender">object that raised the event (auto-generated, unused here)</param>
+        /// <param name="e">arguments for event (auto-generated, unused here)</param>
+        private void memSlider_Scroll(object sender, EventArgs e)
+        {
+            displayMemoryInString32nd(memSlider.Value);
         }
         #endregion
 
@@ -357,6 +368,20 @@ namespace Team4_Project3
                 instructionQueue.Enqueue(fetchedIntructs[fetchedIntructs.Count - 1]);
             }
 
+            //Commit Phase
+            if (reorderBuffer.Count > 0)
+            {
+                Qi[Convert.ToInt32(reorderBuffer[0].instruction.SRegister.Remove(0, 1))]= string.Empty;
+                //switch (reorderBuffer[0].addressingMode)
+                //{
+                //    case string x when (x == "00"):
+                //        int sReg = Convert.ToInt32(reorderBuffer[0].instruction.sRegister.Remove(0, 1));
+                //        regArray[sReg] = reorderBuffer[0].Vj;
+                //        reorderBuffer.RemoveAt(0);
+                //        break;
+                //}
+
+            }
             //Issue Phase
             //Gets instruction pneumonic from instructionlit in instruction object
             string name = $"{instructionQueue.Peek().InstLit[0]}{instructionQueue.Peek().InstLit[1]}{instructionQueue.Peek().InstLit[2]}{instructionQueue.Peek().InstLit[3]}";
@@ -375,7 +400,8 @@ namespace Team4_Project3
                         else
                         {
                             destinationCounter++;
-                            Station resStatMem = new Station($"Load{resMem.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                            loadCounter++;
+                            Station resStatMem = new Station($"Load{loadCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "10");
                             resMem.Enqueue(resStatMem);
                         }
                     }
@@ -390,7 +416,7 @@ namespace Team4_Project3
                         else
                         {
                             destinationCounter++;
-                            Station resStatLoadStoreExec1 = new Station($"Load{resLoadStoreExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                            Station resStatLoadStoreExec1 = new Station($"Load{resLoadStoreExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
                             resLoadStoreExec1.Enqueue(resStatLoadStoreExec1);
                         }
                     }
@@ -406,7 +432,7 @@ namespace Team4_Project3
                     else
                     {
                         destinationCounter++;
-                        Station resStatLoadStoreExec1 = new Station($"Load{resMem.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        Station resStatLoadStoreExec1 = new Station($"Load{resMem.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
                         resMem.Enqueue(resStatLoadStoreExec1);
                     }
 
@@ -422,7 +448,7 @@ namespace Team4_Project3
                     else
                     {
                         destinationCounter++;
-                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
                         resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
@@ -437,7 +463,7 @@ namespace Team4_Project3
                     else
                     {
                         destinationCounter++;
-                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
                         resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
@@ -452,7 +478,7 @@ namespace Team4_Project3
                     else
                     {
                         destinationCounter++;
-                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
                         resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
@@ -467,7 +493,7 @@ namespace Team4_Project3
                     else
                     {
                         destinationCounter++;
-                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
                         resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
@@ -482,142 +508,182 @@ namespace Team4_Project3
                     else
                     {
                         destinationCounter++;
-                        Station resStatIntExec1 = new Station($"Load{resIntExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(),destinationCounter);
+                        Station resStatIntExec1 = new Station($"Load{resIntExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
                         resIntExec1.Enqueue(resStatIntExec1);
                     }
                     break;
             }
 
-            //Execute Phase 
-            if (resLoadStoreExec1.Peek().instruction.fetch == 0)
+            //Execute Phase
+            if (resLoadStoreExec1.Count > 0)
             {
-                if (string.IsNullOrEmpty(resLoadStoreExec1.Peek().Qj) == true)
+                if (resLoadStoreExec1.Peek().instruction.fetch == 0)
                 {
-                    Qi[Convert.ToInt32(resLoadStoreExec1.Peek().instruction.sRegister.Remove(0, 1))] = resLoadStoreExec1.Peek().Name;
-                    loadStoreExec1.Enqueue(resLoadStoreExec1.Dequeue());
-                    resLoadStoreExec1.Peek().instruction.fetch++;
+                    if (string.IsNullOrEmpty(resLoadStoreExec1.Peek().Qj) == true && string.IsNullOrEmpty(Qi[Convert.ToInt32(resLoadStoreExec1.Peek().instruction.p1Register.Remove(0, 1))]) == true)
+                    {
+                        Qi[Convert.ToInt32(resLoadStoreExec1.Peek().instruction.sRegister.Remove(0, 1))] = resLoadStoreExec1.Peek().Name;
+                        loadStoreExec1.Enqueue(resLoadStoreExec1.Dequeue());
+                        resLoadStoreExec1.Peek().instruction.fetch++;
+                    }
+                    else if (Qj == resLoadStoreExec1.Peek().Qj)
+                    {
+                        resLoadStoreExec1.Peek().Qj = string.Empty;
+                        resLoadStoreExec1.Peek().Vj = setVj(resLoadStoreExec1.Peek().instruction);
+                    }
+
                 }
-                else if (Qj == resLoadStoreExec1.Peek().Qj)
+                else
                 {
-                    resLoadStoreExec1.Peek().Qj = string.Empty;
-                    resLoadStoreExec1.Peek().Vj = setVj(resLoadStoreExec1.Peek().instruction);
+                    resLoadStoreExec1.Peek().instruction.fetch--;
+                }
+            }
+            if (resMem.Count > 0)
+            {
+                if (resMem.Peek().instruction.fetch == 0)
+                {
+                    if (string.IsNullOrEmpty(resMem.Peek().Qj) == true)
+                    {
+                        Qi[Convert.ToInt32(resMem.Peek().instruction.sRegister.Remove(0, 1))] = resMem.Peek().Name;
+                        memExec1.Enqueue(resMem.Dequeue());
+                        resMem.Peek().instruction.fetch++;
+                    }
+                    else if (Qj == resMem.Peek().Qj)
+                    {
+                        resMem.Peek().Qj = string.Empty;
+                        resMem.Peek().Vj = setVj(resMem.Peek().instruction);
+                    }
+                }
+                else
+                {
+                    resMem.Peek().instruction.fetch--;
+                }
+            }
+            if (resFExec1.Count > 0)
+            {
+                if (resFExec1.Peek().instruction.fetch == 0)
+                {
+                    if (string.IsNullOrEmpty(resFExec1.Peek().Qk) == true && string.IsNullOrEmpty(resFExec1.Peek().Qk) == true)
+                    {
+                        Qi[Convert.ToInt32(resFExec1.Peek().instruction.sRegister.Remove(0, 1))] = resFExec1.Peek().Name;
+                        fExec1.Enqueue(resFExec1.Dequeue());
+                        resFExec1.Peek().instruction.fetch++;
+                    }
+                    else if (Qj == resFExec1.Peek().Qj)
+                    {
+                        resFExec1.Peek().Qj = string.Empty;
+                        resFExec1.Peek().Vj = setVj(resFExec1.Peek().instruction);
+                    }
+                    else if (Qk == resFExec1.Peek().Qk)
+                    {
+                        resFExec1.Peek().Qk = string.Empty;
+                        resFExec1.Peek().Vk = setVk(resFExec1.Peek().instruction);
+                    }
                 }
 
-            }
-            else
-            {
-                resLoadStoreExec1.Peek().instruction.fetch--;
-            }
-            if (resMem.Peek().instruction.fetch == 0)
-            {
-                if (string.IsNullOrEmpty(resMem.Peek().Qj) == true)
+                else
                 {
-                    Qi[Convert.ToInt32(resMem.Peek().instruction.sRegister.Remove(0, 1))] = resMem.Peek().Name;
-                    memExec1.Enqueue(resMem.Dequeue());
-                    resMem.Peek().instruction.fetch++;
-                }
-                else if (Qj == resMem.Peek().Qj)
-                {
-                    resMem.Peek().Qj = string.Empty;
-                    resMem.Peek().Vj = setVj(resMem.Peek().instruction);
+                    resFExec1.Peek().instruction.fetch--;
                 }
             }
-            else
+            if (resIntExec1.Count>0)
             {
-                resMem.Peek().instruction.fetch--;
-            }
-            if (resFExec1.Peek().instruction.fetch == 0)
-            {
-                if (string.IsNullOrEmpty(resFExec1.Peek().Qk) == true && string.IsNullOrEmpty(resFExec1.Peek().Qk) == true)
+                if (resIntExec1.Peek().instruction.fetch == 0)
                 {
-                    Qi[Convert.ToInt32(resFExec1.Peek().instruction.sRegister.Remove(0, 1))] = resFExec1.Peek().Name;
-                    fExec1.Enqueue(resFExec1.Dequeue());
-                    resFExec1.Peek().instruction.fetch++;
+                    if (string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true && string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true)
+                    {
+                        Qi[Convert.ToInt32(resIntExec1.Peek().instruction.sRegister.Remove(0, 1))] = resIntExec1.Peek().Name;
+                        intExec1.Enqueue(resIntExec1.Dequeue());
+                        resIntExec1.Peek().instruction.fetch++;
+                    }
+                    else if (Qj == resIntExec1.Peek().Qj)
+                    {
+                        resIntExec1.Peek().Qj = string.Empty;
+                        resIntExec1.Peek().Vj = setVj(resIntExec1.Peek().instruction);
+                    }
+                    else if (Qk == resIntExec1.Peek().Qk)
+                    {
+                        resIntExec1.Peek().Qk = string.Empty;
+                        resIntExec1.Peek().Vk = setVk(resIntExec1.Peek().instruction);
+                    }
                 }
-                else if (Qj == resFExec1.Peek().Qj)
+                else
                 {
-                    resFExec1.Peek().Qj = string.Empty;
-                    resFExec1.Peek().Vj = setVj(resFExec1.Peek().instruction);
-                }
-                else if (Qk == resFExec1.Peek().Qk)
-                {
-                    resFExec1.Peek().Qk = string.Empty;
-                    resFExec1.Peek().Vk = setVk(resFExec1.Peek().instruction);
-                }
-            }
-            else
-            {
-                resFExec1.Peek().instruction.fetch--;
-            }
-            if (resIntExec1.Peek().instruction.fetch == 0)
-            {
-                if (string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true && string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true)
-                {
-                    Qi[Convert.ToInt32(resIntExec1.Peek().instruction.sRegister.Remove(0, 1))] = resIntExec1.Peek().Name;
-                    intExec1.Enqueue(resIntExec1.Dequeue());
-                    resIntExec1.Peek().instruction.fetch++;
-                }
-                else if (Qj == resIntExec1.Peek().Qj)
-                {
-                    resIntExec1.Peek().Qj = string.Empty;
-                    resIntExec1.Peek().Vj = setVj(resIntExec1.Peek().instruction);
-                }
-                else if (Qk == resIntExec1.Peek().Qk)
-                {
-                    resIntExec1.Peek().Qk = string.Empty;
-                    resIntExec1.Peek().Vk = setVk(resIntExec1.Peek().instruction);
+                    resIntExec1.Peek().instruction.fetch--;
                 }
             }
-            else
+            //Memory Read Phase
+            if(memExec1.Count > 0)
             {
-                resIntExec1.Peek().instruction.fetch--;
+                if (memExec1.Peek().instruction.fetch == 0)
+                {
+                    memExec1.Peek().instruction.fetch++;
+                }
+                else
+                {
+                    memExec1.Peek().instruction.fetch--;
+                }
             }
-            //Memory Read
-            if (memExec1.Peek().instruction.fetch == 0)
+
+
+            //Write Phase
+            if (memExec1.Count > 0)
             {
-                memExec1.Peek().instruction.fetch++;
+                if (memExec1.Peek().instruction.fetch == 0)
+                {
+
+                    Qj = memExec1.Peek().Name;
+                    Qk = memExec1.Peek().Name;
+                    reorderBuffer.Add(memExec1.Dequeue());
+                }
+                else
+                {
+                    memExec1.Peek().instruction.fetch--;
+                }
             }
-            else
+            if (intExec1.Count > 0)
             {
-                memExec1.Peek().instruction.fetch--;
+                if (intExec1.Peek().instruction.execute == 0)
+                {
+
+                    Qj = intExec1.Peek().Name;
+                    Qk = intExec1.Peek().Name;
+                    reorderBuffer.Add(intExec1.Dequeue());
+                }
+                else
+                {
+                    intExec1.Peek().instruction.execute--;
+                }
             }
-            //Write
-            if (memExec1.Peek().instruction.fetch == 0)
+            if (fExec1.Count > 0)
             {
-                Qj = memExec1.Peek().Name;
-                Qk = memExec1.Peek().Name;
+                if (fExec1.Peek().instruction.execute == 0)
+                {
+
+                    Qj = fExec1.Peek().Name;
+                    Qk = fExec1.Peek().Name;
+                    reorderBuffer.Add(fExec1.Dequeue());
+                }
+                else
+                {
+                    fExec1.Peek().instruction.execute--;
+                }
             }
-            else
-            {
-                memExec1.Peek().instruction.fetch--;
-            }
-            if (intExec1.Peek().instruction.execute == 0)
-            {
-                Qj = intExec1.Peek().Name;
-                Qk = intExec1.Peek().Name;
-            }
-            else
-            {
-                intExec1.Peek().instruction.execute--;
-            }
-            if (fExec1.Peek().instruction.execute == 0)
-            {
-                Qj = fExec1.Peek().Name;
-                Qk = fExec1.Peek().Name;
-            }
-            else
-            {
-                fExec1.Peek().instruction.execute--;
-            }
+            if (loadStoreExec1.Count > 0)
+            { 
             if (loadStoreExec1.Peek().instruction.execute == 0)
             {
+
                 Qj = loadStoreExec1.Peek().Name;
                 Qk = loadStoreExec1.Peek().Name;
+                reorderBuffer.Add(loadStoreExec1.Dequeue());
             }
             else
             {
                 loadStoreExec1.Peek().instruction.execute--;
             }
+            }
+            //Sort ROB (Reorder Buffer)
+            reorderBuffer.Sort((x, y) => x.dest.CompareTo(y.dest));
 
             // Use whenever modifying R0 Program Counter (Same for all other registers)
             // r0TextBox.Text = ((int)regArray[0]).ToString();
@@ -660,9 +726,9 @@ namespace Team4_Project3
 
             ints.P1Register.Remove(0, 1);
 
-            if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P1Register)]) == false)
+            if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P1Register.Remove(0,1))]) == false)
             {
-                return Qi[Convert.ToInt32(ints.P1Register)];
+                return Qi[Convert.ToInt32(ints.P1Register.Remove(0,1))];
             }
             else
             {
@@ -678,7 +744,7 @@ namespace Team4_Project3
         /// </summary> 
         private string setQk(Instruction ints)
         {
-            if (ints.P2Register != string.Empty)
+            if (string.IsNullOrEmpty(ints.P2Register) == false)
             {
                 ints.P2Register.Remove(0, 1);
 
@@ -708,7 +774,7 @@ namespace Team4_Project3
             if (string.IsNullOrEmpty(setQj(ints)) == false)
             {
                 ints.P1Register.Remove(0, 1);
-                return regArray[Convert.ToInt32(ints.P1Register)];
+                return regArray[Convert.ToInt32(ints.P1Register.Remove(0,1))];
             }
             else
             {
@@ -1244,7 +1310,7 @@ namespace Team4_Project3
             }
 
         }//end instantiateMemory()
-        #endregion   
+        #endregion
 
         #region storeMemoryInString() Method
         /// <summary>
@@ -1278,9 +1344,9 @@ namespace Team4_Project3
 
         #region storeMemoryInString32nd() Method
         /// <summary>
-        /// Method for storing 1/32 of memory array to reduce lag
+        /// Method for displaying 1/32 of memory array to reduce lag
         /// </summary>
-        public void storeMemoryInString32nd(int sliderValue)
+        public void displayMemoryInString32nd(int sliderValue)
         {
             //Store all 1/32 of memory into memory textbox
             switch (sliderValue)
@@ -1614,7 +1680,7 @@ namespace Team4_Project3
             //==Reset Dynamic Pipeline Variables==//
             //============================================================//
             instructionQueue = new Queue<Instruction>(9);
-            reorderBuffer = new List<Instruction>();
+            reorderBuffer = new List<Station>();
             fExec1 = new Queue<Station>(1);
             intExec1 = new Queue<Station>(1);
             loadStoreExec1 = new Queue<Station>(1);
@@ -1625,6 +1691,8 @@ namespace Team4_Project3
             resLoadStoreExec1 = new Queue<Station>(2);
             resMem = new Queue<Station>(2);
             Qi = new String[16];
+
+            destinationCounter = 0;
 
         }//end resetAllVariables()
         #endregion
