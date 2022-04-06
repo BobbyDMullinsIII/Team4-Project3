@@ -611,7 +611,7 @@ namespace Team4_Project3
                         Qi[Convert.ToInt32(resMem.Peek().instruction.sRegister.Remove(0, 1))] = resMem.Peek().Name;
                         resMem.Peek().instruction.fetch++;
                         memExec1.Enqueue(resMem.Dequeue());
-                        dynamicMemExecTBox.Text += memExec1.Peek().instruction.InstLit;
+                        dynamicMemExecTBox.Text = memExec1.Peek().instruction.InstLit;
 
                     }
                     else if (Qj == resMem.Peek().Qj)
@@ -641,7 +641,7 @@ namespace Team4_Project3
                         Qi[Convert.ToInt32(resFExec1.Peek().instruction.sRegister.Remove(0, 1))] = resFExec1.Peek().Name;
                         resFExec1.Peek().instruction.fetch++;
                         fExec1.Enqueue(resFExec1.Dequeue());
-                        dynamicFExecTextBox.Text += fExec1.Peek().instruction.InstLit;
+                        dynamicFExecTextBox.Text = fExec1.Peek().instruction.InstLit;
 
                     }
                     else if (Qj == resFExec1.Peek().Qj)
@@ -678,7 +678,7 @@ namespace Team4_Project3
                     {
                         resIntExec1.Peek().instruction.fetch++;
                         intExec1.Enqueue(resIntExec1.Dequeue());
-                        dynamicIntExecuteTextBox.Text += intExec1.Peek().instruction.InstLit;
+                        dynamicIntExecuteTextBox.Text = intExec1.Peek().instruction.InstLit;
                     }
                     else
                     {
@@ -687,7 +687,7 @@ namespace Team4_Project3
                             Qi[Convert.ToInt32(resIntExec1.Peek().instruction.sRegister.Remove(0, 1))] = resIntExec1.Peek().Name;
                             resIntExec1.Peek().instruction.fetch++;
                             intExec1.Enqueue(resIntExec1.Dequeue());
-                            dynamicIntExecuteTextBox.Text += intExec1.Peek().instruction.InstLit;
+                            dynamicIntExecuteTextBox.Text = intExec1.Peek().instruction.InstLit;
 
                         }
                         else if (Qj == resIntExec1.Peek().Qj)
@@ -1834,7 +1834,7 @@ namespace Team4_Project3
             Qi = new String[16];
             destinationCounter = 0;
 
-            commitCounter = 0;
+            commitCounter = 1;
 
             loadCounter = 0;
             memCounter = 0;
