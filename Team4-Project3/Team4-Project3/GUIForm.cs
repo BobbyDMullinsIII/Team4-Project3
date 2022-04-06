@@ -133,6 +133,9 @@ namespace Team4_Project3
         int destinationCounter = 0;
 
         int loadCounter = 0;
+        int intCounter = 0;
+        int memCounter = 0;
+        int fCounter = 0;
         //GUIForm Constructor
         #region GUIForm Constructor
         /// <summary>
@@ -416,7 +419,8 @@ namespace Team4_Project3
                         else
                         {
                             destinationCounter++;
-                            Station resStatLoadStoreExec1 = new Station($"Load{resLoadStoreExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
+                            loadCounter++;
+                            Station resStatLoadStoreExec1 = new Station($"Load{loadCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
                             resLoadStoreExec1.Enqueue(resStatLoadStoreExec1);
                         }
                     }
@@ -432,7 +436,7 @@ namespace Team4_Project3
                     else
                     {
                         destinationCounter++;
-                        Station resStatLoadStoreExec1 = new Station($"Load{resMem.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
+                        Station resStatLoadStoreExec1 = new Station($"Store{resMem.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
                         resMem.Enqueue(resStatLoadStoreExec1);
                     }
 
@@ -448,7 +452,8 @@ namespace Team4_Project3
                     else
                     {
                         destinationCounter++;
-                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
+                        fCounter++;
+                        Station resStatFExec1 = new Station($"F{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
                         resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
@@ -462,8 +467,9 @@ namespace Team4_Project3
                     }
                     else
                     {
+                        fCounter++;
                         destinationCounter++;
-                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
+                        Station resStatFExec1 = new Station($"F{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
                         resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
@@ -477,8 +483,9 @@ namespace Team4_Project3
                     }
                     else
                     {
+                        fCounter++;
                         destinationCounter++;
-                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
+                        Station resStatFExec1 = new Station($"F{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
                         resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
@@ -492,8 +499,9 @@ namespace Team4_Project3
                     }
                     else
                     {
+                        fCounter++;
                         destinationCounter++;
-                        Station resStatFExec1 = new Station($"Load{resFExec1.Count + 1}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
+                        Station resStatFExec1 = new Station($"F{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
                         resFExec1.Enqueue(resStatFExec1);
                     }
                     break;
@@ -748,9 +756,9 @@ namespace Team4_Project3
             {
                 ints.P2Register.Remove(0, 1);
 
-                if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P2Register)]) == false)
+                if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P2Register.Remove(0,1))]) == false)
                 {
-                    return Qi[Convert.ToInt32(ints.P2Register)];
+                    return Qi[Convert.ToInt32(ints.P2Register.Remove(0,1))];
                 }
                 else
                 {
