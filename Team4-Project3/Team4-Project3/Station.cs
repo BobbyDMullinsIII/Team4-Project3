@@ -80,6 +80,7 @@ namespace Team4_Project3
             this.Vk = Vk;
             this.A = A;
             this.instruction = instruction;
+            this.dest=dest;
             this.addressingMode = addressingMode;
 
         }//end Station()

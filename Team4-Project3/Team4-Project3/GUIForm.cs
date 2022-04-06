@@ -109,6 +109,7 @@ namespace Team4_Project3
 
         int stopF = 0;
         bool ifStop = false;
+        int stopFF = 0;
 
         bool rF1 = true;
         bool rF2 = true;
@@ -132,10 +133,13 @@ namespace Team4_Project3
         String[] Qi = new String[16];
         int destinationCounter = 0;
 
+        int commitCounter = 1;
+
         int loadCounter = 0;
         int memCounter = 0;
         int intCounter = 0;
         int fCounter = 0;
+
         //GUIForm Constructor
         #region GUIForm Constructor
         /// <summary>
@@ -364,19 +368,40 @@ namespace Team4_Project3
             incrementCycleCounter();
 
             //Create new list of currently fetched instructions and fetch instructions of queue count is less than 9
-            List<Instruction> fetchedIntructs = new List<Instruction>();
-            if (instructionQueue.Count < 9)
+            if (stopFF != 1)
             {
-                (fetchedIntructs, regArray[0], i, stopF) = ProgramController.fetch(instructions, fetchedIntructs, (int)regArray[0], i);
-                instructionQueue.Enqueue(fetchedIntructs[fetchedIntructs.Count - 1]);
+                List<Instruction> fetchedIntructs = new List<Instruction>();
+                if (instructionQueue.Count < 9)
+                {
+                    (fetchedIntructs, regArray[0], i, stopF) = ProgramController.fetch(instructions, fetchedIntructs, (int)regArray[0], i);
+                    instructionQueue.Enqueue(fetchedIntructs[fetchedIntructs.Count - 1]);
+                    if (stopF == 1)
+                    {
+                        stopFF = 1;
+                    }
+                }
             }
 
             //Commit Phase
             if (reorderBuffer.Count > 0)
             {
-                Qi[Convert.ToInt32(reorderBuffer[0].instruction.SRegister.Remove(0, 1))]= string.Empty;
-                commitTextBox.Text = reorderBuffer[0].instruction.InstLit;
-                reorderBuffer.RemoveAt(0);
+                if (reorderBuffer[0].dest == commitCounter)
+                {
+                    if ($"{reorderBuffer[0].instruction.InstLit[0]}{reorderBuffer[0].instruction.InstLit[1]}{reorderBuffer[0].instruction.InstLit[2]}{reorderBuffer[0].instruction.InstLit[3]}" == "STOP")
+                    {
+                        nextCycleButton.Enabled = false;
+                    }
+                    else
+                    {
+                        Qi[Convert.ToInt32(reorderBuffer[0].instruction.SRegister.Remove(0, 1))] = string.Empty;
+                        commitCounter++;
+                    }
+
+
+
+                    commitTextBox.Text = reorderBuffer[0].instruction.InstLit;
+                    reorderBuffer.RemoveAt(0);
+                }
                 //switch (reorderBuffer[0].addressingMode)
                 //{
                 //    case string x when (x == "00"):
@@ -389,29 +414,50 @@ namespace Team4_Project3
             }
             //Issue Phase
             //Gets instruction pneumonic from instructionlit in instruction object
-            string name = $"{instructionQueue.Peek().InstLit[0]}{instructionQueue.Peek().InstLit[1]}{instructionQueue.Peek().InstLit[2]}{instructionQueue.Peek().InstLit[3]}";
-            switch (name)
+            if (ifStop != true&& instructionQueue.Count>0)
             {
-                case string n when (n == "LDRE"):
-                    Instruction temp = instructionQueue.Peek();
-                    if (temp.P1Register[0] == '&')
-                    {
-                        if (resMem.Count == 2)
+                string name = $"{instructionQueue.Peek().InstLit[0]}{instructionQueue.Peek().InstLit[1]}{instructionQueue.Peek().InstLit[2]}{instructionQueue.Peek().InstLit[3]}";
+                switch (name)
+                {
+                    case string n when (n == "LDRE"):
+                        Instruction temp = instructionQueue.Peek();
+                        if (temp.P1Register[0] == '&')
                         {
-                            //Increase structural hazard count and display update to GUI
-                            structHCount++;
-                            structHTextBox.Text = structHCount.ToString();
+                            if (resMem.Count == 2)
+                            {
+                                //Increase structural hazard count and display update to GUI
+                                structHCount++;
+                                structHTextBox.Text = structHCount.ToString();
+                            }
+                            else
+                            {
+                                destinationCounter++;
+                                loadCounter++;
+                                Station resStatMem = new Station($"Load{loadCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "10");
+                                resMem.Enqueue(resStatMem);
+                                issueTextBox.Text = resMem.Peek().instruction.InstLit;
+                            }
                         }
                         else
                         {
-                            destinationCounter++;
-                            loadCounter++;
-                            Station resStatMem = new Station($"Load{loadCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "10");
-                            resMem.Enqueue(resStatMem);
+                            if (resLoadStoreExec1.Count == 2)
+                            {
+                                //Increase structural hazard count and display update to GUI
+                                structHCount++;
+                                structHTextBox.Text = structHCount.ToString();
+                            }
+                            else
+                            {
+                                destinationCounter++;
+                                loadCounter++;
+                                Station resStatLoadStoreExec1 = new Station($"Load{loadCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
+                                resLoadStoreExec1.Enqueue(resStatLoadStoreExec1);
+                                issueTextBox.Text = resLoadStoreExec1.Peek().instruction.InstLit;
+                            }
                         }
-                    }
-                    else
-                    {
+                        break;
+
+                    case string n when (n == "STRE"):
                         if (resLoadStoreExec1.Count == 2)
                         {
                             //Increase structural hazard count and display update to GUI
@@ -422,110 +468,103 @@ namespace Team4_Project3
                         {
                             destinationCounter++;
                             loadCounter++;
-                            Station resStatLoadStoreExec1 = new Station($"Load{loadCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
-                            resLoadStoreExec1.Enqueue(resStatLoadStoreExec1);
+                            Station resStatLoadStoreExec1 = new Station($"Store{loadCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
+                            resMem.Enqueue(resStatLoadStoreExec1);
+                            issueTextBox.Text = resLoadStoreExec1.Peek().instruction.InstLit;
                         }
-                    }
-                    break;
 
-                case string n when (n == "STRE"):
-                    if (resLoadStoreExec1.Count == 2)
-                    {
-                        //Increase structural hazard count and display update to GUI
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
-                    }
-                    else
-                    {
-                        destinationCounter++;
-                        loadCounter++;
-                        Station resStatLoadStoreExec1 = new Station($"Store{loadCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
-                        resMem.Enqueue(resStatLoadStoreExec1);
-                    }
+                        break;
 
-                    break;
+                    case string n when (n == "FADD"):
+                        if (resFExec1.Count == 2)
+                        {
+                            //Increase structural hazard count and display update to GUI
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+                        }
+                        else
+                        {
+                            destinationCounter++;
+                            fCounter++;
+                            Station resStatFExec1 = new Station($"Float{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
+                            resFExec1.Enqueue(resStatFExec1);
+                            issueTextBox.Text = resFExec1.Peek().instruction.InstLit;
+                        }
+                        break;
 
-                case string n when (n == "FADD"):
-                    if (resFExec1.Count == 2)
-                    {
-                        //Increase structural hazard count and display update to GUI
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
-                    }
-                    else
-                    {
-                        destinationCounter++;
-                        fCounter++;
-                        Station resStatFExec1 = new Station($"Float{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
-                        resFExec1.Enqueue(resStatFExec1);
-                    }
-                    break;
+                    case string n when (n == "FSUB"):
+                        if (resFExec1.Count == 2)
+                        {
+                            //Increase structural hazard count and display update to GUI
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+                        }
+                        else
+                        {
+                            destinationCounter++;
+                            fCounter++;
+                            Station resStatFExec1 = new Station($"Float{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
+                            resFExec1.Enqueue(resStatFExec1);
+                            issueTextBox.Text = resFExec1.Peek().instruction.InstLit;
+                        }
+                        break;
 
-                case string n when (n == "FSUB"):
-                    if (resFExec1.Count == 2)
-                    {
-                        //Increase structural hazard count and display update to GUI
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
-                    }
-                    else
-                    {
-                        destinationCounter++;
-                        fCounter++;
-                        Station resStatFExec1 = new Station($"Float{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
-                        resFExec1.Enqueue(resStatFExec1);
-                    }
-                    break;
+                    case string n when (n == "FMUL"):
+                        if (resFExec1.Count == 2)
+                        {
+                            //Increase structural hazard count and display update to GUI
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+                        }
+                        else
+                        {
+                            destinationCounter++;
+                            fCounter++;
+                            Station resStatFExec1 = new Station($"Float{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
+                            resFExec1.Enqueue(resStatFExec1);
+                            issueTextBox.Text = resFExec1.Peek().instruction.InstLit;
+                        }
+                        break;
 
-                case string n when (n == "FMUL"):
-                    if (resFExec1.Count == 2)
-                    {
-                        //Increase structural hazard count and display update to GUI
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
-                    }
-                    else
-                    {
-                        destinationCounter++;
-                        fCounter++;
-                        Station resStatFExec1 = new Station($"Float{fCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
-                        resFExec1.Enqueue(resStatFExec1);
-                    }
-                    break;
+                    case string n when (n == "FDIV"):
+                        if (resFExec1.Count == 2)
+                        {
+                            //Increase structural hazard count and display update to GUI
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+                        }
+                        else
+                        {
+                            destinationCounter++;
+                            fCounter++;
+                            Station resStatFExec1 = new Station($"Float{fCounter++}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
+                            resFExec1.Enqueue(resStatFExec1);
+                            issueTextBox.Text = resFExec1.Peek().instruction.InstLit;
+                        }
+                        break;
 
-                case string n when (n == "FDIV"):
-                    if (resFExec1.Count == 2)
-                    {
-                        //Increase structural hazard count and display update to GUI
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
-                    }
-                    else
-                    {
-                        destinationCounter++;
-                        fCounter++;
-                        Station resStatFExec1 = new Station($"Float{fCounter++}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "11");
-                        resFExec1.Enqueue(resStatFExec1);
-                    }
-                    break;
-
-                default:
-                    if (resIntExec1.Count == 2)
-                    {
-                        //Increase structural hazard count and display update to GUI
-                        structHCount++;
-                        structHTextBox.Text = structHCount.ToString();
-                    }
-                    else
-                    {
-                        destinationCounter++;
-                        intCounter++;
-                        Station resStatIntExec1 = new Station($"int{intCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
-                        resIntExec1.Enqueue(resStatIntExec1);
-                    }
-                    break;
+                    default:
+                        if (resIntExec1.Count == 2)
+                        {
+                            //Increase structural hazard count and display update to GUI
+                            structHCount++;
+                            structHTextBox.Text = structHCount.ToString();
+                        }
+                        else
+                        {
+                            destinationCounter++;
+                            intCounter++;
+                            Station resStatIntExec1 = new Station($"int{intCounter}", true, returnOp(instructionQueue), setQj(instructionQueue.Peek()), setQk(instructionQueue.Peek()), setVj(instructionQueue.Peek()), setVk(instructionQueue.Peek()), "", instructionQueue.Dequeue(), destinationCounter, "00");
+                            resIntExec1.Enqueue(resStatIntExec1);
+                            if ($"{resIntExec1.Peek().instruction.InstLit[0]} {resIntExec1.Peek().instruction.InstLit[1]}{resIntExec1.Peek().instruction.InstLit[2]}{resIntExec1.Peek().instruction.InstLit[3]}" == "STOP")
+                            {
+                                ifStop = true;
+                            }
+                            issueTextBox.Text = resIntExec1.Peek().instruction.InstLit;
+                        }
+                        break;
+                }
             }
-
             //Execute Phase
             if (resLoadStoreExec1.Count > 0)
             {
@@ -536,7 +575,7 @@ namespace Team4_Project3
                         Qi[Convert.ToInt32(resLoadStoreExec1.Peek().instruction.sRegister.Remove(0, 1))] = resLoadStoreExec1.Peek().Name;
                         resLoadStoreExec1.Peek().instruction.fetch++;
                         loadStoreExec1.Enqueue(resLoadStoreExec1.Dequeue());
-                        dynamicExecuteTextBox.Text += loadStoreExec1.Peek().instruction.InstLit;
+                        dynamicLSExecTBox.Text = loadStoreExec1.Peek().instruction.InstLit;
 
                     }
                     else if (Qj == resLoadStoreExec1.Peek().Qj)
@@ -555,12 +594,12 @@ namespace Team4_Project3
             {
                 if (resMem.Peek().instruction.fetch == 0)
                 {
-                    if (string.IsNullOrEmpty(resMem.Peek().Qj) == true && string.IsNullOrEmpty(Qi[Convert.ToInt32(resMem.Peek().instruction.p1Register.Remove(0, 1))]) == true)
+                    if (string.IsNullOrEmpty(resMem.Peek().Qj) == true && string.IsNullOrEmpty(Qi[Convert.ToInt32(resMem.Peek().instruction.sRegister.Remove(0, 1))]) == true)
                     {
                         Qi[Convert.ToInt32(resMem.Peek().instruction.sRegister.Remove(0, 1))] = resMem.Peek().Name;
                         resMem.Peek().instruction.fetch++;
                         memExec1.Enqueue(resMem.Dequeue());
-                        dynamicExecuteTextBox.Text += memExec1.Peek().instruction.InstLit;
+                        dynamicMemExecTBox.Text += memExec1.Peek().instruction.InstLit;
 
                     }
                     else if (Qj == resMem.Peek().Qj)
@@ -583,8 +622,8 @@ namespace Team4_Project3
                         Qi[Convert.ToInt32(resFExec1.Peek().instruction.sRegister.Remove(0, 1))] = resFExec1.Peek().Name;
                         resFExec1.Peek().instruction.fetch++;
                         fExec1.Enqueue(resFExec1.Dequeue());
-                        dynamicExecuteTextBox.Text += fExec1.Peek().instruction.InstLit;
-                        
+                        dynamicFExecTextBox.Text += fExec1.Peek().instruction.InstLit;
+
                     }
                     else if (Qj == resFExec1.Peek().Qj)
                     {
@@ -603,28 +642,38 @@ namespace Team4_Project3
                     resFExec1.Peek().instruction.fetch--;
                 }
             }
-            if (resIntExec1.Count>0)
+            if (resIntExec1.Count > 0)
             {
                 if (resIntExec1.Peek().instruction.fetch == 0)
                 {
-                    if (string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true && string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true && string.IsNullOrEmpty(Qi[Convert.ToInt32(resIntExec1.Peek().instruction.p1Register.Remove(0, 1))]) == true && string.IsNullOrEmpty(Qi[Convert.ToInt32(resIntExec1.Peek().instruction.p2Register.Remove(0, 1))]) == true)
+                    if ($"{resIntExec1.Peek().instruction.InstLit[0]}{resIntExec1.Peek().instruction.InstLit[1]}{resIntExec1.Peek().instruction.InstLit[2]}{resIntExec1.Peek().instruction.InstLit[3]}" == "STOP")
                     {
-                        Qi[Convert.ToInt32(resIntExec1.Peek().instruction.sRegister.Remove(0, 1))] = resIntExec1.Peek().Name;
                         resIntExec1.Peek().instruction.fetch++;
                         intExec1.Enqueue(resIntExec1.Dequeue());
-                        dynamicExecuteTextBox.Text += intExec1.Peek().instruction.InstLit;
+                        dynamicIntExecuteTextBox.Text += intExec1.Peek().instruction.InstLit;
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true && string.IsNullOrEmpty(resIntExec1.Peek().Qk) == true && string.IsNullOrEmpty(Qi[Convert.ToInt32(resIntExec1.Peek().instruction.p1Register.Remove(0, 1))]) == true && string.IsNullOrEmpty(Qi[Convert.ToInt32(resIntExec1.Peek().instruction.p2Register.Remove(0, 1))]) == true)
+                        {
+                            Qi[Convert.ToInt32(resIntExec1.Peek().instruction.sRegister.Remove(0, 1))] = resIntExec1.Peek().Name;
+                            resIntExec1.Peek().instruction.fetch++;
+                            intExec1.Enqueue(resIntExec1.Dequeue());
+                            dynamicIntExecuteTextBox.Text += intExec1.Peek().instruction.InstLit;
 
+                        }
+                        else if (Qj == resIntExec1.Peek().Qj)
+                        {
+                            resIntExec1.Peek().Qj = string.Empty;
+                            resIntExec1.Peek().Vj = setVj(resIntExec1.Peek().instruction);
+                        }
+                        else if (Qk == resIntExec1.Peek().Qk)
+                        {
+                            resIntExec1.Peek().Qk = string.Empty;
+                            resIntExec1.Peek().Vk = setVk(resIntExec1.Peek().instruction);
+                        }
                     }
-                    else if (Qj == resIntExec1.Peek().Qj)
-                    {
-                        resIntExec1.Peek().Qj = string.Empty;
-                        resIntExec1.Peek().Vj = setVj(resIntExec1.Peek().instruction);
-                    }
-                    else if (Qk == resIntExec1.Peek().Qk)
-                    {
-                        resIntExec1.Peek().Qk = string.Empty;
-                        resIntExec1.Peek().Vk = setVk(resIntExec1.Peek().instruction);
-                    }
+                    
                 }
                 else
                 {
@@ -632,11 +681,12 @@ namespace Team4_Project3
                 }
             }
             //Memory Read Phase
-            if(memExec1.Count > 0)
+            if (memExec1.Count > 0)
             {
                 if (memExec1.Peek().instruction.fetch == 0)
                 {
                     memExec1.Peek().instruction.fetch++;
+                    memReadTextBox.Text = memExec1.Peek().instruction.InstLit;
                 }
                 else
                 {
@@ -653,7 +703,9 @@ namespace Team4_Project3
 
                     Qj = memExec1.Peek().Name;
                     Qk = memExec1.Peek().Name;
+                    writeTextBox.Text = memExec1.Peek().instruction.InstLit;
                     reorderBuffer.Add(memExec1.Dequeue());
+
                 }
                 else
                 {
@@ -667,6 +719,7 @@ namespace Team4_Project3
 
                     Qj = intExec1.Peek().Name;
                     Qk = intExec1.Peek().Name;
+                    writeTextBox.Text = intExec1.Peek().instruction.InstLit;
                     reorderBuffer.Add(intExec1.Dequeue());
                 }
                 else
@@ -681,6 +734,7 @@ namespace Team4_Project3
 
                     Qj = fExec1.Peek().Name;
                     Qk = fExec1.Peek().Name;
+                    writeTextBox.Text = fExec1.Peek().instruction.InstLit;
                     reorderBuffer.Add(fExec1.Dequeue());
                 }
                 else
@@ -689,18 +743,19 @@ namespace Team4_Project3
                 }
             }
             if (loadStoreExec1.Count > 0)
-            { 
-            if (loadStoreExec1.Peek().instruction.execute == 0)
             {
+                if (loadStoreExec1.Peek().instruction.execute == 0)
+                {
 
-                Qj = loadStoreExec1.Peek().Name;
-                Qk = loadStoreExec1.Peek().Name;
-                reorderBuffer.Add(loadStoreExec1.Dequeue());
-            }
-            else
-            {
-                loadStoreExec1.Peek().instruction.execute--;
-            }
+                    Qj = loadStoreExec1.Peek().Name;
+                    Qk = loadStoreExec1.Peek().Name;
+                    writeTextBox.Text = loadStoreExec1.Peek().instruction.InstLit;
+                    reorderBuffer.Add(loadStoreExec1.Dequeue());
+                }
+                else
+                {
+                    loadStoreExec1.Peek().instruction.execute--;
+                }
             }
             //Sort ROB (Reorder Buffer)
             reorderBuffer.Sort((x, y) => x.dest.CompareTo(y.dest));
@@ -743,17 +798,24 @@ namespace Team4_Project3
         /// </summary>
         private string setQj(Instruction ints)
         {
-
-            ints.P1Register.Remove(0, 1);
-
-            if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P1Register.Remove(0,1))]) == false)
+            if (stopFF != 1)
             {
-                return Qi[Convert.ToInt32(ints.P1Register.Remove(0,1))];
-            }
-            else
-            {
+                if (ints.P1Register[0] != '&')
+                {
+                    ints.P1Register.Remove(0, 1);
+
+                    if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P1Register.Remove(0, 1))]) == false)
+                    {
+                        return Qi[Convert.ToInt32(ints.P1Register.Remove(0, 1))];
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
                 return "";
             }
+            return "";
 
         }//end setQj()
         #endregion
@@ -768,9 +830,9 @@ namespace Team4_Project3
             {
                 ints.P2Register.Remove(0, 1);
 
-                if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P2Register.Remove(0,1))]) == false)
+                if (string.IsNullOrEmpty(Qi[Convert.ToInt32(ints.P2Register.Remove(0, 1))]) == false)
                 {
-                    return Qi[Convert.ToInt32(ints.P2Register.Remove(0,1))];
+                    return Qi[Convert.ToInt32(ints.P2Register.Remove(0, 1))];
                 }
                 else
                 {
@@ -791,16 +853,25 @@ namespace Team4_Project3
         /// </summary> 
         private float setVj(Instruction ints)
         {
-            if (string.IsNullOrEmpty(setQj(ints)) == false)
+            if (stopFF != 1)
             {
-                ints.P1Register.Remove(0, 1);
-                return regArray[Convert.ToInt32(ints.P1Register.Remove(0,1))];
+                if (ints.P1Register[0] != '&')
+                {
+                    if (string.IsNullOrEmpty(setQj(ints)) == false)
+                    {
+                        ints.P1Register.Remove(0, 1);
+                        return regArray[Convert.ToInt32(ints.P1Register.Remove(0, 1))];
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                    return 0;
             }
             else
-            {
                 return 0;
-            }
-
 
         }//end setVj()
         #endregion
@@ -814,7 +885,7 @@ namespace Team4_Project3
             if (string.IsNullOrEmpty(setQk(ints)) == false)
             {
                 ints.P2Register.Remove(0, 1);
-                return regArray[Convert.ToInt32(ints.P2Register)];
+                return regArray[Convert.ToInt32(ints.P2Register.Remove(0, 1))];
             }
             else
             {
@@ -1330,6 +1401,16 @@ namespace Team4_Project3
             }
 
         }//end instantiateMemory()
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void assemblyTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
         #endregion
 
         #region storeMemoryInString() Method
@@ -1547,7 +1628,7 @@ namespace Team4_Project3
 
             //Reset Dynamic Phase textboxes
             issueTextBox.Text = string.Empty;
-            dynamicExecuteTextBox.Text = string.Empty;
+            dynamicIntExecuteTextBox.Text = string.Empty;
             writeTextBox.Text = string.Empty;
             commitTextBox.Text = string.Empty;
 
@@ -1691,6 +1772,7 @@ namespace Team4_Project3
 
             stopF = 0;
             ifStop = false;
+            stopFF = 0;
 
             rF1 = true;
             rF2 = true;
@@ -1706,13 +1788,20 @@ namespace Team4_Project3
             loadStoreExec1 = new Queue<Station>(1);
             memExec1 = new Queue<Station>(1);
 
+            //Reservation Stations
             resFExec1 = new Queue<Station>(2);
             resIntExec1 = new Queue<Station>(2);
             resLoadStoreExec1 = new Queue<Station>(2);
             resMem = new Queue<Station>(2);
             Qi = new String[16];
-
             destinationCounter = 0;
+
+            commitCounter = 0;
+
+            loadCounter = 0;
+            memCounter = 0;
+            intCounter = 0;
+            fCounter = 0;
 
         }//end resetAllVariables()
         #endregion
