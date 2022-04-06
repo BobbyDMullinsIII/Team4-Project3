@@ -41,6 +41,8 @@
             this.assemblyTextBox = new System.Windows.Forms.TextBox();
             this.assemblyLabel = new System.Windows.Forms.Label();
             this.simulationPanel = new System.Windows.Forms.Panel();
+            this.memReadLabel = new System.Windows.Forms.Label();
+            this.memReadTextBox = new System.Windows.Forms.TextBox();
             this.trueDependenceLabel = new System.Windows.Forms.Label();
             this.memConflictLabel = new System.Windows.Forms.Label();
             this.resStationLabel = new System.Windows.Forms.Label();
@@ -135,8 +137,7 @@
             this.pipeLineOutText = new System.Windows.Forms.TextBox();
             this.memoryOutput = new System.Windows.Forms.TabPage();
             this.memOutputText = new System.Windows.Forms.TextBox();
-            this.memReadTextBox = new System.Windows.Forms.TextBox();
-            this.memReadLabel = new System.Windows.Forms.Label();
+            this.memSlider = new System.Windows.Forms.TrackBar();
             this.menuStrip1.SuspendLayout();
             this.assemblyPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
@@ -144,6 +145,7 @@
             this.tabControl1.SuspendLayout();
             this.pipelineOutput.SuspendLayout();
             this.memoryOutput.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.memSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // MNAWLabel
@@ -382,6 +384,27 @@
             this.simulationPanel.Name = "simulationPanel";
             this.simulationPanel.Size = new System.Drawing.Size(946, 604);
             this.simulationPanel.TabIndex = 3;
+            // 
+            // memReadLabel
+            // 
+            this.memReadLabel.AutoSize = true;
+            this.memReadLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.memReadLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.memReadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.memReadLabel.Location = new System.Drawing.Point(268, 102);
+            this.memReadLabel.Name = "memReadLabel";
+            this.memReadLabel.Size = new System.Drawing.Size(136, 27);
+            this.memReadLabel.TabIndex = 122;
+            this.memReadLabel.Text = "Memory Read";
+            // 
+            // memReadTextBox
+            // 
+            this.memReadTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.memReadTextBox.Location = new System.Drawing.Point(12, 102);
+            this.memReadTextBox.Name = "memReadTextBox";
+            this.memReadTextBox.ReadOnly = true;
+            this.memReadTextBox.Size = new System.Drawing.Size(250, 26);
+            this.memReadTextBox.TabIndex = 121;
             // 
             // trueDependenceLabel
             // 
@@ -1401,26 +1424,15 @@
             this.memOutputText.Size = new System.Drawing.Size(302, 572);
             this.memOutputText.TabIndex = 0;
             // 
-            // memReadTextBox
+            // memSlider
             // 
-            this.memReadTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.memReadTextBox.Location = new System.Drawing.Point(12, 102);
-            this.memReadTextBox.Name = "memReadTextBox";
-            this.memReadTextBox.ReadOnly = true;
-            this.memReadTextBox.Size = new System.Drawing.Size(250, 26);
-            this.memReadTextBox.TabIndex = 121;
-            // 
-            // memReadLabel
-            // 
-            this.memReadLabel.AutoSize = true;
-            this.memReadLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.memReadLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.memReadLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.memReadLabel.Location = new System.Drawing.Point(268, 102);
-            this.memReadLabel.Name = "memReadLabel";
-            this.memReadLabel.Size = new System.Drawing.Size(136, 27);
-            this.memReadLabel.TabIndex = 122;
-            this.memReadLabel.Text = "Memory Read";
+            this.memSlider.Location = new System.Drawing.Point(1272, 35);
+            this.memSlider.Maximum = 32;
+            this.memSlider.Minimum = 1;
+            this.memSlider.Name = "memSlider";
+            this.memSlider.Size = new System.Drawing.Size(309, 45);
+            this.memSlider.TabIndex = 18;
+            this.memSlider.Value = 1;
             // 
             // GUIForm
             // 
@@ -1428,6 +1440,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1584, 681);
+            this.Controls.Add(this.memSlider);
             this.Controls.Add(this.outputPanel);
             this.Controls.Add(this.simulationPanel);
             this.Controls.Add(this.assemblyPanel);
@@ -1451,6 +1464,7 @@
             this.pipelineOutput.PerformLayout();
             this.memoryOutput.ResumeLayout(false);
             this.memoryOutput.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.memSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1567,6 +1581,7 @@
         private System.Windows.Forms.TextBox reorderBufferTextBox;
         private System.Windows.Forms.Label memReadLabel;
         private System.Windows.Forms.TextBox memReadTextBox;
+        private System.Windows.Forms.TrackBar memSlider;
     }
 }
 
