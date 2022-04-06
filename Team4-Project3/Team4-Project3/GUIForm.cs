@@ -402,6 +402,8 @@ namespace Team4_Project3
                     commitTextBox.Text = reorderBuffer[0].instruction.InstLit;
                     reorderBuffer.RemoveAt(0);
                 }
+                else
+                    bufferD++;
                 //switch (reorderBuffer[0].addressingMode)
                 //{
                 //    case string x when (x == "00"):
@@ -580,8 +582,15 @@ namespace Team4_Project3
                     }
                     else if (Qj == resLoadStoreExec1.Peek().Qj)
                     {
+                        dependenceD++;
+                        trueDependenceTextBox.Text = dependenceD.ToString();
                         resLoadStoreExec1.Peek().Qj = string.Empty;
                         resLoadStoreExec1.Peek().Vj = setVj(resLoadStoreExec1.Peek().instruction);
+                    }
+                    else 
+                    {
+                        dependenceD++;
+                        trueDependenceTextBox.Text = dependenceD.ToString();
                     }
 
                 }
@@ -604,8 +613,15 @@ namespace Team4_Project3
                     }
                     else if (Qj == resMem.Peek().Qj)
                     {
+                        dependenceD++;
+                        trueDependenceTextBox.Text = dependenceD.ToString();
                         resMem.Peek().Qj = string.Empty;
                         resMem.Peek().Vj = setVj(resMem.Peek().instruction);
+                    }
+                    else
+                    {
+                        dependenceD++;
+                        trueDependenceTextBox.Text = dependenceD.ToString();
                     }
                 }
                 else
@@ -627,13 +643,22 @@ namespace Team4_Project3
                     }
                     else if (Qj == resFExec1.Peek().Qj)
                     {
+                        dependenceD++;
+                        trueDependenceTextBox.Text = dependenceD.ToString();
                         resFExec1.Peek().Qj = string.Empty;
                         resFExec1.Peek().Vj = setVj(resFExec1.Peek().instruction);
                     }
                     else if (Qk == resFExec1.Peek().Qk)
                     {
+                        dependenceD++;
+                        trueDependenceTextBox.Text = dependenceD.ToString();
                         resFExec1.Peek().Qk = string.Empty;
                         resFExec1.Peek().Vk = setVk(resFExec1.Peek().instruction);
+                    }
+                    else
+                    {
+                        dependenceD++;
+                        trueDependenceTextBox.Text = dependenceD.ToString();
                     }
                 }
 
@@ -664,13 +689,22 @@ namespace Team4_Project3
                         }
                         else if (Qj == resIntExec1.Peek().Qj)
                         {
+                            dependenceD++;
+                            trueDependenceTextBox.Text = dependenceD.ToString();
                             resIntExec1.Peek().Qj = string.Empty;
                             resIntExec1.Peek().Vj = setVj(resIntExec1.Peek().instruction);
                         }
                         else if (Qk == resIntExec1.Peek().Qk)
                         {
+                            dependenceD++;
+                            trueDependenceTextBox.Text = dependenceD.ToString();
                             resIntExec1.Peek().Qk = string.Empty;
                             resIntExec1.Peek().Vk = setVk(resIntExec1.Peek().instruction);
+                        }
+                        else
+                        {
+                            dependenceD++;
+                            trueDependenceTextBox.Text = dependenceD.ToString();
                         }
                     }
                     
