@@ -1426,7 +1426,7 @@
             // 
             // memSlider
             // 
-            this.memSlider.Location = new System.Drawing.Point(1272, 32);
+            this.memSlider.Location = new System.Drawing.Point(1270, 35);
             this.memSlider.Maximum = 32;
             this.memSlider.Minimum = 1;
             this.memSlider.Name = "memSlider";
