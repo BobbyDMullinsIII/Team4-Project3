@@ -403,7 +403,10 @@ namespace Team4_Project3
                     reorderBuffer.RemoveAt(0);
                 }
                 else
+                {
                     bufferD++;
+                    reorderBufferTextBox.Text = bufferD.ToString();
+                }
                 //switch (reorderBuffer[0].addressingMode)
                 //{
                 //    case string x when (x == "00"):
