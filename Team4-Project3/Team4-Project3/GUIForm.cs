@@ -400,6 +400,7 @@ namespace Team4_Project3
 
 
                     commitTextBox.Text = reorderBuffer[0].instruction.InstLit;
+                    ProgramController.execute(reorderBuffer[0].instruction);
                     reorderBuffer.RemoveAt(0);
                 }
                 else

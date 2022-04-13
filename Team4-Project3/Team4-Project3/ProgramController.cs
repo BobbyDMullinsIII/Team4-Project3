@@ -1303,7 +1303,7 @@ namespace Team4_Project3
         /// <returns>Value to store in sRegister</returns>
         public static void LDREI(Instruction pipeInts)
         {
-            float ret = guiForm.getReg(pipeInts.p1Register);
+            float ret = float.Parse(pipeInts.p1Register.Remove(0,1));
 
             guiForm.updateRegister(pipeInts.sRegister, ret);
 
