@@ -959,29 +959,33 @@ namespace Team4_Project3
             switch ($"{pipeInts.InstLit[0]}{pipeInts.InstLit[1]}{pipeInts.InstLit[2]}{pipeInts.InstLit[3]}")
             {
                 case string n when (n == "LDRE"):
-                    if (pipeInts.InstLit[7] == 'R')
+                    if (pipeInts.p1Register[0] == 'R')
                     {
                         LDRER(pipeInts);
                     }
-                    else if (pipeInts.InstLit[7] == 'R')
-                    { }
+                    else if (pipeInts.p1Register[0] == '#')
+                    {
+                        LDREI(pipeInts);
+                    }
                     else
-                    { }
+                    {
+                        LDREM(pipeInts);
+                    }
                     break;
                 case string n when (n == "STRE"):
-
+                    STRE(pipeInts);
                     break;
                 case string n when (n == "COMP"):
-
+                    COMP(pipeInts);
                     break;
                 case string n when (n == "ANDD"):
-
+                    ANDD(pipeInts);
                     break;
                 case string n when (n == "OORR"):
-
+                    OORR(pipeInts);
                     break;
                 case string n when (n == "BRLT"):
-
+                    
                     break;
                 case string n when (n == "BRGT"):
 
@@ -999,16 +1003,16 @@ namespace Team4_Project3
 
                     break;
                 case string n when (n == "FADD"):
-
+                    FADD(pipeInts);
                     break;
                 case string n when (n == "FSUB"):
-
+                    FSUB(pipeInts);
                     break;
                 case string n when (n == "FMUL"):
-
+                    FMUL(pipeInts);
                     break;
                 case string n when (n == "FDIV"):
-
+                    FDIV(pipeInts);
                     break;
                 case string n when (n == "NOOP"):
 

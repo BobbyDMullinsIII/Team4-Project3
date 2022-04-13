@@ -1355,52 +1355,51 @@ namespace Team4_Project3
             switch (param)
             {
                 case string n when (n == "R0"):
-                    return (int)regArray[0];
+                    return Convert.ToInt32(r0TextBox.Text);
 
                 case string n when (n == "R1"):
-                    return (int)regArray[1];
+                    return Convert.ToInt32(r1TextBox.Text);
 
                 case string n when (n == "R2"):
-                    return (int)regArray[2];
+                    return Convert.ToInt32(r2TextBox.Text);
 
                 case string n when (n == "R3"):
-                    return (int)regArray[3];
+                    return Convert.ToInt32(r3TextBox.Text);
 
                 case string n when (n == "R4"):
-                    return (int)regArray[4];
+                    return Convert.ToInt32(r4TextBox.Text);
 
                 case string n when (n == "R5"):
-                    return (int)regArray[5];
+                    return Convert.ToInt32(r5TextBox.Text);
 
                 case string n when (n == "R6"):
-                    return (int)regArray[6];
+                    return Convert.ToInt32(r6TextBox.Text);
 
                 case string n when (n == "R7"):
-                    return (int)regArray[7];
+                    return Convert.ToInt32(r7TextBox.Text);
 
                 case string n when (n == "R8"):
-                    return (int)regArray[8];
+                    return Convert.ToInt32(r8TextBox.Text);
 
                 case string n when (n == "R9"):
-                    return (int)regArray[9];
+                    return Convert.ToInt32(r9TextBox.Text);
 
                 case string n when (n == "R10"):
-                    return (int)regArray[10];
+                    return Convert.ToInt32(r10TextBox.Text);
 
                 case string n when (n == "R11"):
-                    return (int)regArray[11];
+                    return Convert.ToInt32(r11TextBox.Text);
 
                 case string n when (n == "F12"):
-                    return regArray[12];
-
+                    return float.Parse(f12TextBox.Text);
                 case string n when (n == "F13"):
-                    return regArray[13];
+                    return float.Parse(f13TextBox.Text);
 
                 case string n when (n == "F14"):
-                    return regArray[14];
+                    return float.Parse(f14TextBox.Text);
 
                 case string n when (n == "f15"):
-                    return regArray[15];
+                    return float.Parse(f15TextBox.Text);
 
                 default:
                     return 0;
